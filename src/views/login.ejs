@@ -1,0 +1,42 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/banner', {name: "Login"}) %>
+<!-- Account Section Starts Here -->
+<div class="account-section padding-top padding-bottom">
+  <div class="container">
+      <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6 col-xl-5 d-none d-lg-block">
+              <div class="section__thumb rtl me-5">
+                  <img src="assets/images/account/thumb.png" alt="account">
+              </div>
+          </div>
+          <div class="col-lg-6 col-xl-5">
+              <div class="account__form__wrapper">
+                  <h3 class="title">Hello, Welcome Back</h3>
+                  <form class="form account__form">
+                      <div class="form-group">
+                          <input type="email" class="form-control form--control" placeholder="Username Or Email">
+                      </div>
+                      <div class="form-group">
+                          <input type="password" class="form-control form--control" placeholder="Password">
+                          <span class="eye-icon"><i class="las la-eye"></i></span>
+                      </div>
+                      <div class=" d-flex flex-wrap align-items-center">
+                          <div class="form--check me-4">
+                              <input type="checkbox" id="rem-me">
+                              <label for="rem-me">Remember Me</label>
+                          </div>
+                          <a href="/forget-password" class="forgot-pass text--base">Forgot Password</a>
+                      </div>
+                      <button class="btn cmn--btn mt-4">Sign In Account</button>
+                  </form>
+                  <p class="mt-4">Don't have on Account yet?   <a class="ms-2 text--base" href="/register">Create Account</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Account Section Ends Here -->
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

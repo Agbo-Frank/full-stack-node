@@ -5,6 +5,7 @@ import { BadRequestException, NotFoundException } from "../../utility/service-er
 import jwt from "../../utility/jwt";
 import { StatusCodes } from "http-status-codes";
 import mail from "../../utility/mail";
+import Referral from "../../model/referral";
 
 class Controller {
   async login(req: any, res: Response, next: NextFunction){
@@ -39,6 +40,12 @@ class Controller {
       const { email, password, phone_number, first_name, last_name } = req.body
       let user = await User.findOne({ email })
       if(user)throw new BadRequestException("User with same email/username already exist");
+
+      let referral = null
+      if("referral_code" in req.body){
+        referral = await User.findOne({ referral_code: req?.body?.referral_code })
+        if(!referral) throw new NotFoundException("Invalid referral code");
+      }
   
       user = new User({ 
         email, 
@@ -49,7 +56,14 @@ class Controller {
       })
 
       await user.save()
-      const data = {...user.toObject(), password: null}
+
+      if(referral){
+        await Referral.create({
+          user: referral.id,
+          referee: user.id,
+          reward: 10
+        })
+      }
       
       // await mail.send({
       //   to: email,
@@ -71,7 +85,7 @@ class Controller {
       //   The Artverse Team<br />
       //   `
       // })
-      return responsHandler(res, "Registration successful", StatusCodes.CREATED, data)
+      return responsHandler(res, "Registration successful", StatusCodes.CREATED)
     } catch (error) {
       next(error)
     }

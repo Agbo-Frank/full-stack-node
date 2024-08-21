@@ -6,6 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import cloudinary from "../../utility/cloudinary";
 import Transaction from "../../model/transaction";
 import numeral from "numeral";
+import Referral from "../../model/referral";
 
 class Controller {
   async profile(req: any, res: Response, next: NextFunction){
@@ -121,6 +122,20 @@ class Controller {
         description: `Withdrawal request` 
       })
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async referrals(req: any, res: Response, next: NextFunction){
+    try {
+      const data = await Referral.find({ user: req.user })
+      const balance = data.reduce((acc, d) => acc + d.reward, 0)
+
+      return responsHandler(
+        res, "Referrals retrived successfully", 
+        StatusCodes.OK, { balance, refferees: data }
+      )
     } catch (error) {
       next(error)
     }

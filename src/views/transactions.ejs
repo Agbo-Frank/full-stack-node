@@ -1,0 +1,125 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/banner', {name: "Transactions"}) %>
+
+<!-- Dashboard Section Starts Here -->
+<div class="dashbaord-section padding-bottom">
+  <div class="container">
+    <div class="row">
+      <%- include('partials/sidebar', {active: "transactions"}) %>
+      <div class="col-lg-8 col-xl-8 col-xxl-9">
+        <div class="dashboard__wrapper">
+          <div class="dashboard__header">
+              <div class="inner">
+                  <h3 class="title">User Panel</h3>
+              </div>
+              <div class="inner">
+                  <form class="search__form">
+                      <div class="form-group">
+                        <input type="text" class="form-control form--control" placeholder="Search Here...">
+                        <button type="submit" class="btn"><i class="las la-search"></i></button>
+                      </div>
+                  </form>
+              </div>
+              <div class="inner">
+                <ul class="tabs d-flex flex-wrap align-items-center">
+                  <li><a href="#"><i class="las la-bell"></i><span class="badge badge--base badge--round">01</span> </a></li>
+                  <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+                </ul>
+              </div>
+          </div>
+          <div class="d-flex flex-wrap align-items-center justify-content-between mt-5 mb-4">
+              <h3 class="title">Transactions</h3>
+              <select class="nice-select btn--round">
+                  <option>Last Month</option>
+                  <option>Last 3 Months</option>
+                  <option>Last 6 Months</option>
+              </select>
+          </div>
+          <table class="table transection__table dashboard__table">
+            <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Amount</th>
+                  <th>Wallet</th>
+                  <th>Date</th>
+                  <th>Currency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="User Name">
+                      <p class="name">Robert Mahfuj</p>
+                    </td>
+                    <td data-label="Amount"><span class="amount">$1500</span></td>
+                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
+                    <td data-label="Date"><span class="date">25 Apr 2021</span></td>
+                    <td data-label="Currency"><span class="currency">USD</span></td>
+                </tr>
+                <tr>
+                    <td data-label="User Name">
+                        <div class="user d-flex flex-wrap align-items-center">
+                            <div class="thumb">
+                                <img src="assets/images/dashboard/item2.png" alt="dashboard">
+                            </div>
+                            <p class="name">Munna Ahmed</p>
+                        </div>
+                    </td>
+                    <td data-label="Amount"><span class="amount">$1500</span></td>
+                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
+                    <td data-label="Date"><span class="date">25 Jan 2021</span></td>
+                    <td data-label="Currency"><span class="currency">BItcoin</span></td>
+                </tr>
+                <tr>
+                    <td data-label="User Name">
+                        <div class="user d-flex flex-wrap align-items-center">
+                            <div class="thumb">
+                                <img src="assets/images/dashboard/item3.png" alt="dashboard">
+                            </div>
+                            <p class="name">Rafuj Raihan</p>
+                        </div>
+                    </td>
+                    <td data-label="Amount"><span class="amount">$1500</span></td>
+                    <td data-label="Wallet"><span class="wallet">block.io</span></td>
+                    <td data-label="Date"><span class="date">25 May 2021</span></td>
+                    <td data-label="Currency"><span class="currency">NSU</span></td>
+                </tr>
+                <tr>
+                    <td data-label="User Name">
+                        <div class="user d-flex flex-wrap align-items-center">
+                            <div class="thumb">
+                                <img src="assets/images/dashboard/item4.png" alt="dashboard">
+                            </div>
+                            <p class="name">Robert Mahfuj</p>
+                        </div>
+                    </td>
+                    <td data-label="Amount"><span class="amount">$1500</span></td>
+                    <td data-label="Wallet"><span class="wallet">Bank Wire</span></td>
+                    <td data-label="Date"><span class="date">25 Feb 2021</span></td>
+                    <td data-label="Currency"><span class="currency">BIT</span></td>
+                </tr>
+                <tr>
+                    <td data-label="User Name">
+                        <div class="user d-flex flex-wrap align-items-center">
+                            <div class="thumb">
+                                <img src="assets/images/dashboard/item5.png" alt="dashboard">
+                            </div>
+                            <p class="name">Jibon Khan</p>
+                        </div>
+                    </td>
+                    <td data-label="Amount"><span class="amount">$2500</span></td>
+                    <td data-label="Wallet"><span class="wallet">Paypal</span></td>
+                    <td data-label="Date"><span class="date">25 May 2021</span></td>
+                    <td data-label="Currency"><span class="currency">USD</span></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dashboard Section Ends Here -->
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

@@ -2,6 +2,8 @@ import { Response, NextFunction } from "express";
 import { extractFilters, pagingParams, responsHandler } from "../../utility/helpers";
 import User from "../../model/user";
 import { StatusCodes } from "http-status-codes";
+import Transaction from "../../model/transaction";
+import Plan from "../../model/plans";
 
 class Controller {
   async users(req: any, res: Response, next: NextFunction){
@@ -43,6 +45,37 @@ class Controller {
         }
       )
       return responsHandler(res, "Users retrieved successfully", StatusCodes.OK, data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async transactions(req: any, res: Response, next: NextFunction){
+    try {
+      const { page, limit } = pagingParams(req)
+      const filters = extractFilters(
+        req.query, 
+        ['search', 'type', 'hash'],
+        ['recipient', 'type', 'hash']
+      )
+
+      const data = await Transaction.paginate(
+        { $and: filters.length > 0 ? filters : [{}] },
+        {  
+          page, limit, 
+          sort: { created_at: "desc" },
+        }
+      )
+      return responsHandler(res, "Transactions retrieved successfully", StatusCodes.OK, data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async plans(req: any, res: Response, next: NextFunction){
+    try {
+      const data = await Plan.find()
+      return responsHandler(res, "Transactions retrieved successfully", StatusCodes.OK, data)
     } catch (error) {
       next(error)
     }
