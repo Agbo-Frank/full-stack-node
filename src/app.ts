@@ -4,7 +4,9 @@ import cors from 'cors';
 import ErrorHandler from './middleware/error-handler';
 import api from './api';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import Logger from './utility/logger';
+import checkUser from './middleware/check-user';
 
 const logger = new Logger("server")
 
@@ -23,13 +25,15 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json({ limit: "10mb" }));
-
+app.use(checkUser)
 api(app)
 app.use(ErrorHandler)
 

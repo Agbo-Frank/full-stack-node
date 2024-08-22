@@ -7,6 +7,8 @@ export default {
   login: [ emailValidator, passwordValidator ],
   register: [
     emailValidator, passwordValidator,
-    body("username").notEmpty().withMessage("Username is required").matches(/^\S*$/).withMessage('Username should not contain spaces'),
+    body("first_name").notEmpty().withMessage("First name is required"),
+    body("last_name").notEmpty().withMessage("Last name is required"),
+    body("phone_number").notEmpty().withMessage("Phone number is required"),
   ]
 }

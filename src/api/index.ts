@@ -8,7 +8,7 @@ import guard, { guardValid } from "../middleware/guard";
 import isAdmin from "../middleware/is-admin";
 
 export default function(app: Application){
-  app.use(pages)
+  app.use("/", pages)
   app.use("/user", user)
   app.use("/auth", auth)
   app.use("/investment", investment)

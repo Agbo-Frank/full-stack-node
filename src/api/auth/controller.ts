@@ -26,9 +26,11 @@ class Controller {
         }
       } 
 
+      res.cookie("jwt", data.access_token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 }) 
       return responsHandler(res, "User login successful", StatusCodes.OK, data)
 
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }

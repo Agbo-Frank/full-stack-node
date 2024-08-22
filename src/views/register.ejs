@@ -12,23 +12,38 @@
           <div class="col-lg-6 col-xl-5">
               <div class="account__form__wrapper">
                   <h3 class="title">Create Your Account</h3>
-                  <form class="form account__form">
-                      <div class="form-group">
-                          <input type="email" class="form-control form--control" placeholder="Username Or Email">
-                      </div>
-                      <div class="form-group">
-                          <input type="password" class="form-control form--control" placeholder="Password">
-                          <span class="eye-icon"><i class="las la-eye"></i></span>
-                      </div>
-                      <div class="form-group">
-                          <input type="password" class="form-control form--control" placeholder="Re-Password">
-                          <span class="eye-icon"><i class="las la-eye"></i></span>
-                      </div>
-                      <div class="form--check me-4">
-                          <input type="checkbox" id="rem-me">
-                          <label for="rem-me">I agree with all  <a href="/policy" class="text--base ms-2">Terms & Condition</a></label>
-                      </div>
-                      <button class="btn cmn--btn mt-4">Sign Up Account</button>
+                  <form id="register" class="form account__form">
+                    <p class="error theme-one"></p>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input name="first_name" required class="form-control form--control" placeholder="Enter your First name">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input name="last_name" required class="form-control form--control" placeholder="Enter your Last name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input name="email" required type="email" class="form-control form--control" placeholder="Enter your Email">
+                    </div>
+                    <div class="form-group">
+                        <input name="phone_number" required class="form-control form--control" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <input name="password" type="password" class="form-control form--control" placeholder="Enter your Password">
+                        <span class="eye-icon"><i class="las la-eye"></i></span>
+                    </div>
+                    <div class="form--check me-4">
+                        <input type="checkbox" id="rem-me">
+                        <label for="rem-me">I agree with all  <a href="/policy" class="text--base ms-2">Terms & Condition</a></label>
+                    </div>
+                    <button class="btn cmn--btn mt-4">
+                        Sign Up Account
+                        <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
                   </form>
                   <p class="mt-4">Already you have an account in here? <a class="ms-2 text--base" href="/login">Sign In</a></p>
               </div>

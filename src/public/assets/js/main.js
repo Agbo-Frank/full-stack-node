@@ -376,3 +376,71 @@ $('#currency').change(function(e) {
   //     alert('Please enter some text.');
   // }
 });
+
+function notify(message, type = 'success'){
+  if(type === 'success'){
+    tata.success('Success', message);
+  }
+  else {
+    tata.error('Error!', message);
+  }
+}
+
+//Login
+$("#login").submit(async function(e) {
+  e.preventDefault()
+  $("#loader").removeClass("d-none")
+  $("#login button").prop('disabled', true)
+
+  const payload = {
+    email: e.target.email.value,
+    password: e.target.password.value,
+  };
+
+  try {
+    const response = await fetch("/auth/login", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    notify(data?.message, response.ok ? "success" : "error")
+    if(response.ok){
+      location.assign("/")
+    }
+   
+  }
+  finally{
+    $("#loader").toggleClass("d-none")
+    $("#login button").prop('disabled', false)
+  }
+})
+
+//registration
+$("#register").submit(async function(e) {
+  e.preventDefault()
+  $("#register #loader").removeClass("d-none")
+  $("#register button").prop('disabled', true)
+
+  const payload = {
+    email: e.target.email.value,
+    password: e.target.password.value,
+    first_name: e.target.first_name.value,
+    last_name: e.target.last_name.value,
+    phone_number: e.target.phone_number.value,
+  };
+
+  try {
+    const response = await fetch("/auth/register", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "succcess" : "error")
+  }
+  finally{
+    $("#register #loader").toggleClass("d-none")
+    $("#register button").prop('disabled', false)
+  }
+})
