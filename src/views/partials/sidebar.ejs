@@ -8,14 +8,24 @@
           </div>
       </div>
       <ul class="dashbard__tab tags">
-          <li><a href="#" class="<%= active === 'overview' && 'active'  %>">Overview</a></li>
-          <li><a href="#">Investments</a></li>
-          <li><a href="#">Plans</a></li>
-          <li><a href="/transactions" class="<%= active === 'transactions' && 'active'  %>" >Transactions</a></li>
-          <li><a href="#">Referral Link</a></li>
-          <li><a href="/settings">Account Settings</a></li>
-          <li><a href="#">Security Settings</a></li>
-          <li><a href="#">Sign Out</a></li>
+          <% 
+            const items = [
+              {title: "Overview", slug: 'dashboard'},
+              {title: "Deposit", slug: 'deposit'},
+              {title: "Withdraw", slug: 'withdraw'},
+              {title: "Investments", slug: 'investments'},
+              {title: "Plans", slug: 'plans'},
+              {title: "Transactions", slug: 'transactions'},
+              {title: "Referrals", slug: 'referrals'},
+              {title: "Account Settings", slug: 'settings'},
+              {title: "KYC", slug: 'kyc'},
+            ] 
+          %>
+          <% items.forEach(i => { %>
+            <li>
+              <a href="/<%= i.slug %>" class="<%= active === i.slug && 'active'  %>"><%= i.title %></a>
+            </li>
+          <% }) %>
       </ul>
       <button class="btn-close btn-close-white d-lg-none"></button>
   </div>

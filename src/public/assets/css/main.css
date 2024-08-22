@@ -648,6 +648,10 @@ textarea.form--control {
     border-color: rgba(215, 163, 31, 0.7);
 }
 
+.dashboard__form .nice-select {
+    background: transparent !important;
+    color: white;
+}
 .nice-select .list {
     max-height: 150px;
     overflow-y: auto;
@@ -1940,6 +1944,7 @@ i {
     margin: 0;
     border: none;
     width: 100%;
+    display: table;
     border-collapse: collapse;
 }
 
@@ -1985,9 +1990,15 @@ i {
 
 .table tbody tr td {
     background: #1A1A33;
+    white-space: nowrap;
     padding: 15px 35px;
     color: #fff;
     vertical-align: middle;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
 }
 
 @media (min-width: 992px) {
@@ -2700,6 +2711,8 @@ i {
 .dashboard__header {
     padding: 15px 25px;
     background: #1A1A33;
+    display: flex;
+    width: 100%;
     border-radius: 5px;
     align-items: center;
     justify-content: space-between;

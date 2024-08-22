@@ -337,3 +337,42 @@ $('.privacy__tab__menu li a').on('click', function() {
   $('.privacy__tab__menu li a').removeClass('active')
   $(this).addClass('active')
 })
+
+function generateQRCode(text) {
+  $('#qrcode').empty();
+  
+  // Create a new QR code
+  new QRCode(document.getElementById("qrcode"), {
+      text,
+      width: 128,
+      height: 128,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+  });
+}
+
+const addresses = {
+  "ethereum": "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03",
+  "bitcoin": "bc1q6gxju7st2da7frxekk4ar6na68rly9m0zq7cuh",
+  "usdt": "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
+}
+
+// Event listener for the button
+$('#currency').change(function(e) {
+  console.log("on change", e.target.value);
+  const currency = e.target.value.toLowerCase();
+  const address = addresses[currency] || "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
+  $("input[name='address']").val(address)
+
+  generateQRCode(
+    address[currency] || 
+    "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
+  )
+  // var text = $('#text-input').val();
+  // if (text.trim() !== '') {
+  //     generateQRCode(text);
+  // } else {
+  //     alert('Please enter some text.');
+  // }
+});

@@ -1,0 +1,44 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/banner', {name: "Plans"}) %>
+
+<!-- Dashboard Section Starts Here -->
+<div class="dashbaord-section padding-bottom">
+  <div class="container">
+    <div class="row">
+      <%- include('partials/sidebar', {active: "plans"}) %>
+      <div class="col-lg-8 col-xl-8 col-xxl-9">
+        <div class="dashboard__wrapper">
+          <div class="dashboard__header">
+            <div class="inner">
+              <h3 class="title">Investments</h3>
+            </div>
+            <div class="inner">
+              <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
+                <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+              </ul>
+            </div>
+        </div>
+          <div class="row g-4 mt-5 justify-content-start">
+            <div class="col-sm-6">
+              <%- include('partials/plan') %>
+            </div>
+            <div class="col-sm-6">
+              <%- include('partials/plan') %>
+            </div>
+            <div class="col-sm-6">
+              <%- include('partials/plan') %>
+            </div>
+            <div class="col-sm-6">
+              <%- include('partials/plan') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dashboard Section Ends Here -->
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

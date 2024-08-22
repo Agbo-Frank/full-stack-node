@@ -1,42 +1,52 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<%- include('partials/banner', {name: "Transactions"}) %>
+<%- include('partials/banner', {name: "Referrals"}) %>
 
 <!-- Dashboard Section Starts Here -->
 <div class="dashbaord-section padding-bottom">
   <div class="container">
     <div class="row">
-      <%- include('partials/sidebar', {active: "transactions"}) %>
+      <%- include('partials/sidebar', {active: "referrals"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
           <div class="dashboard__header">
-              <div class="inner">
-                  <h3 class="title">User Panel</h3>
-              </div>
-              <div class="inner">
-                  <form class="search__form">
-                      <div class="form-group">
-                        <input type="text" class="form-control form--control" placeholder="Search Here...">
-                        <button type="submit" class="btn"><i class="las la-search"></i></button>
-                      </div>
-                  </form>
-              </div>
-              <div class="inner">
-                <ul class="tabs d-flex flex-wrap align-items-center">
-                  <li><a href="#"><i class="las la-bell"></i><span class="badge badge--base badge--round">01</span> </a></li>
-                  <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
-                </ul>
-              </div>
+            <div class="inner">
+              <h3 class="title">Referrals</h3>
+            </div>
+            <div class="inner">
+              <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
+                <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+              </ul>
+            </div>
           </div>
-          <div class="d-flex flex-wrap align-items-center justify-content-between mt-5 mb-4">
-              <h3 class="title">Transactions</h3>
-              <select class="nice-select btn--round">
-                  <option>Last Month</option>
-                  <option>Last 3 Months</option>
-                  <option>Last 6 Months</option>
-              </select>
+
+          <div class="row d-flex align-items-stretch pt-5 gy-4">
+            <div class="col-xl-6 col-xxl-4 col-lg-6 col-md-6">
+              <div class="dashboard__card">
+                <div class="dashboard__card-icon">
+                  <i class="las la-wallet"></i>
+                </div>
+                <div class="dashboard__card-content">
+                  <p class="info">Referral Balance</p>
+                  <h3 class="title">587 USD</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-xxl-4 col-lg-6 col-md-6">
+              <div style="height: 100%; flex-direction: column;" class="d-flex justify-content-between dashboard__form">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h3 class="title">Referral link</h3>
+                  <h3 class="title text--base">Copy</h3>
+                </div>
+                
+                <div class="form-group mt-5 mt-md-0">
+                  <input name="address" type="text" disabled class="form-control form--control" placeholder="Referral link">
+                </div>
+              </div>
+            </div>
           </div>
-          <table class="table transection__table dashboard__table">
+
+          <table class="table mt-5 transection__table dashboard__table">
             <thead>
                 <tr>
                   <th>User Name</th>
@@ -67,7 +77,7 @@
                 </tr>
                 <tr>
                     <td data-label="User Name">
-                        <p class="name">Rafuj Raihan</p>
+                      <p class="name">Rafuj Raihan</p>
                     </td>
                     <td data-label="Amount"><span class="amount">$1500</span></td>
                     <td data-label="Wallet"><span class="wallet">block.io</span></td>

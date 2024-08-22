@@ -1,0 +1,66 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/banner', {name: "Withdraw"}) %>
+
+<!-- Dashboard Section Starts Here -->
+<div class="dashbaord-section padding-bottom">
+  <div class="container">
+    <div class="row">
+      <%- include('partials/sidebar', {active: "withdraw"}) %>
+      <div class="col-lg-8 col-xl-8 col-xxl-9">
+        <div class="dashboard__wrapper">
+          <div class="dashboard__header">
+              <div class="inner">
+                <h3 class="title">Withdraw</h3>
+              </div>
+              <div class="inner">
+                <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
+                  <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+                </ul>
+              </div>
+          </div>
+
+          <div class="dashboard__form mt-5">
+            <div>
+              <form class="setting mt-3">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Enter amount</label>
+                      <input type="number" class="form-control form--control" placeholder="Enter amount">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-label">Select method</label>
+                      <select id="currency" class="nice-select w-100 h-50">
+                          <option>Bitcoin</option>
+                          <option>Ethereum</option>
+                          <option>USDT</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input name="address" type="text" disabled class="form-control form--control" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button class="btn cmn--btn mt-4">Request withdrawal</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dashboard Section Ends Here -->
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

@@ -30,34 +30,6 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "10mb" }));
 
-app.get('/', (req, res) => {
-  return res.render('index');
-});
-app.get('/login', (req, res) => {
-  return res.render('login');
-});
-app.get('/register', (req, res) => {
-  return res.render('register');
-});
-app.get('/policy', (req, res) => {
-  return res.render('policy');
-});
-app.get('/dashboard', (req, res) => {
-  return res.render('dashboard');
-});
-app.get('/transactions', (req, res) => {
-  return res.render('transactions');
-});
-app.get('/forget-password', (req, res) => {
-  return res.render('forget-password');
-});
-app.get('/settings', (req, res) => {
-  return res.render('settings');
-});
-app.get('*', (req, res) => {
-  return res.render('error');
-});
-
 api(app)
 app.use(ErrorHandler)
 
