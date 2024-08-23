@@ -607,3 +607,56 @@ $("#copy").click(function(e){
     })
     .catch(console.log)
 })
+
+$("#plan select").change(function(e){
+  const raw = e.target.value.split(",")
+  const plan = {}
+  raw.forEach(p => {
+    const [key, value] = p.split(":")
+    plan[key] = value;
+  })
+
+  $("#plan input[type='number']").attr("min", plan?.min_price)
+  $("#plan input[type='number']").attr("max", plan?.max_price)
+
+  $("#plan_details h2").text(plan?.rate + "%")
+  $("#plan_details #min").text(plan?.min_price + " USD")
+  $("#plan_details #max").text(plan?.max_price + " USD")
+  $("#plan_details .plan__item-footer p").text(plan?.name)
+  console.log(plan)
+})
+
+//create investment
+$("#plan").submit(async function(e) {
+  e.preventDefault()
+  $("#plan #loader").removeClass("d-none")
+  $("#plan button").prop('disabled', true)
+
+  const raw = e.target.plan_id.value.split(",")
+  const plan = {}
+  raw.forEach(p => {
+    const [key, value] = p.split(":")
+    plan[key] = value;
+  })
+
+  const payload = {
+    plan_id: plan.id,
+    amount: e.target.amount.value
+  };
+  try {
+    const response = await fetch("/investment", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#plan #loader").toggleClass("d-none")
+    $("#plan button").prop('disabled', false)
+  }
+})

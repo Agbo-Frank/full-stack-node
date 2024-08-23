@@ -7,13 +7,13 @@ import { ICreateInvestment } from "./interface";
 import { responsHandler, validateRequest } from "../../utility/helpers";
 import { StatusCodes } from "http-status-codes";
 import numeral from "numeral";
+import Transaction from "../../model/transaction";
 
 
 class Controller {
   async create(req: any, res: Response, next: NextFunction){
     try {
       validateRequest(req)
-
       const { plan_id, amount } = req.body
 
       const plan = await Plan.findById(plan_id)
@@ -37,6 +37,12 @@ class Controller {
 
       user.balance = numeral(user?.balance).subtract(amount).value()
       await user.save()
+      await Transaction.create({
+        user: req?.user,
+        amount, currency: "USD",
+        status: "approved",
+        type: ""
+      })
 
       return responsHandler(res, "Investment created successfully", StatusCodes.CREATED)
     } catch (error) {

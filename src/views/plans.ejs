@@ -35,9 +35,9 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="form-label">Plans</label>
-                          <select name="currency" id="currency" class="nice-select w-100 h-50">
+                          <select name="plan_id" class="nice-select w-100 h-50">
                             <% data.forEach(plan => {%>
-                              <option class="text-capitalize" value="<%= plan?._id %>"><%= plan?.name %></option>
+                              <option class="text-capitalize" value="<%= `id:${plan?._id},name:${plan?.name},rate:${plan?.rate},min_price:${plan?.min_price},max_price:${plan?.max_price}` %>"><%= plan?.name %></option>
                             <% }) %>
                           </select>
                         </div>
@@ -48,6 +48,9 @@
                           <label>Amount</label>
                           <input 
                             name="amount" 
+                            type="number"
+                            min="<%= data[0]['min_price']%>"
+                            max="<%= data[0]['max_price']%>"
                             class="form-control form--control" 
                             placeholder="Enter amount"
                           >
@@ -67,23 +70,23 @@
             <div class="col-lg-5 mt-5">
               <div id="plan_details" class="plan__item">
                 <div class="plan__item-header">
-                  <h2 class="plan-parcent">70%</h2>
-                  <p class="plan-parcent-info">After 24 Hours</p>
+                  <h2 class="plan-parcent"><%= data[0]['rate']%>%</h2>
+                  <p class="plan-parcent-info">After 30 Days</p>
                 </div>
                 <div class="plan__item-body">
                   <ul class="plan__info">
                     <li>
                       <span class="title">Min :</span>
-                      <span id="min" class="value">200 USD</span>
+                      <span id="min" class="value"><%= data[0]['min_price']%> USD</span>
                     </li>
                     <li>
                       <span class="title">Max :</span>
-                      <span id="max" class="value">500 USD</span>
+                      <span id="max" class="value"><%= data[0]['max_price']%> USD</span>
                     </li>
                   </ul>
                 </div>
                 <div class="plan__item-footer">
-                  <p class="footer-info text-uppercase"> basic</p>
+                  <p class="footer-info text-uppercase"> <%= data[0]['name']%></p>
                 </div>
             </div>
             </div>
