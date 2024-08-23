@@ -28,7 +28,7 @@
                 </div>
                 <div class="dashboard__card-content">
                   <p class="info">Referral Balance</p>
-                  <h3 class="title">587 USD</h3>
+                  <h3 class="title"><%= balance %> USD</h3>
                 </div>
               </div>
             </div>
@@ -36,11 +36,11 @@
               <div style="height: 100%; flex-direction: column;" class="d-flex justify-content-between dashboard__form">
                 <div class="d-flex justify-content-between align-items-center">
                   <h3 class="title">Referral link</h3>
-                  <h3 class="title text--base">Copy</h3>
+                  <h3 id="copy" style="cursor: pointer;" class="title text--base">Copy</h3>
                 </div>
                 
                 <div class="form-group mt-5 mt-md-0">
-                  <input name="address" type="text" disabled class="form-control form--control" placeholder="Referral link">
+                  <input name="code" type="text" value="<%= link %>" disabled class="form-control form--control" placeholder="Referral link">
                 </div>
               </div>
             </div>
@@ -49,59 +49,21 @@
           <table class="table mt-5 transection__table dashboard__table">
             <thead>
                 <tr>
-                  <th>User Name</th>
+                  <th>Name</th>
                   <th>Amount</th>
-                  <th>Wallet</th>
                   <th>Date</th>
-                  <th>Currency</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-label="User Name">
-                      <p class="name">Robert Mahfuj</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
-                    <td data-label="Date"><span class="date">25 Apr 2021</span></td>
-                    <td data-label="Currency"><span class="currency">USD</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Munna Ahmed</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
-                    <td data-label="Date"><span class="date">25 Jan 2021</span></td>
-                    <td data-label="Currency"><span class="currency">BItcoin</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                      <p class="name">Rafuj Raihan</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">block.io</span></td>
-                    <td data-label="Date"><span class="date">25 May 2021</span></td>
-                    <td data-label="Currency"><span class="currency">NSU</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Robert Mahfuj</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Bank Wire</span></td>
-                    <td data-label="Date"><span class="date">25 Feb 2021</span></td>
-                    <td data-label="Currency"><span class="currency">BIT</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Jibon Khan</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$2500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Paypal</span></td>
-                    <td data-label="Date"><span class="date">25 May 2021</span></td>
-                    <td data-label="Currency"><span class="currency">USD</span></td>
-                </tr>
+                <% data?.forEach(i => {%>
+                  <tr>
+                      <td data-label="User Name">
+                        <p class="name"><%= `${i?.referee?.first_name} ${i?.referee?.last_name}` %></p>
+                      </td>
+                      <td data-label="Amount"><span class="amount">$1500</span></td>
+                      <td data-label="Date"><span class="date">25 Apr 2021</span></td>
+                  </tr>
+                <% }) %>
             </tbody>
           </table>
         </div>

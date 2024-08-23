@@ -22,35 +22,44 @@
 
           <div class="dashboard__form mt-5">
             <div>
-              <form class="setting mt-3">
+              <form id="deposit" class="setting mt-3">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Enter amount</label>
-                      <input type="number" class="form-control form--control" placeholder="Enter amount">
+                      <input required name="amount" type="number" class="form-control form--control" placeholder="Enter amount">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="form-label">Select method</label>
-                      <select id="currency" class="nice-select w-100 h-50">
-                          <option>Bitcoin</option>
-                          <option>Ethereum</option>
-                          <option>USDT</option>
+                      <select required id="currency" name="currency" class="nice-select w-100 h-50">
+                          <option value="btc">Bitcoin</option>
+                          <option value="eth">Ethereum</option>
+                          <option value="usdt">USDT</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 mt-3">
                     <div class="form-group">
                       <label>Address</label>
                       <input name="address" type="text" disabled class="form-control form--control" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt-2">
+                    <div class="form-group">
+                      <label>Hash</label>
+                      <input name="hash" type="text" required class="form-control form--control" placeholder="0x68e02*****6eed5d">
                     </div>
                   </div>
                   <div style="display: flex; justify-content: center;" class="col-md-12">
                     <div id="qrcode"></div>
                   </div>
                   <div class="col-md-12">
-                    <button class="btn cmn--btn mt-4">I have made a deposit</button>
+                    <button class="btn cmn--btn mt-4">
+                      I have made a deposit
+                      <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
                   </div>
                 </div>
               </form>

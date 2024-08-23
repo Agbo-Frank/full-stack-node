@@ -13,6 +13,7 @@ export const MAIL_USER = process.env.MAIL_USER;
 export const MAIL_PASS = process.env.MAIL_PASS;
 
 export const NOTIFICATION_MAIL = process.env.NOTIFICATION_MAIL;
+export const APP_URL = process.env.APP_URL;
 
 export const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;

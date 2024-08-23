@@ -3,6 +3,7 @@ import { UnprocessableContent } from "./service-error";
 import { Response, Request } from "express"
 import axios from "axios";
 import { FilterQuery } from "mongoose";
+import User from "../model/user";
 
 export function randNum(len = 4){
   const numbers = '0123456789'
@@ -82,7 +83,7 @@ export const pagingParams = (req: Request) => {
   const limit = req.query?.limit ? parseInt(`${req.query?.limit}`) : 25
   const page = req.query?.page ? parseInt(`${req.query?.page}`) < 1 ? 1 : parseInt(`${req.query?.page}`) : 1
 
-  return {limit, page, ...req.query}
+  return { limit, page, ...req.query }
 }
 
 export const extractFilters = (payload: any, fields: string[], searchable_fields: string[] =[]) => {
@@ -105,20 +106,35 @@ export const extractFilters = (payload: any, fields: string[], searchable_fields
   return proccessed;
 }
 
-export const getPrice = async (base :string[], quote: string[]) => {
-  try {
-    const param = new URLSearchParams()
-    param.append("ids", base.join(","))
-    param.append("vs_currencies", quote.join(","))
-    param.append("precision", "full")
+export function extractNameFromEmail(email: string) {
+  let username = email.split('@')[0];
 
-    const { data } = await axios.get(`https://api.coingecko.com/api/v3/simple/price?${param.toString()}`)
-    return data
-  } catch (error) {
-    return error?.response
+  username = username.split(/\.|_/)[0];
+  if(username.length > 6) username = username.slice(0, 8)
+  return username + randNum(2)
+}
+
+export const generateCode = async (email: string) =>  {
+  let is_unique = null
+  let code: string | null = null
+
+  if(email && email?.length > 0){
+    do {
+        code =  extractNameFromEmail(email)
+        is_unique = await User.findOne({ code })
+    }
+    while(is_unique);
   }
+
+  return code?.replace(/\s/g, '').toLowerCase()
 }
 
 export const maskAddress = (address: string) => {
   return isEmpty(address) ? address : address?.slice(0, 5) + '*'.repeat(4) + address.slice(-5);
 }
+
+export const wrapAsync = (fn) => {
+  return (req, res, next) => {
+    return fn(req, res, next).catch(next);
+  };
+};

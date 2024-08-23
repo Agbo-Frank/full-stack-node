@@ -22,32 +22,35 @@
 
           <div class="dashboard__form mt-5">
             <div>
-              <form class="setting mt-3">
+              <form id="withdraw" class="setting mt-3">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Enter amount</label>
-                      <input type="number" class="form-control form--control" placeholder="Enter amount">
+                      <input name="amount" type="number" class="form-control form--control" placeholder="Enter amount">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="form-label">Select method</label>
-                      <select id="currency" class="nice-select w-100 h-50">
-                          <option>Bitcoin</option>
-                          <option>Ethereum</option>
-                          <option>USDT</option>
+                      <select name="currency" id="currency" class="nice-select w-100 h-50">
+                        <option value="btc">Bitcoin</option>
+                        <option value="eth">Ethereum</option>
+                        <option value="usdt">USDT</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 mt-3">
                     <div class="form-group">
-                      <label>Address</label>
-                      <input name="address" type="text" disabled class="form-control form--control" placeholder="Address">
+                      <label>Enter Your wallet Address</label>
+                      <input name="address" type="text" class="form-control form--control" placeholder="Address">
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <button class="btn cmn--btn mt-4">Request withdrawal</button>
+                    <button class="btn cmn--btn mt-4">
+                      Request withdrawal
+                      <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
                   </div>
                 </div>
               </form>

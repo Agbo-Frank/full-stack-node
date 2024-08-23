@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { responsHandler, validateRequest } from "../../utility/helpers";
+import { generateCode, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { BadRequestException, NotFoundException } from "../../utility/service-error";
 import jwt from "../../utility/jwt";
@@ -52,9 +52,9 @@ class Controller {
       user = new User({ 
         email, 
         phone_number, 
-        password, first_name, last_name,
-        // address: faker.finance.ethereumAddress(),
-        // avatar: avatars[Math.floor(Math.random() * avatars.length - 1)],
+        password, first_name, 
+        last_name, 
+        referral_code: generateCode(email),
       })
 
       await user.save()
@@ -119,6 +119,11 @@ class Controller {
     catch (error) {
       next(error)
     }
+  }
+
+  async logout(req: any, res: Response, next: NextFunction){
+    res.cookie('jwt', '', { maxAge: 1 });
+    return responsHandler(res, "Logout successful", StatusCodes.OK)
   }
 }
 export default new Controller()

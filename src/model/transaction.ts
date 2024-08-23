@@ -5,15 +5,18 @@ export interface ITransaction {
   user: string
   type: string //withdraw, deposit, mint commision
   amount: number
+  currency: string
   status: string //"pending", "approved", "declined"
   description: string
   recipient: string
   hash: string
+  created_at?: string
 }
 
 const tx = new Schema<ITransaction>({
   user: String,
   type: String,
+  currency: String,
   amount: Number,
   hash: String,
   status: String,

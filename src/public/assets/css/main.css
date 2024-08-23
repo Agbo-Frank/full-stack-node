@@ -2656,6 +2656,13 @@ i {
     object-fit: cover;
 }
 
+#avatar-form img {
+    width: 80px; 
+    height: 80px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
 .dashbard__tab {
     margin-top: 40px;
 }
@@ -2716,6 +2723,11 @@ i {
     border-radius: 5px;
     align-items: center;
     justify-content: space-between;
+}
+
+.dashboard__table__container {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .dashboard__header form {

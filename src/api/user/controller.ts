@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { compareStrings, pagingParams, responsHandler, validateRequest } from "../../utility/helpers";
+import { pagingParams, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { BadRequestException, NotFoundException } from "../../utility/service-error";
 import { StatusCodes } from "http-status-codes";
@@ -33,11 +33,6 @@ class Controller {
       let user = await User.findById(req.user)
       if(!user) throw new NotFoundException("user not found");
 
-      if("avatar" in payload && !compareStrings(payload?.avatar, user?.avatar)){
-        const result = await cloudinary.uploader.upload(payload.avatar, {folder: '/okafor/photos'})
-        if(result)payload.avatar = result?.secure_url;
-      }
-
       user = await User.findByIdAndUpdate(req.user, {
         first_name: payload?.first_name,
         last_name: payload?.last_name,
@@ -47,6 +42,27 @@ class Controller {
       }, { new: true })
 
       return responsHandler(res, "User profile updated successfully", StatusCodes.CREATED, user)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async uploadAvatar(req: any, res: Response, next: NextFunction){
+    try {
+      validateRequest(req)
+
+      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/okafor/photos'})
+      if(!result) throw new BadRequestException(`Unable to upload avatar`);
+
+      await User.updateOne(
+        { _id: req.user },
+        { avatar: result?.secure_url }
+      )
+
+      return responsHandler(
+        res, "Password updated successfully", 
+        StatusCodes.OK, { url: result?.secure_url }
+      )
     } catch (error) {
       next(error)
     }
@@ -87,17 +103,20 @@ class Controller {
 
   async deposit(req: any, res: Response, next: NextFunction){
     try {
-      const { amount, hash } = req.body
+      validateRequest(req)
+      const { amount, hash, currency } = req.body
       const tx = await Transaction.create({
         user: req.user,
         type: "deposit",
+        currency,
         amount, hash,
         status: "pending",
         description: "Wallet funding",
       })
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
-      next(error)
+      console.log("errr:", error)
+      // next(error)
     }
   }
 

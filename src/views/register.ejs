@@ -33,8 +33,16 @@
                         <input name="phone_number" required class="form-control form--control" placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
-                        <input name="password" type="password" class="form-control form--control" placeholder="Enter your Password">
+                        <input name="password" type="password" class="form-control form--control" required placeholder="Enter your Password">
                         <span class="eye-icon"><i class="las la-eye"></i></span>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            name="referral_code" 
+                            class="form-control form--control" 
+                            value="<%= referral_code || '' %>"
+                            placeholder="Enter your referral code (optional)"
+                        >
                     </div>
                     <div class="form--check me-4">
                         <input type="checkbox" id="rem-me">

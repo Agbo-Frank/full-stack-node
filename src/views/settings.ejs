@@ -14,17 +14,8 @@
                   <h3 class="title">User Panel</h3>
               </div>
               <div class="inner">
-                  <form class="search__form">
-                      <div class="form-group">
-                        <input type="text" class="form-control form--control" placeholder="Search Here...">
-                        <button type="submit" class="btn"><i class="las la-search"></i></button>
-                      </div>
-                  </form>
-              </div>
-              <div class="inner">
-                <ul class="tabs d-flex flex-wrap align-items-center">
-                  <li><a href="#"><i class="las la-bell"></i><span class="badge badge--base badge--round">01</span> </a></li>
-                  <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+                <ul class="tabs d-flex justify-content-end flex-wrap align-items-center">
+                  <li><div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div></li>
                 </ul>
               </div>
           </div>
@@ -34,41 +25,79 @@
               <div class="col-lg-6 mt-5">
                 <div class="dashboard__form">
                   <h3 class="title">Profile info</h3>
+                  <div id="avatar-form" class="my-3 d-flex justify-content-center">
+                    <label for="image" class="thumb" style="position: relative;">
+                      <img src="<%= user?.avatar %>" alt="dashboard">
+                      <div style="background-color: white; display: flex; justify-content: center; align-items: center; width: 25px; height: 25px; position: absolute; right: -3px; bottom: -3px; border-radius: 100px;">
+                        <i class="las la-user-edit " style="color: #1A1A33;"></i>
+                      </div>
+                    </label>
+                    <input type="file" id="image" name="avatar" hidden />
+                  </div>
                   <div>
-                    <form class="setting mt-3">
+                    <form id="profile" class="setting mt-3">
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>first name</label>
-                            <input type="text" class="form-control form--control" placeholder="First name">
+                            <input 
+                              name="first_name" 
+                              class="form-control form--control" 
+                              value="<%= user?.first_name %>" 
+                              placeholder="First name"
+                            >
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Last name</label>
-                            <input type="text" class="form-control form--control" placeholder="Last name">
+                            <input 
+                              name="last_name"
+                              value="<%= user?.last_name %>" 
+                              class="form-control form--control"
+                              placeholder="Last name"
+                            >
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control form--control" placeholder="Email address">
+                            <input 
+                              type="email" 
+                              disabled
+                              value="<%= user?.email %>"
+                              class="form-control form--control" 
+                              placeholder="Email address"
+                            >
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" class="form-control form--control" placeholder="Phone number">
+                            <input 
+                              name="phone_number" 
+                              value="<%= user?.phone_number %>"
+                              class="form-control form--control" 
+                              placeholder="Phone number"
+                            >
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Address</label>
-                            <input type="text" class="form-control form--control" placeholder="Address">
+                            <input 
+                              name="address" 
+                              value="<%= user?.address %>" 
+                              class="form-control form--control" 
+                              placeholder="Address"
+                            >
                           </div>
                         </div>
                         <div class="col-md-12">
-                          <button class="btn cmn--btn mt-4">Update profile</button>
+                          <button class="btn cmn--btn mt-4">
+                            Update profile
+                            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                          </button>
                         </div>
                       </div>
                     </form>
@@ -80,28 +109,31 @@
                 <div class="dashboard__form">
                   <h3 class="title">Change Password</h3>
                   <div>
-                    <form class="setting mt-3">
+                    <form id="password" class="setting mt-3">
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Current password</label>
-                            <input type="text" class="form-control form--control" placeholder="First name">
+                            <input name="old_password" type="password" class="form-control form--control" placeholder="Enter your current password">
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>New password</label>
-                            <input type="text" class="form-control form--control" placeholder="Last name">
+                            <input name="new_password" type="password" class="form-control form--control" placeholder="Enter a new password">
                           </div>
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                           <div class="form-group">
                             <label>Confirm Password</label>
-                            <input type="email" class="form-control form--control" placeholder="Email address">
+                            <input name="new_password" type="password" class="form-control form--control" placeholder="Re-enter password">
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
-                          <button class="btn cmn--btn mt-4">Update password</button>
+                          <button class="btn cmn--btn mt-4">
+                            Update password
+                            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                          </button>
                         </div>
                       </div>
                     </form>

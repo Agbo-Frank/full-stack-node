@@ -7,16 +7,15 @@ export default async function checkUser(req: Request, res: Response, next: NextF
   res.locals.user = null;
   try {
     const token = req.cookies?.jwt;
-    if(token){
-      const decoded: any = jwt.verify(token, JWT_SECRET_KEY);
-      if(decoded){
-        const user = await User.findById(decoded.id);
-        console.log(user)
-        res.locals.user = user;
-        res.locals.role = decoded.role;
-        next();
-      }
-    }
+    if(!token) throw new Error("No token!")
+
+    const decoded: any = jwt.verify(token, JWT_SECRET_KEY);
+    if(!decoded) throw new Error("Invalid token");
+
+    const user = await User.findById(decoded.id);
+    res.locals.user = user;
+    res.locals.role = decoded.role;
+    
     next();
   } catch (error) {
     next();

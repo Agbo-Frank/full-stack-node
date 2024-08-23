@@ -359,7 +359,7 @@ const addresses = {
 }
 
 // Event listener for the button
-$('#currency').change(function(e) {
+$('#deposit #currency').change(function(e) {
   console.log("on change", e.target.value);
   const currency = e.target.value.toLowerCase();
   const address = addresses[currency] || "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
@@ -439,8 +439,171 @@ $("#register").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "succcess" : "error")
   }
+  catch(error){
+    console.log(error)
+  }
   finally{
     $("#register #loader").toggleClass("d-none")
     $("#register button").prop('disabled', false)
   }
+})
+
+//deposit
+$("#deposit").submit(async function(e) {
+  e.preventDefault()
+  $("#deposit #loader").removeClass("d-none")
+  $("#deposit button").prop('disabled', true)
+
+  const payload = {
+    amount: e.target.amount.value,
+    address: e.target.address.value,
+    hash: e.target.hash.value,
+    currency: e.target.currency.value
+  };
+  console.log(payload)
+  try {
+    const response = await fetch("/user/deposit", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  finally{
+    $("#deposit #loader").toggleClass("d-none")
+    $("#deposit button").prop('disabled', false)
+  }
+})
+
+//withdraw
+$("#withdraw").submit(async function(e) {
+  e.preventDefault()
+  $("#withdraw #loader").removeClass("d-none")
+  $("#withdraw button").prop('disabled', true)
+
+  const payload = {
+    amount: e.target.amount.value,
+    address: e.target.address.value,
+    currency: e.target.currency.value
+  };
+  console.log(payload)
+  try {
+    const response = await fetch("/user/withdraw", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "succcess" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#withdraw #loader").toggleClass("d-none")
+    $("#withdraw button").prop('disabled', false)
+  }
+})
+
+//logout
+$("#logout").click(async function(e) {
+  $("#logout #loader").toggleClass("d-none")
+  $("#logout").prop('disabled', true)
+
+  try {
+    await fetch("/auth/logout", {
+      method: "DELETE",
+      headers: { 'Content-Type': 'application/json' },
+    })
+    // const data = await response.json()
+    // return notify(data?.message, response.ok ? "succcess" : "error")
+  }
+  finally{
+    $("#logout #loader").toggleClass("d-none")
+    $("#logout").prop('disabled', false)
+  }
+})
+
+//update profile
+$("#profile").submit(async function(e) {
+  e.preventDefault()
+  $("#profile #loader").removeClass("d-none")
+  $("#profile button").prop('disabled', true)
+
+  const payload = {
+    first_name: e.target.first_name.value,
+    last_name: e.target.last_name.value,
+    address: e.target.address.value,
+    phone_number: e.target.phone_number.value,
+  };
+  try {
+    const response = await fetch("/user/profile", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#profile #loader").toggleClass("d-none")
+    $("#profile button").prop('disabled', false)
+  }
+})
+
+//update password
+$("#password").submit(async function(e) {
+  e.preventDefault()
+  $("#password #loader").removeClass("d-none")
+  $("#password button").prop('disabled', true)
+
+  const payload = {
+    old_password: e.target.old_password.value,
+    new_password: e.target.new_password.value
+  };
+  try {
+    const response = await fetch("/user/change-password", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#password #loader").toggleClass("d-none")
+    $("#password button").prop('disabled', false)
+  }
+})
+
+//upload avatar
+$("#avatar-form input[name='avatar']").change(async function(e) {
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    $("#avatar-form img").attr("src", e.target.result)
+    const response = await fetch("/user/avatar", {
+      method: "POST",
+      body: JSON.stringify({ image: e.target.result }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  };
+  reader.readAsDataURL(e.target.files[0]);
+})
+
+$("#copy").click(function(e){
+  navigator.clipboard.writeText($("input[name='code']").val())
+    .then(fulfilled => {
+      $("#copy").text("Copied")
+      setTimeout(() => $("#copy").text("Copy"), 3000)
+    })
+    .catch(console.log)
 })

@@ -6,7 +6,6 @@ export interface IUser {
   last_name: string
   email: string
   phone_number: string
-  referral_code: string
   password: string
   avatar: string
   balance: number
@@ -15,6 +14,7 @@ export interface IUser {
   otp_expiry: string
   otp: string
   role: string
+  referral_code: string
 } 
 
 const user = new Schema<IUser>({
