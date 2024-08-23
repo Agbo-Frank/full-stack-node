@@ -25,5 +25,35 @@ export const cover = [
   "https://res.cloudinary.com/dobhl79fp/image/upload/v1721532480/nfts/cover/ftgtuhxshg7ascbnrrbe.jpg",
   "https://res.cloudinary.com/dobhl79fp/image/upload/v1721532479/nfts/cover/zotxqcs3a2z04m492vtu.jpg",
   "https://res.cloudinary.com/dobhl79fp/image/upload/v1721532479/nfts/cover/v8qvoenfuh7gwdvsrlxz.jpg",
-  
+]
+
+export const DEFAULT_PLANS = [
+  {
+    name: "basic",
+    description: "",
+    rate: 25,
+    max_price: 219,
+    min_price: 50 
+  },
+  {
+    name: "standard",
+    description: "",
+    rate: 15,
+    max_price: 549,
+    min_price: 220 
+  },
+  {
+    name: "Advance",
+    description: "",
+    rate: 15,
+    max_price: 1999,
+    min_price: 550
+  },
+  {
+    name: "enterprise",
+    description: "",
+    rate: 10,
+    max_price: 4999,
+    min_price:  1200
+  }
 ]

@@ -12,5 +12,5 @@ export default function(app: Application){
   app.use("/user", guard, user)
   app.use("/auth", auth)
   app.use("/investment", investment)
-  app.use("/admin", guard, isAdmin, admin)
+  app.use("/admin", admin)
 }

@@ -60,7 +60,25 @@
 <!-- Why Choose Us Section Ends Here -->
 
 <!-- Plan Section Starts Here -->
-<%- include('partials/plans') %>
+<section class="plan-section padding-bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="section__header text-center">
+                    <h2 class="section__header-title">Our Investment Plan</h2>
+                    <p>Aenean vulputate eleifend tellus. Aenean leo ligul porttitoeu consequat vitae eleifend </p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <% data.forEach(plan => {%>
+                <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6">
+                  <%- include('partials/plan', { plan }) %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
 <!-- Plan Section Ends Here -->
 
 <!-- Profit Calculation Section Starts Here -->
@@ -83,11 +101,10 @@
                           <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
                               <div class="form-group">
                                   <label class="form-label">Plan</label>
-                                  <select class="nice-select w-100 h-50">
-                                      <option>Select Plan</option>
-                                      <option>Silver Plan</option>
-                                      <option>Gold Plan</option>
-                                      <option>Platium Plan</option>
+                                  <select class="nice-select text-capitalize w-100 h-50">
+                                    <% data.forEach(plan => {%>
+                                      <option class="text-capitalize" value="<%= plan?._id %>"><%= plan?.name %></option>
+                                    <% }) %>
                                   </select>
                               </div>
                           </div>

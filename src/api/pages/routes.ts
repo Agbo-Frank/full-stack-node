@@ -21,6 +21,6 @@ router.get("/withdraw", cltr.withdraw)
 router.get("/contact", cltr.contact)
 router.get("/referrals", guard, cltr.referrals)
 router.get("/kyc", cltr.kyc)
-// router.get("/*", cltr.error)
+router.get("/*", cltr.error)
 
 export default router

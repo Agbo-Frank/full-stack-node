@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { extractFilters, pagingParams, responsHandler } from "../../utility/helpers";
+import { extractFilters, pagingParams, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { StatusCodes } from "http-status-codes";
 import Transaction from "../../model/transaction";
@@ -76,6 +76,16 @@ class Controller {
     try {
       const data = await Plan.find()
       return responsHandler(res, "Transactions retrieved successfully", StatusCodes.OK, data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async createPlan(req: any, res: Response, next: NextFunction){
+    try {
+      validateRequest(req)
+      const data = await Plan.create(req.body)
+      return responsHandler(res, "Plan created successfully", StatusCodes.CREATED, data)
     } catch (error) {
       next(error)
     }

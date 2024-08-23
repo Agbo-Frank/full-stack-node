@@ -5,10 +5,12 @@ import controller from "../user/controller";
 import { Request, Response } from "express";
 import Referral from "../../model/referral";
 import { APP_URL } from "../../utility/config";
+import Plan from "../../model/plans";
 
 class Controller{
   async home(req: Request, res: Response){
-    return res.render('index');
+    const plans = await Plan.find()
+    return res.render('index', { data: plans });
   }
   async login(req: Request, res: Response){
     return res.render('login');
@@ -43,7 +45,8 @@ class Controller{
     return res.render('transactions', { data });
   }
   async plans(req: Request, res: Response){
-    return res.render('plans');
+    const plans = await Plan.find()
+    return res.render('plans', { data: plans });
   }
   async investments(req: Request, res: Response){
     return res.render('investments');

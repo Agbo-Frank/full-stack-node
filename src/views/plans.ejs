@@ -11,7 +11,7 @@
         <div class="dashboard__wrapper">
           <div class="dashboard__header">
             <div class="inner">
-              <h3 class="title">Investments</h3>
+              <h3 class="title">Plans</h3>
             </div>
             <div class="inner">
               <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
@@ -19,20 +19,76 @@
               </ul>
             </div>
         </div>
-          <div class="row g-4 mt-5 justify-content-start">
-            <div class="col-sm-6">
-              <%- include('partials/plan') %>
+        <div class="">
+          <div class="row">
+            <div class="col-lg-7 mt-5">
+              <div class="dashboard__form">
+                <h3 class="title">Select Plan</h3>
+                <small>In Apex stack - Your Trusted Investment Broker, You will receive profits everyday including weekends.</small>
+                <div>
+                  <small>Current balance: <strong><%= user?.balance %></strong></small>
+                </div>
+                
+                <div>
+                  <form id="plan" class="setting mt-3">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-label">Plans</label>
+                          <select name="currency" id="currency" class="nice-select w-100 h-50">
+                            <% data.forEach(plan => {%>
+                              <option class="text-capitalize" value="<%= plan?._id %>"><%= plan?.name %></option>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 mt-2">
+                        <div class="form-group">
+                          <label>Amount</label>
+                          <input 
+                            name="amount" 
+                            class="form-control form--control" 
+                            placeholder="Enter amount"
+                          >
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <button class="btn cmn--btn mt-4">
+                          Start investment
+                          <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <%- include('partials/plan') %>
+            <div class="col-lg-5 mt-5">
+              <div id="plan_details" class="plan__item">
+                <div class="plan__item-header">
+                  <h2 class="plan-parcent">70%</h2>
+                  <p class="plan-parcent-info">After 24 Hours</p>
+                </div>
+                <div class="plan__item-body">
+                  <ul class="plan__info">
+                    <li>
+                      <span class="title">Min :</span>
+                      <span id="min" class="value">200 USD</span>
+                    </li>
+                    <li>
+                      <span class="title">Max :</span>
+                      <span id="max" class="value">500 USD</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="plan__item-footer">
+                  <p class="footer-info text-uppercase"> basic</p>
+                </div>
             </div>
-            <div class="col-sm-6">
-              <%- include('partials/plan') %>
-            </div>
-            <div class="col-sm-6">
-              <%- include('partials/plan') %>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

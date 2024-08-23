@@ -6,6 +6,7 @@ import { BadRequestException, NotFoundException } from "../../utility/service-er
 import { ICreateInvestment } from "./interface";
 import { responsHandler, validateRequest } from "../../utility/helpers";
 import { StatusCodes } from "http-status-codes";
+import numeral from "numeral";
 
 
 class Controller {
@@ -22,12 +23,22 @@ class Controller {
       }
 
       const user = await User.findById(req.user)
-
       if(amount > user.balance){
         throw new BadRequestException("Insufficient funds")
       }
 
-      return responsHandler(res, "investment created successfully", StatusCodes.CREATED)
+      await Investment.create({
+        plan_name: plan?.name,
+        plan_id: plan?.id,
+        capital: amount,
+        user: req?.user,
+        status: "pending"
+      })
+
+      user.balance = numeral(user?.balance).subtract(amount).value()
+      await user.save()
+
+      return responsHandler(res, "Investment created successfully", StatusCodes.CREATED)
     } catch (error) {
       next(error)
     }

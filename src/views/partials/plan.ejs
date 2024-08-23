@@ -1,21 +1,21 @@
 <div class="plan__item">
     <div class="plan__item-header">
-        <h2 class="plan-parcent">5%</h2>
-        <p class="plan-parcent-info">After 6 Hours</p>
+        <h2 class="plan-parcent"><%= plan?.rate %>%</h2>
+        <p class="plan-parcent-info">After 24 Hours</p>
     </div>
     <div class="plan__item-body">
         <ul class="plan__info">
             <li>
                 <span class="title">Min :</span>
-                <span class="value">15 USD</span>
+                <span class="value"><%= plan?.min_price %> USD</span>
             </li>
             <li>
                 <span class="title">Max :</span>
-                <span class="value">30 USD</span>
+                <span class="value"><%= plan?.max_price %> USD</span>
             </li>
         </ul>
     </div>
     <div class="plan__item-footer">
-        <p class="footer-info"> FOREVER</p>
+        <p class="footer-info text-uppercase"> <%= plan?.name %></p>
     </div>
 </div>
