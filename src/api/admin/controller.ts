@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import Transaction from "../../model/transaction";
 import Plan from "../../model/plans";
 import dayjs from "dayjs";
+import Investment from "../../model/investment";
 
 class Controller {
   async users(req: any, res: Response, next: NextFunction){
@@ -22,13 +23,6 @@ class Controller {
         sort: { created_at: "desc" },
       }
     )
-    data = {
-      ...data,
-      docs: data.docs.map(d => ({
-        ...d.toJSON(), 
-        created_at: dayjs(d.created_at).format("DD MMM YYYY")
-      }))
-    }
     return res.render('users', { data });
   }
 
@@ -46,7 +40,7 @@ class Controller {
         { new: true }
       )
 
-      return responsHandler(res, "User updated successfully")
+      return responsHandler(res, "User updated successfully", StatusCodes.OK, user)
     } catch (error) {
       next(error)
     }
@@ -61,14 +55,14 @@ class Controller {
         ['email', 'first_name', 'last_name']
       )
 
-      const data = await User.paginate(
+      const data = await Investment.paginate(
         { $and: filters.length > 0 ? filters : [{}] },
         {  
           page, limit, 
           sort: { created_at: "desc" },
         }
       )
-      return responsHandler(res, "Users retrieved successfully", StatusCodes.OK, data)
+      return res.render('all-investments', { data });
     } catch (error) {
       next(error)
     }
@@ -90,19 +84,15 @@ class Controller {
           sort: { created_at: "desc" },
         }
       )
-      return responsHandler(res, "Transactions retrieved successfully", StatusCodes.OK, data)
+      return res.render('all-transactions', { data });
     } catch (error) {
       next(error)
     }
   }
 
   async plans(req: any, res: Response, next: NextFunction){
-    try {
-      const data = await Plan.find()
-      return responsHandler(res, "Transactions retrieved successfully", StatusCodes.OK, data)
-    } catch (error) {
-      next(error)
-    }
+    const data = await Plan.find()
+    return res.render('all-plans', { data });
   }
 
   async createPlan(req: any, res: Response, next: NextFunction){

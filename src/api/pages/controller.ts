@@ -36,13 +36,6 @@ class Controller{
       { user: req.user },
       { page, limit, sort: { created_at: "desc" } }
     )
-    data = {
-      ...data,
-      docs: data.docs.map(d => ({
-        ...d.toJSON(), 
-        created_at: dayjs(d.created_at).format("DD MMM YYYY")
-      }))
-    }
     return res.render('transactions', { data });
   }
   async plans(req: Request, res: Response){

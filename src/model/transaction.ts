@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Schema, model, PaginateModel, Types } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 
@@ -21,12 +22,19 @@ const tx = new Schema<ITransaction>({
   hash: String,
   status: String,
   description: String,
-  recipient: { type: String }
+  recipient: { type: String },
+  created_at: {
+    type: String,
+    get(v){
+      return dayjs(v).format("DD MMM YYYY")
+    }
+  }
 }, {
   timestamps: {
     createdAt: "created_at",
     updatedAt: "updated_at"
-  }
+  },
+
 })
 
 tx.plugin(mongoosePaginate);

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Schema, model, PaginateModel, Types } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 
@@ -46,7 +47,13 @@ const user = new Schema<IUser>({
     default: "user",
     enum: ["admin", "user"]
   },
-  password: String
+  password: String,
+  created_at: {
+    type: String,
+    get(v){
+      return dayjs(v).format("DD MMM YYYY")
+    }
+  }
 }, {
   timestamps: {
     createdAt: "created_at",

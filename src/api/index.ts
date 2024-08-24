@@ -9,14 +9,7 @@ import isAdmin from "../middleware/is-admin";
 import page from "./pages/controller"
 
 export default function(app: Application){
-  app.use(
-    "/admin", 
-    (req, _, next) => {
-      console.log("Guy!")
-      next()
-    },
-    admin
-  )
+  app.use("/admin", admin)
   app.use("/", pages)
   app.use("/user", guard, user)
   app.use("/auth", auth)

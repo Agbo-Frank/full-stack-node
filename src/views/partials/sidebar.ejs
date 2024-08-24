@@ -9,11 +9,8 @@
       </div>
       <ul class="dashbard__tab tags">
           <% 
-            const items = [
-              {
-                title: user?.role === "admin" ? "Users" : "Overview", 
-                slug: user?.role === "admin" ? "admin/users" : 'dashboard'
-              },
+            const user_tabs = [
+              {title: "Overview", slug:  'dashboard'},
               {title: "Deposit", slug: 'deposit'},
               {title: "Withdraw", slug: 'withdraw'},
               {title: "Investments", slug: 'investments'},
@@ -22,7 +19,16 @@
               {title: "Referrals", slug: 'referrals'},
               {title: "Account Settings", slug: 'settings'},
               {title: "KYC", slug: 'kyc'},
-            ] 
+            ]
+            
+            const admin_tabs = [
+              {title: "Users", slug: 'admin/users'},
+              {title: "Investments", slug: 'admin/investments'},
+              {title: "Transactions", slug: 'admin/transactions'},
+              {title: "Plans", slug: 'admin/plans'},
+              {title: "Account Settings", slug: 'settings'}
+            ]
+            const items = user?.role === 'admin' ? admin_tabs : user_tabs;
           %>
           <% items.forEach(i => { %>
             <li>

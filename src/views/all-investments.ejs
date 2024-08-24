@@ -1,17 +1,17 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<%- include('partials/banner', {name: "Users"}) %>
+<%- include('partials/banner', {name: "Investment"}) %>
 
 <!-- Dashboard Section Starts Here -->
 <div class="dashbaord-section padding-bottom">
   <div class="container">
     <div class="row">
-      <%- include('partials/sidebar', {active: "admin/users"}) %>
+      <%- include('partials/sidebar', {active: "admin/investment"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
             <div class="dashboard__header">
                 <div class="inner">
-                  <h3 class="title">Users</h3>
+                  <h3 class="title">Investment</h3>
                 </div>
                 <div class="inner">
                   <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
@@ -28,26 +28,21 @@
                 <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Email</th>
-                      <th>Balance</th>
-                      <th>Phone</th>
+                      <th>Amount</th>
+                      <th>Profit</th>
+                      <th>Status</th>
                       <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
                   <% data.docs.forEach(i => { %>
                     <tr data-user="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn user__details__btn">
-                      <td data-label="Name">
-                        <div class="user d-flex  align-items-center">
-                            <div class="thumb">
-                                <img src="/assets/images/dashboard/item1.png" alt="dashboard">
-                            </div>
-                            <p class="name"><%= i?.first_name + " " + i?.last_name %></p>
-                        </div>
+                      <td data-label="User Name">
+                        <p class="Plan name"><%= i?.plan_name %></p>
                       </td>
-                      <td data-label="Email"><span class="wallet"><%= i?.email %></span></td>
-                      <td data-label="Balance"><span class="amount">$<%= i?.balance %></span></td>
-                      <td data-label="Phone number"><span class="wallet"><%= i?.phone_number %></span></td>
+                      <td data-label="Capital"><span class="amount">$<%= i?.capitale %></span></td>
+                      <td data-label="Profit"><span class="wallet"><%= i?.profit %></span></td>
+                      <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                     </tr>
                   <% }) %>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { PaginateModel, Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 
@@ -30,6 +31,12 @@ const investmentSchema = new Schema<IInvestment>({
     type: String,
     enum: Object.values(investment_status),
     default: investment_status.PENDING
+  },
+  created_at: {
+    type: String,
+    get(v){
+      return dayjs(v).format("DD MMM YYYY")
+    }
   }
 },{
   timestamps: {

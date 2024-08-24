@@ -1,17 +1,17 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<%- include('partials/banner', {name: "Users"}) %>
+<%- include('partials/banner', {name: "Plans"}) %>
 
 <!-- Dashboard Section Starts Here -->
 <div class="dashbaord-section padding-bottom">
   <div class="container">
     <div class="row">
-      <%- include('partials/sidebar', {active: "admin/users"}) %>
+      <%- include('partials/sidebar', {active: "admin/plans"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
             <div class="dashboard__header">
                 <div class="inner">
-                  <h3 class="title">Users</h3>
+                  <h3 class="title">Plans</h3>
                 </div>
                 <div class="inner">
                   <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
@@ -28,27 +28,20 @@
                 <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Email</th>
-                      <th>Balance</th>
-                      <th>Phone</th>
-                      <th>Date</th>
+                      <th>Rate</th>
+                      <th>Max</th>
+                      <th>Min</th>
                     </tr>
                 </thead>
                 <tbody>
-                  <% data.docs.forEach(i => { %>
-                    <tr data-user="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn user__details__btn">
-                      <td data-label="Name">
-                        <div class="user d-flex  align-items-center">
-                            <div class="thumb">
-                                <img src="/assets/images/dashboard/item1.png" alt="dashboard">
-                            </div>
-                            <p class="name"><%= i?.first_name + " " + i?.last_name %></p>
-                        </div>
+                  <% data.forEach(i => { %>
+                    <tr data-plan="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn plan__details__btn">
+                      <td data-label="Plan Name">
+                        <p class="name"><%= i?.name %></p>
                       </td>
-                      <td data-label="Email"><span class="wallet"><%= i?.email %></span></td>
-                      <td data-label="Balance"><span class="amount">$<%= i?.balance %></span></td>
-                      <td data-label="Phone number"><span class="wallet"><%= i?.phone_number %></span></td>
-                      <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
+                      <td data-label="Rate"><span class="amount"><%= i?.rate %>%</span></td>
+                      <td data-label="Max price"><span class="amount"><%= i?.max_price %></span></td>
+                      <td data-label="Min price"><span class="amount"><%= i?.min_price %></span></td>
                     </tr>
                   <% }) %>
                 </tbody>

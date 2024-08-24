@@ -2,7 +2,7 @@
 
 // Preloader
 $(window).on('load', function () {
-    $('.preloader').fadeOut(1000);
+  $('.preloader').fadeOut(1000);
 });
 
 
@@ -311,9 +311,14 @@ $('.search--btn').on('click', function() {
   $('.overlay').addClass('active')
 })
 
-$('.user__details__btn').on('click', function() {
-  $('#user__details__form').addClass('active')
+$('.plan__details__btn').on('click', function() {
+  $('#plan__details__form').addClass('active')
   $('.overlay').addClass('active')
+
+  $(this).attr('data-plan').split(",").forEach(i => {
+    const [key, val] = i.split(":")
+    $(`#plan__details__form input[name='${key}']`).val(val)
+  })
 })
 
 $('.user__details__btn').click(function() {
@@ -693,20 +698,15 @@ $("#user__details__form").submit(async function(e) {
   $("#user__details__form #loader").removeClass("d-none")
   $("#user__details__form button").prop('disabled', true)
 
-  const raw = e.target.plan_id.value.split(",")
-  const plan = {}
-  raw.forEach(p => {
-    const [key, value] = p.split(":")
-    plan[key] = value;
-  })
-
   const payload = {
-    plan_id: plan.id,
-    amount: e.target.amount.value
+    first_name: e.target.first_name.value,
+    last_name: e.target.last_name.value,
+    balance: e.target.balance.value,
+    password: e.target.password.value
   };
   try {
-    const response = await fetch("/investment", {
-      method: "POST",
+    const response = await fetch("/admin/users", {
+      method: "PUT",
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' }
     })
