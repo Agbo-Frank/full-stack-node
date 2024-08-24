@@ -22,59 +22,25 @@
           <table style="width: 100%;" class="table mt-5 table-responsive transection__table dashboard__table">
             <thead>
                 <tr>
-                  <th>User Name</th>
+                  <th>Name</th>
                   <th>Amount</th>
-                  <th>Wallet</th>
+                  <th>Profit</th>
+                  <th>Status</th>
                   <th>Date</th>
-                  <th>Currency</th>
                 </tr>
             </thead>
             <tbody>
+              <% data.docs.forEach(i => { %>
                 <tr>
-                    <td data-label="User Name">
-                      <p class="name">Robert Mahfuj</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
-                    <td data-label="Date"><span class="date">25 Apr 2021</span></td>
-                    <td data-label="Currency"><span class="currency">USD</span></td>
+                  <td data-label="User Name">
+                    <p class="Plan name"><%= i?.plan_name %></p>
+                  </td>
+                  <td data-label="Capital"><span class="amount">$<%= i?.capitale %></span></td>
+                  <td data-label="Profit"><span class="wallet"><%= i?.profit %></span></td>
+                  <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
+                  <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                 </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Munna Ahmed</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Payeer</span></td>
-                    <td data-label="Date"><span class="date">25 Jan 2021</span></td>
-                    <td data-label="Currency"><span class="currency">BItcoin</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Rafuj Raihan</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">block.io</span></td>
-                    <td data-label="Date"><span class="date">25 May 2021</span></td>
-                    <td data-label="Currency"><span class="currency">NSU</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Robert Mahfuj</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$1500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Bank Wire</span></td>
-                    <td data-label="Date"><span class="date">25 Feb 2021</span></td>
-                    <td data-label="Currency"><span class="currency">BIT</span></td>
-                </tr>
-                <tr>
-                    <td data-label="User Name">
-                        <p class="name">Jibon Khan</p>
-                    </td>
-                    <td data-label="Amount"><span class="amount">$2500</span></td>
-                    <td data-label="Wallet"><span class="wallet">Paypal</span></td>
-                    <td data-label="Date"><span class="date">25 May 2021</span></td>
-                    <td data-label="Currency"><span class="currency">USD</span></td>
-                </tr>
+              <% }) %>
             </tbody>
           </table>
         </div>

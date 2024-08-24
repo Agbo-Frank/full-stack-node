@@ -12,11 +12,6 @@ const logger = new Logger("server")
 
 const app = express();
 
-app.use((req, _, next) => {
-  logger.log("info", {method: req?.method, endpoint: req?.url})
-  next()
-})
-
 app.set('trust proxy', 1);
 app.use(helmet());
 app.use(cors({
@@ -28,6 +23,11 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use((req, _, next) => {
+  logger.log("info", {method: req?.method, endpoint: req?.url})
+  next()
+})
 
 app.use(cookieParser());
 

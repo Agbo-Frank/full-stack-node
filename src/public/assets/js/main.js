@@ -311,6 +311,23 @@ $('.search--btn').on('click', function() {
   $('.overlay').addClass('active')
 })
 
+$('.user__details__btn').on('click', function() {
+  $('#user__details__form').addClass('active')
+  $('.overlay').addClass('active')
+})
+
+$('.user__details__btn').click(function() {
+  $('#user__details__form').addClass('active')
+  $('.overlay').addClass('active')
+
+  $(this).attr('data-user').split(",").forEach(i => {
+    const [key, val] = i.split(":")
+    $(`#user__details__form input[name='${key}']`).val(val)
+  })
+  
+});
+
+
 $('.btn-close, .overlay').on('click', function() {
   $('.search__form__wrapper').removeClass('active')
   $('.overlay').removeClass('active')
@@ -376,6 +393,17 @@ $('#deposit #currency').change(function(e) {
   //     alert('Please enter some text.');
   // }
 });
+
+function stringToObject(str){
+  const raw = str.split(",")
+  const obj = {}
+  raw.forEach(p => {
+    const [key, value] = p.split(":")
+    obj[key] = value;
+  })
+
+  return obj
+}
 
 function notify(message, type = 'success'){
   if(type === 'success'){
@@ -608,22 +636,20 @@ $("#copy").click(function(e){
     .catch(console.log)
 })
 
+function formatCurrency(amount, locale = 'en-US', currency = 'USD') {
+  return amount.toLocaleString(locale, { style: 'currency', currency});
+}
+
 $("#plan select").change(function(e){
-  const raw = e.target.value.split(",")
-  const plan = {}
-  raw.forEach(p => {
-    const [key, value] = p.split(":")
-    plan[key] = value;
-  })
+  const plan = stringToObject(e.target.value)
 
   $("#plan input[type='number']").attr("min", plan?.min_price)
   $("#plan input[type='number']").attr("max", plan?.max_price)
 
   $("#plan_details h2").text(plan?.rate + "%")
-  $("#plan_details #min").text(plan?.min_price + " USD")
-  $("#plan_details #max").text(plan?.max_price + " USD")
+  $("#plan_details #min").text(formatCurrency(plan?.min_price) + " USD")
+  $("#plan_details #max").text(formatCurrency(plan?.max_price) + " USD")
   $("#plan_details .plan__item-footer p").text(plan?.name)
-  console.log(plan)
 })
 
 //create investment
@@ -658,5 +684,40 @@ $("#plan").submit(async function(e) {
   finally{
     $("#plan #loader").toggleClass("d-none")
     $("#plan button").prop('disabled', false)
+  }
+})
+
+//edit user
+$("#user__details__form").submit(async function(e) {
+  e.preventDefault()
+  $("#user__details__form #loader").removeClass("d-none")
+  $("#user__details__form button").prop('disabled', true)
+
+  const raw = e.target.plan_id.value.split(",")
+  const plan = {}
+  raw.forEach(p => {
+    const [key, value] = p.split(":")
+    plan[key] = value;
+  })
+
+  const payload = {
+    plan_id: plan.id,
+    amount: e.target.amount.value
+  };
+  try {
+    const response = await fetch("/investment", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#user__details__form #loader").toggleClass("d-none")
+    $("#user__details__form button").prop('disabled', false)
   }
 })

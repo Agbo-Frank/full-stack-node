@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 import Referral from "../../model/referral";
 import { APP_URL } from "../../utility/config";
 import Plan from "../../model/plans";
+import Investment from "../../model/investment";
 
 class Controller{
   async home(req: Request, res: Response){
@@ -48,8 +49,13 @@ class Controller{
     const plans = await Plan.find()
     return res.render('plans', { data: plans });
   }
-  async investments(req: Request, res: Response){
-    return res.render('investments');
+  async investments(req: any, res: Response){
+    const { page, limit } = pagingParams(req)
+    const data = await Investment.paginate(
+      { user: req.user}, 
+      { page, limit, sort: { created_at: "desc"}}
+    )
+    return res.render('investments', { data });
   }
   async settings(req: Request, res: Response){
     return res.render('settings');

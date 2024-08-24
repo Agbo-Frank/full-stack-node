@@ -1,0 +1,48 @@
+<div class="search__form__wrapper">
+  <div class="form__inner">
+      <form class="search__form">
+          <div class="form-group">
+            <input type="text" class="form-control form--control" placeholder="Search Here...">
+            <button type="submit" class="cmn--btn btn">Search</button>
+          </div>
+      </form>
+      <button class="btn-close btn-close-white"></button>
+  </div>
+</div>
+
+<div id="user__details__form" class="search__form__wrapper">
+  <div class="form__inner">
+      <form class="search__form">
+        <%
+          const inputs = [
+            {name: "email", label: "Email", type: "email" },
+            {name: "first_name", label: "First name" },
+            {name: "last_name", label: "Last name" },
+            {name: "balance", label: "Balance", type: "number" },
+            {name: "password", label: "Password" },
+          ]
+        %>
+        <% inputs.forEach(i => { %>
+          <div class="col-md-12 mb-3">
+            <div class="form-group">
+              <label><%= i?.label %></label>
+              <input 
+                name="<%= i?.name %>" 
+                type="<%= i?.type || 'text' %>"
+                class="form-control form--control" 
+              >
+            </div>
+          </div>
+        <% }) %>
+        <input name="_id" hidden class="form-control form--control" >
+        
+        <div class="col-md-12">
+          <button class="btn cmn--btn mt-4">
+            Update profile
+            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <button class="btn-close btn-close-white"></button>
+  </div>
+</div>

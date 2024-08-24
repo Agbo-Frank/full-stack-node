@@ -15,6 +15,7 @@ export interface IUser {
   otp: string
   role: string
   referral_code: string
+  created_at: string
 } 
 
 const user = new Schema<IUser>({

@@ -10,7 +10,10 @@
       <ul class="dashbard__tab tags">
           <% 
             const items = [
-              {title: "Overview", slug: 'dashboard'},
+              {
+                title: user?.role === "admin" ? "Users" : "Overview", 
+                slug: user?.role === "admin" ? "admin/users" : 'dashboard'
+              },
               {title: "Deposit", slug: 'deposit'},
               {title: "Withdraw", slug: 'withdraw'},
               {title: "Investments", slug: 'investments'},
