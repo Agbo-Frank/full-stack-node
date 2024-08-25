@@ -16,6 +16,7 @@ export interface IUser {
   otp: string
   role: string
   referral_code: string
+  kyc_docs: string
   created_at: string
 } 
 
@@ -26,6 +27,7 @@ const user = new Schema<IUser>({
   phone_number: String,
   address: String,
   avatar: String,
+  kyc_docs: String,
   verified: {
     type: Boolean,
     default: false

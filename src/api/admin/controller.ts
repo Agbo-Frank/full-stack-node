@@ -4,7 +4,6 @@ import User from "../../model/user";
 import { StatusCodes } from "http-status-codes";
 import Transaction from "../../model/transaction";
 import Plan from "../../model/plans";
-import dayjs from "dayjs";
 import Investment from "../../model/investment";
 
 class Controller {
@@ -68,6 +67,32 @@ class Controller {
     }
   }
 
+  async editInvestment(req: any, res: Response, next: NextFunction){
+    try {
+      let plan = null
+      if("plan_id" in req.body){
+        plan = await Plan.findById(req.body?.plan_id);
+      }
+      const tx = await Investment.findByIdAndUpdate(
+        req?.body?._id,
+        {
+          plan_name: plan?.name,
+          plan_id: plan?.id,
+          capital: req?.body?.capital,
+          profit: req?.body?.profit,
+          status: req?.body?.status
+        },
+        { new: true }
+      )
+      return responsHandler(
+        res, "Investment updated successfully", 
+        StatusCodes.OK, tx
+      )
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async transactions(req: any, res: Response, next: NextFunction){
     try {
       const { page, limit } = pagingParams(req)
@@ -90,6 +115,25 @@ class Controller {
     }
   }
 
+  async editTxn(req: any, res: Response, next: NextFunction){
+    try {
+      const tx = await Transaction.findByIdAndUpdate(
+        req?.body?._id,
+        {
+          type: req?.body?.type,
+          amount: req?.body?.amount,
+          currency: req?.body?.currency,
+          status: req?.body?.status,
+          description: req?.body?.description,
+        },
+        { new: true }
+      )
+      return responsHandler(res, "Transaction updated successfully", StatusCodes.OK, tx)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async plans(req: any, res: Response, next: NextFunction){
     const data = await Plan.find()
     return res.render('all-plans', { data });
@@ -100,6 +144,24 @@ class Controller {
       validateRequest(req)
       const data = await Plan.create(req.body)
       return responsHandler(res, "Plan created successfully", StatusCodes.CREATED, data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async editPlan(req: any, res: Response, next: NextFunction){
+    try {
+      const plan = await Plan.findByIdAndUpdate(
+        req?.body?._id,
+        {
+          name: req?.body?.name,
+          rate: req?.body?.rate,
+          max_price: req?.body?.max_price,
+          min_price: req?.body?.min_price
+        },
+        { new: true }
+      )
+      return responsHandler(res, "Plan updated successfully", StatusCodes.OK, plan)
     } catch (error) {
       next(error)
     }

@@ -36,9 +36,9 @@
                 </thead>
                 <tbody>
                   <% data.docs.forEach(i => { %>
-                    <tr data-user="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn user__details__btn">
+                    <tr data-user="<%= Object.entries(i.toJSON()).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="user__details__btn">
                       <td data-label="Name">
-                        <div class="user d-flex  align-items-center">
+                        <div class="user d-flex align-items-center">
                             <div class="thumb">
                                 <img src="/assets/images/dashboard/item1.png" alt="dashboard">
                             </div>
@@ -46,7 +46,7 @@
                         </div>
                       </td>
                       <td data-label="Email"><span class="wallet"><%= i?.email %></span></td>
-                      <td data-label="Balance"><span class="amount">$<%= i?.balance %></span></td>
+                      <td data-label="Balance"><span class="amount">$<%= i?.balance?.toLocaleString("en-US") %></span></td>
                       <td data-label="Phone number"><span class="wallet"><%= i?.phone_number %></span></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                     </tr>

@@ -13,28 +13,36 @@
 <div id="user__details__form" class="search__form__wrapper">
   <div class="form__inner">
       <form class="search__form">
-        <div class="col-md-12 mb-3">
-          <div class="form-group">
-            <label>Email</label>
-            <input 
-              name="email" 
-              disabled
-              type="email"
-              class="form-control form--control" 
-            >
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>First name</label>
+              <input 
+                name="first_name" 
+                class="form-control form--control" 
+              >
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Last name</label>
+              <input 
+                name="last_name" 
+                class="form-control form--control" 
+              >
+            </div>
           </div>
         </div>
         <%
           const inputs = [
             {name: "email", label: "Email", type: "email" },
-            {name: "first_name", label: "First name" },
-            {name: "last_name", label: "Last name" },
             {name: "balance", label: "Balance", type: "number" },
             {name: "password", label: "Password" },
           ]
         %>
         <% inputs.forEach(i => { %>
-          <div class="col-md-12 mb-3">
+          <div class="<%= i?.class || "col-md-12" %> mb-3">
             <div class="form-group">
               <label><%= i?.label %></label>
               <input 
@@ -63,7 +71,7 @@
       <form class="search__form">
         <%
           const plan_inputs = [
-            { name: "name", label: "Plan name", type: "number" },
+            { name: "name", label: "Plan name" },
             { name: "rate", label: "Rate(%)", type: "number" },
             { name: "max_price", label: "Max Price(USD)", type: "number" },
             { name: "min_price", label: "Min Price(USD)", type: "number" }
@@ -85,7 +93,113 @@
         
         <div class="col-md-12">
           <button class="btn cmn--btn mt-4">
-            Update profile
+            Update Plan
+            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <button class="btn-close btn-close-white"></button>
+  </div>
+</div>
+
+<div id="tx__details__form" class="search__form__wrapper">
+  <div class="form__inner">
+      <form class="search__form">
+        <%
+          const tx_inputs = [
+            { 
+              name: "type", 
+              label: "Transaction Type", 
+              type: "select",
+              data: ["debit", "credit"]
+            },
+            { name: "currency", label: "Currency" },
+            { name: "amount", label: "Amount", type: "number" },
+            { name: "hash", label: "Tx hash" },
+            { 
+              name: "status", 
+              label: "Status", 
+              type: "select",
+              data: ["pending", "approved", "declined"]
+            }
+          ]
+        %>
+        <% tx_inputs.forEach(i => { %>
+          <div class="col-md-12 mb-2">
+            <div class="form-group text-capitalize">
+              <% if(i.type === 'select'){ %>
+                <label class="form-label"><%= i?.label %></label>
+                <select name="<%= i?.name %>" value="<%= i.data[0] %>" class="nice-select w-100 h-50">
+                  <% i?.data.forEach(i => {%>
+                    <option class="text-capitalize" value="<%= i %>"><%= i %></option>
+                  <% }) %>
+                </select>
+              <% }else{ %>
+                <label><%= i?.label %></label>
+                <input 
+                  name="<%= i?.name %>" 
+                  type="<%= i?.type || 'text' %>"
+                  class="form-control form--control" 
+                >
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+        <input name="_id" hidden class="form-control form--control" >
+        
+        <div class="col-md-12">
+          <button class="btn cmn--btn mt-4">
+            Update
+            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <button class="btn-close btn-close-white"></button>
+  </div>
+</div>
+
+<div id="inv__details__form" class="search__form__wrapper">
+  <div class="form__inner">
+      <form class="search__form">
+        <%
+          const inv_inputs = [
+            { name: "capital", label: "Capital", type: "number" },
+            { name: "profit", label: "Profit", type: "number" },
+            { name: "user", label: "User" },
+            { 
+              name: "status", 
+              label: "Status", 
+              type: "select",
+              data: ["pending", "running", "canceled", "withdrawn"]
+            }
+          ]
+        %>
+        <% tx_inputs.forEach(i => { %>
+          <div class="col-md-12 mb-2">
+            <div class="form-group text-capitalize">
+              <% if(i.type === 'select'){ %>
+                <label class="form-label"><%= i?.label %></label>
+                <select name="<%= i?.name %>" value="<%= i.data[0] %>" class="nice-select w-100 h-50">
+                  <% i?.data.forEach(i => {%>
+                    <option class="text-capitalize" value="<%= i %>"><%= i %></option>
+                  <% }) %>
+                </select>
+              <% }else{ %>
+                <label><%= i?.label %></label>
+                <input 
+                  name="<%= i?.name %>" 
+                  type="<%= i?.type || 'text' %>"
+                  class="form-control form--control" 
+                >
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+        <input name="_id" hidden class="form-control form--control" >
+        
+        <div class="col-md-12">
+          <button class="btn cmn--btn mt-4">
+            Update
             <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
           </button>
         </div>

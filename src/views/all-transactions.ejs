@@ -37,14 +37,14 @@
                 </thead>
                 <tbody>
                   <% data.docs.forEach(i => { %>
-                    <tr data-user="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn user__details__btn">
+                    <tr data-tx="<%= Object.entries(i.toJSON()).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="tx__details__btn">
                       <td data-label="User Name">
                         <p class="name"><%= i?._id %></p>
                       </td>
-                      <td data-label="Amount"><span class="amount"><%= i?.type %></span></td>
-                      <td data-label="Wallet"><span class="wallet"><%= i?.currency %></span></td>
-                      <td data-label="Date"><span class="date"><%= i?.amount %></span></td>
-                      <td data-label="Currency"><span class="currency"><%= i?.status %></span></td>
+                      <td data-label="Transaction Type"><span class="wallet"><%= i?.type %></span></td>
+                      <td data-label="Currency"><span class="wallet"><%= i?.currency %></span></td>
+                      <td data-label="Amount"><span class="amount"><%= i?.amount?.toLocaleString("en-US") %></span></td>
+                      <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                     </tr>
                   <% }) %>

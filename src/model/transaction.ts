@@ -4,7 +4,7 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 
 export interface ITransaction {
   user: string
-  type: string //withdraw, deposit, debit credit
+  type: string //withdraw, deposit, commission charge
   amount: number
   currency: string
   status: string //"pending", "approved", "declined"

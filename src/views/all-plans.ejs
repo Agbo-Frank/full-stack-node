@@ -35,13 +35,13 @@
                 </thead>
                 <tbody>
                   <% data.forEach(i => { %>
-                    <tr data-plan="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn plan__details__btn">
+                    <tr data-plan="<%= Object.entries(i.toObject()).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="plan__details__btn">
                       <td data-label="Plan Name">
-                        <p class="name"><%= i?.name %></p>
+                        <p class="name text-capitalize"><%= i?.name %></p>
                       </td>
                       <td data-label="Rate"><span class="amount"><%= i?.rate %>%</span></td>
-                      <td data-label="Max price"><span class="amount"><%= i?.max_price %></span></td>
-                      <td data-label="Min price"><span class="amount"><%= i?.min_price %></span></td>
+                      <td data-label="Max price"><span class="currency">$<%= i?.max_price?.toLocaleString("en-US") %></span></td>
+                      <td data-label="Min price"><span class="currency">$<%= i?.min_price?.toLocaleString("en-US") %></span></td>
                     </tr>
                   <% }) %>
                 </tbody>

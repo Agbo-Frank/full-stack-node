@@ -159,5 +159,19 @@ class Controller {
       next(error)
     }
   }
+
+  async kyc(req: any, res: Response, next: NextFunction){
+    const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/okafor/photos'})
+    if(!result) throw new BadRequestException(`Unable to upload avatar`);
+
+    await User.updateOne(
+      { _id: req.user },
+      { kyc_docs: result?.secure_url }
+    )
+    return responsHandler(
+      res, "KYC document sent for reveiw", 
+      StatusCodes.OK, { url: result?.secure_url }
+    )
+  }
 }
 export default new Controller()

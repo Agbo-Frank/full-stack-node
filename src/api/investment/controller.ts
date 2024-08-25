@@ -41,7 +41,8 @@ class Controller {
         user: req?.user,
         amount, currency: "USD",
         status: "approved",
-        type: "debit"
+        description: `Investment initiation: ${plan?.name}`,
+        type: "charge"
       })
 
       return responsHandler(res, "Investment created successfully", StatusCodes.CREATED)

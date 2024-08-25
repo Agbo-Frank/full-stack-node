@@ -9,7 +9,7 @@ export interface IPlan {
 }
 
 
-const planSchema = new Schema<IPlan>({
+const plan = new Schema<IPlan>({
     name: String,
     description: String,
     rate: Number,
@@ -17,5 +17,6 @@ const planSchema = new Schema<IPlan>({
     min_price: { type: Number, default: 0 }
 })
 
-const Plan = model("plan", planSchema)
+plan.set('toObject', { getters: true });
+const Plan = model("plan", plan)
 export default Plan

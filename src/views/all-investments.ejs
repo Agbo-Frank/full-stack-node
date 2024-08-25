@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                   <% data.docs.forEach(i => { %>
-                    <tr data-user="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="search--btn user__details__btn">
+                    <tr data-inv="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="inv__details__btn">
                       <td data-label="User Name">
                         <p class="Plan name"><%= i?.plan_name %></p>
                       </td>

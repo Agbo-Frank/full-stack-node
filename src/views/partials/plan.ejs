@@ -7,11 +7,11 @@
         <ul class="plan__info">
             <li>
                 <span class="title">Min :</span>
-                <span class="value"><%= plan?.min_price %> USD</span>
+                <span class="value"><%= plan?.min_price?.toLocaleString("en-US") %> USD</span>
             </li>
             <li>
                 <span class="title">Max :</span>
-                <span class="value"><%= plan?.max_price %> USD</span>
+                <span class="value"><%= plan?.max_price?.toLocaleString("en-US") %> USD</span>
             </li>
         </ul>
     </div>

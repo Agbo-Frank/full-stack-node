@@ -26,15 +26,19 @@ class Controller{
   async policy(req: Request, res: Response){
     return res.render('policy');
   }
-  async dashboard(req: Request, res: Response){
-    return res.render('dashboard');
+  async dashboard(req, res: Response){
+    let data = await Transaction.paginate(
+      { user: req.user },
+      { page: 1, limit: 5, sort: { created_at: "desc" } }
+    )
+    return res.render('dashboard', { tx: data.docs });
   }
   async transactions(req: any, res: Response){
     const { page, limit } = pagingParams(req)
 
     let data = await Transaction.paginate(
       { user: req.user },
-      { page, limit, sort: { created_at: "desc" } }
+      { page, limit, sort: { created_at: "desc" }}
     )
     return res.render('transactions', { data });
   }

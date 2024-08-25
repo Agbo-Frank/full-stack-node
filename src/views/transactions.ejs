@@ -46,10 +46,10 @@
                     <td data-label="User Name">
                       <p class="name"><%= i?._id %></p>
                     </td>
-                    <td data-label="Amount"><span class="amount"><%= i?.type %></span></td>
-                    <td data-label="Wallet"><span class="wallet"><%= i?.currency %></span></td>
-                    <td data-label="Date"><span class="date"><%= i?.amount %></span></td>
-                    <td data-label="Currency"><span class="currency"><%= i?.status %></span></td>
+                    <td data-label="Transaction type"><span class="amount"><%= i?.type %></span></td>
+                    <td data-label="Currency"><span class="wallet"><%= i?.currency %></span></td>
+                    <td data-label="Amount"><span class="date"><%= i?.amount?.toLocaleString("en-US") %></span></td>
+                    <td data-label="Status"><span class="currency"><%= i?.status %></span></td>
                     <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                   </tr>
                 <% }) %>

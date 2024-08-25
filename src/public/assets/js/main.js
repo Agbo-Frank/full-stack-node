@@ -332,6 +332,30 @@ $('.user__details__btn').click(function() {
   
 });
 
+$('.tx__details__btn').click(function() {
+  $('#tx__details__form').addClass('active')
+  $('.overlay').addClass('active')
+
+  $(this).attr('data-tx').split(",").forEach(i => {
+    const [key, val] = i.split(":")
+    $(`#tx__details__form input[name='${key}']`).val(val)
+    $(`#tx__details__form select[name='${key}']`).val(val)
+  })
+  
+});
+
+$('.inv__details__btn').click(function() {
+  $('#inv__details__form').addClass('active')
+  $('.overlay').addClass('active')
+
+  $(this).attr('data-inv').split(",").forEach(i => {
+    const [key, val] = i.split(":")
+    $(`#inv__details__form input[name='${key}']`).val(val)
+    $(`#inv__details__form select[name='${key}']`).val(val)
+  })
+  
+});
+
 
 $('.btn-close, .overlay').on('click', function() {
   $('.search__form__wrapper').removeClass('active')
@@ -701,6 +725,7 @@ $("#user__details__form").submit(async function(e) {
   const payload = {
     first_name: e.target.first_name.value,
     last_name: e.target.last_name.value,
+    _id: e.target._id.value,
     balance: e.target.balance.value,
     password: e.target.password.value
   };
@@ -719,5 +744,126 @@ $("#user__details__form").submit(async function(e) {
   finally{
     $("#user__details__form #loader").toggleClass("d-none")
     $("#user__details__form button").prop('disabled', false)
+  }
+})
+
+$("#plan__details__form").submit(async function(e) {
+  e.preventDefault()
+  $("#plan__details__form #loader").removeClass("d-none")
+  $("#plan__details__form button").prop('disabled', true)
+
+  const payload = {
+    name: e.target.name.value,
+    _id: e.target._id.value,
+    rate: e.target.rate.value,
+    max_price: e.target.max_price.value,
+    min_price: e.target.min_price.value
+  };
+  try {
+    const response = await fetch("/admin/plans", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#plan__details__form #loader").toggleClass("d-none")
+    $("#plan__details__form button").prop('disabled', false)
+  }
+})
+
+$("#tx__details__form").submit(async function(e) {
+  e.preventDefault()
+  $("#tx__details__form #loader").removeClass("d-none")
+  $("#tx__details__form button").prop('disabled', true)
+
+  const payload = {
+    type: e.target.type.value,
+    _id: e.target._id.value,
+    amount: e.target.amount.value,
+    currency: e.target.currency.value,
+    status: e.target.status.value,
+    description: e.target.description.value
+  };
+  try {
+    const response = await fetch("/admin/transactions", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#tx__details__form #loader").toggleClass("d-none")
+    $("#tx__details__form button").prop('disabled', false)
+  }
+})
+
+$("#inv__details__form").submit(async function(e) {
+  e.preventDefault()
+  $("#inv__details__form #loader").removeClass("d-none")
+  $("#inv__details__form button").prop('disabled', true)
+
+  const payload = {
+    _id: e.target._id.value,
+    capital: e.target.capital.value,
+    profit: e.target.profit.value,
+    status: e.target.status.value,
+  };
+  try {
+    const response = await fetch("/admin/investments", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#inv__details__form #loader").toggleClass("d-none")
+    $("#inv__details__form button").prop('disabled', false)
+  }
+})
+
+$("#kyc").submit(async function(e) {
+  e.preventDefault()
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    await upload(e.target.result)
+  };
+  reader.readAsDataURL(e.target.docs.files[0]);
+
+  async function upload(image){
+    $("kyc #loader").removeClass("d-none")
+    $("kyc button").prop('disabled', true)
+    try {
+      const response = await fetch("/users/kyc", {
+        method: "POST",
+        body: JSON.stringify({ image }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const data = await response.json()
+      return notify(data?.message, response.ok ? "success" : "error")
+    }
+    catch(error){
+      console.log(error)
+    }
+    finally{
+      $("kyc #loader").toggleClass("d-none")
+      $("kyc button").prop('disabled', false)
+    }
   }
 })

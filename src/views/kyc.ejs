@@ -24,16 +24,19 @@
             <div class="col-lg-6 mt-5">
               <div class="dashboard__form">
                 <div>
-                  <form class="setting mt-3">
+                  <form id="kyc" class="setting mt-3">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Identification Documents (National ID, International Passport etc..)</label>
-                          <input type="file" class="form-control form--control" placeholder="Last name">
+                          <input name="docs" type="file" class="form-control" placeholder="Last name">
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <button class="btn cmn--btn mt-4">Submit document</button>
+                        <button class="btn cmn--btn mt-4">
+                          Submit document
+                          <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
                       </div>
                     </div>
                   </form>
