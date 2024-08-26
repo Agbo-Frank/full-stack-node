@@ -77,7 +77,7 @@ class Controller {
       const inv = await Investment.findById(req.body.id)
       if(!inv) throw new NotFoundException("Investment not found");
       if(inv.status !== investment_status.active){
-        throw new NotFoundException("Investment is" + inv.status);
+        throw new NotFoundException("Investment is " + inv.status);
       }
       if(dayjs().diff(inv.created_at, "months") < 6) {
         throw new NotFoundException("Investment not found");

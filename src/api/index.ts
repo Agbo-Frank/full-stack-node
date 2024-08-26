@@ -13,7 +13,7 @@ export default function(app: Application){
   app.use("/", pages)
   app.use("/user", guard, user)
   app.use("/auth", auth)
-  app.use("/investment", investment)
+  app.use("/investment", guard, investment)
   app.get("/*", page.error)
 
 }

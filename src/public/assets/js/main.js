@@ -583,6 +583,30 @@ $("#referral__withdrawal").click(async function(e) {
   }
 })
 
+//investment withdrawal
+$(".inv__withdrawal").click(async function(e) {
+  $(".inv__withdrawal #loader").toggleClass("d-none")
+  $(".inv__withdrawal").prop('disabled', true)
+
+  console.log($(this).attr('data-inv'))
+  try {
+    const response = await fetch("/investment/withdraw", {
+      method: "POST",
+      body: JSON.stringify({ id: $(this).attr('data-inv')}),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $(".inv__withdrawal #loader").toggleClass("d-none")
+    $(".inv__withdrawal").prop('disabled', false)
+  }
+})
+
 //logout
 $("#logout").click(async function(e) {
   $("#logout #loader").toggleClass("d-none")

@@ -1,10 +1,10 @@
 import { Router } from "express";
 import ctrl from "./controller"
 import valid from "./validator"
-import guard from "../../middleware/guard";
 
 const router = Router()
 
-router.post("/", guard, valid.create, ctrl.create)
+router.post("/", valid.create, ctrl.create)
+router.post("/withdraw", valid.withdraw, ctrl.withdraw)
 
 export default router
