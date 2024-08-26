@@ -1,4 +1,4 @@
-import Investment from "../../model/investment";
+import Investment, { investment_status } from "../../model/investment";
 import { Response, NextFunction } from "express";
 import Plan from "../../model/plans";
 import User from "../../model/user";
@@ -28,11 +28,10 @@ class Controller {
       }
 
       await Investment.create({
-        plan_name: plan?.name,
-        plan_id: plan?.id,
+        plan: plan?.id,
         capital: amount,
         user: req?.user,
-        status: "pending"
+        status: investment_status.active
       })
 
       user.balance = numeral(user?.balance).subtract(amount).value()

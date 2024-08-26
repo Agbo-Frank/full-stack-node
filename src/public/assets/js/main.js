@@ -411,10 +411,7 @@ $('#deposit #currency').change(function(e) {
   const address = addresses[currency] || "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
   $("input[name='address']").val(address)
 
-  generateQRCode(
-    address[currency] || 
-    "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
-  )
+  generateQRCode("0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03")
   // var text = $('#text-input').val();
   // if (text.trim() !== '') {
   //     generateQRCode(text);
@@ -446,7 +443,7 @@ function notify(message, type = 'success'){
 //Login
 $("#login").submit(async function(e) {
   e.preventDefault()
-  $("#loader").removeClass("d-none")
+  $("#loader").toggleClass("d-none")
   $("#login button").prop('disabled', true)
 
   const payload = {
@@ -476,7 +473,7 @@ $("#login").submit(async function(e) {
 //registration
 $("#register").submit(async function(e) {
   e.preventDefault()
-  $("#register #loader").removeClass("d-none")
+  $("#register #loader").toggleClass("d-none")
   $("#register button").prop('disabled', true)
 
   const payload = {
@@ -508,16 +505,16 @@ $("#register").submit(async function(e) {
 //deposit
 $("#deposit").submit(async function(e) {
   e.preventDefault()
-  $("#deposit #loader").removeClass("d-none")
+  $("#deposit #loader").toggleClass("d-none")
   $("#deposit button").prop('disabled', true)
 
   const payload = {
     amount: e.target.amount.value,
     address: e.target.address.value,
     hash: e.target.hash.value,
-    currency: e.target.currency.value
+    nework: e.target.currency.value
   };
-  console.log(payload)
+
   try {
     const response = await fetch("/user/deposit", {
       method: "POST",
@@ -536,7 +533,7 @@ $("#deposit").submit(async function(e) {
 //withdraw
 $("#withdraw").submit(async function(e) {
   e.preventDefault()
-  $("#withdraw #loader").removeClass("d-none")
+  $("#withdraw #loader").toggleClass("d-none")
   $("#withdraw button").prop('disabled', true)
 
   const payload = {
@@ -569,12 +566,13 @@ $("#logout").click(async function(e) {
   $("#logout").prop('disabled', true)
 
   try {
-    await fetch("/auth/logout", {
+    const response = await fetch("/auth/logout", {
       method: "DELETE",
       headers: { 'Content-Type': 'application/json' },
     })
-    // const data = await response.json()
-    // return notify(data?.message, response.ok ? "succcess" : "error")
+    const data = await response.json()
+    if(response.ok) location.replace('/')
+    return notify(data?.message, response.ok ? "success" : "error")
   }
   finally{
     $("#logout #loader").toggleClass("d-none")
@@ -585,7 +583,7 @@ $("#logout").click(async function(e) {
 //update profile
 $("#profile").submit(async function(e) {
   e.preventDefault()
-  $("#profile #loader").removeClass("d-none")
+  $("#profile #loader").toggleClass("d-none")
   $("#profile button").prop('disabled', true)
 
   const payload = {
@@ -615,7 +613,7 @@ $("#profile").submit(async function(e) {
 //update password
 $("#password").submit(async function(e) {
   e.preventDefault()
-  $("#password #loader").removeClass("d-none")
+  $("#password #loader").toggleClass("d-none")
   $("#password button").prop('disabled', true)
 
   const payload = {
@@ -665,6 +663,15 @@ $("#copy").click(function(e){
     .catch(console.log)
 })
 
+$("#copy__addr").click(function(e){
+  navigator.clipboard.writeText($("input[name='address']").val())
+    .then(fulfilled => {
+      $("#copy__addr").text("Copied")
+      setTimeout(() => $("#copy__addr").text("Copy"), 3000)
+    })
+    .catch(console.log)
+})
+
 function formatCurrency(amount, locale = 'en-US', currency = 'USD') {
   return amount.toLocaleString(locale, { style: 'currency', currency});
 }
@@ -684,7 +691,7 @@ $("#plan select").change(function(e){
 //create investment
 $("#plan").submit(async function(e) {
   e.preventDefault()
-  $("#plan #loader").removeClass("d-none")
+  $("#plan #loader").toggleClass("d-none")
   $("#plan button").prop('disabled', true)
 
   const raw = e.target.plan_id.value.split(",")
@@ -719,7 +726,7 @@ $("#plan").submit(async function(e) {
 //edit user
 $("#user__details__form").submit(async function(e) {
   e.preventDefault()
-  $("#user__details__form #loader").removeClass("d-none")
+  $("#user__details__form #loader").toggleClass("d-none")
   $("#user__details__form button").prop('disabled', true)
 
   const payload = {
@@ -749,7 +756,7 @@ $("#user__details__form").submit(async function(e) {
 
 $("#plan__details__form").submit(async function(e) {
   e.preventDefault()
-  $("#plan__details__form #loader").removeClass("d-none")
+  $("#plan__details__form #loader").toggleClass("d-none")
   $("#plan__details__form button").prop('disabled', true)
 
   const payload = {
@@ -779,7 +786,7 @@ $("#plan__details__form").submit(async function(e) {
 
 $("#tx__details__form").submit(async function(e) {
   e.preventDefault()
-  $("#tx__details__form #loader").removeClass("d-none")
+  $("#tx__details__form #loader").toggleClass("d-none")
   $("#tx__details__form button").prop('disabled', true)
 
   const payload = {
@@ -810,7 +817,7 @@ $("#tx__details__form").submit(async function(e) {
 
 $("#inv__details__form").submit(async function(e) {
   e.preventDefault()
-  $("#inv__details__form #loader").removeClass("d-none")
+  $("#inv__details__form #loader").toggleClass("d-none")
   $("#inv__details__form button").prop('disabled', true)
 
   const payload = {
@@ -847,7 +854,7 @@ $("#kyc").submit(async function(e) {
   reader.readAsDataURL(e.target.docs.files[0]);
 
   async function upload(image){
-    $("kyc #loader").removeClass("d-none")
+    $("kyc #loader").toggleClass("d-none")
     $("kyc button").prop('disabled', true)
     try {
       const response = await fetch("/users/kyc", {

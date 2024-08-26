@@ -3,18 +3,16 @@ import { PaginateModel, Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 export const investment_status = Object.freeze({
-  "PENDING": "pending",
-  "CANCELED": "canceled",
-  "RUNNING": "running",
-  "SUSPENSION": "suspension",
-  "WITHDRAWN": "withdrawn"
+  "active": "active",
+  "inactive": "inactive",
+  "completed": "completed"
 })
 
 export interface IInvestment {
-  plan_name: string
-  plan_id: string
+  plan: string
   capital: number 
   profit: number
+  due_at: string | any
   user: string
   status: string
   updated_at: string
@@ -22,15 +20,17 @@ export interface IInvestment {
 }
 
 const investmentSchema = new Schema<IInvestment>({
-  plan_name: String,
-  plan_id: String,
+  plan: String,
   user: String,
   capital: { type: Number, default: 0 }, 
   profit: { type: Number, default: 0 },
   status: {
     type: String,
     enum: Object.values(investment_status),
-    default: investment_status.PENDING
+    default: investment_status.active
+  },
+  due_at: {
+    type: Date,
   },
   created_at: {
     type: String,

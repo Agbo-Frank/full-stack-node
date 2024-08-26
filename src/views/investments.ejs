@@ -19,30 +19,32 @@
                   </ul>
                 </div>
             </div>
-          <table style="width: 100%;" class="table mt-5 table-responsive transection__table dashboard__table">
-            <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Amount</th>
-                  <th>Profit</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-              <% data.docs.forEach(i => { %>
-                <tr>
-                  <td data-label="User Name">
-                    <p class="Plan name"><%= i?.plan_name %></p>
-                  </td>
-                  <td data-label="Capital"><span class="amount">$<%= i?.capitale %></span></td>
-                  <td data-label="Profit"><span class="amount">$<%= i?.profit %></span></td>
-                  <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
-                  <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
+            <div class="dashboard__table__container">
+              <table style="width: 100%;" class="table mt-5 table-responsive transection__table dashboard__table">
+                <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Amount</th>
+                      <th>Profit</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% data.docs.forEach(i => { %>
+                    <tr>
+                      <td data-label="User Name">
+                        <p class="Plan name"><%= i?.plan %></p>
+                      </td>
+                      <td data-label="Capital"><span class="amount">$<%= i?.capital %></span></td>
+                      <td data-label="Profit"><span class="amount">$<%= i?.profit %></span></td>
+                      <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
+                      <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
     </div>

@@ -34,6 +34,7 @@
     "logfmt": "^1.4.0",
     "mongoose": "^8.5.3",
     "mongoose-paginate-v2": "^1.8.3",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
     "numeral": "^2.0.6",
@@ -45,6 +46,7 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
+    "@types/node-cron": "^3.0.11",
     "@types/numeral": "^2.0.5",
     "gts": "^5.3.1",
     "typescript": "^5.4.3"

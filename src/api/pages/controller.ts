@@ -7,6 +7,7 @@ import Referral from "../../model/referral";
 import { APP_URL } from "../../utility/config";
 import Plan from "../../model/plans";
 import Investment from "../../model/investment";
+import numeral from "numeral";
 
 class Controller{
   async home(req: Request, res: Response){
@@ -29,9 +30,12 @@ class Controller{
   async dashboard(req, res: Response){
     let data = await Transaction.paginate(
       { user: req.user },
-      { page: 1, limit: 5, sort: { created_at: "desc" } }
+      { sort: { created_at: "desc" } }
     )
-    return res.render('dashboard', { tx: data.docs });
+
+    const total_deposit = data.docs.filter(t => t.type === "deposit" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
+    const total_withdraw = data.docs.filter(t => t.type === "withdraw" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
+    return res.render('dashboard', { tx: data.docs, total_deposit, total_withdraw });
   }
   async transactions(req: any, res: Response){
     const { page, limit } = pagingParams(req)

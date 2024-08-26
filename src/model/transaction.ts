@@ -7,6 +7,7 @@ export interface ITransaction {
   type: string //withdraw, deposit, commission charge
   amount: number
   currency: string
+  network: string
   status: string //"pending", "approved", "declined"
   description: string
   recipient: string
@@ -20,6 +21,7 @@ const tx = new Schema<ITransaction>({
   currency: String,
   amount: Number,
   hash: String,
+  network: String,
   status: String,
   description: String,
   recipient: { type: String },

@@ -37,8 +37,8 @@
                           <i class="las la-money-bill-alt"></i>
                       </div>
                       <div class="dashboard__card-content">
-                          <p class="info">Earning Total</p>
-                          <h3 class="title">587 USD</h3>
+                          <p class="info">Total Earning</p>
+                          <h3 class="title"><%= user?.earnings.toLocaleString("en-US") %> USD</h3>
                       </div>
                   </div>
               </div>
@@ -48,11 +48,22 @@
                           <i class="las la-file-invoice-dollar"></i>
                       </div>
                       <div class="dashboard__card-content">
-                          <p class="info">Pending Withdraw</p>
-                          <h3 class="title">587 USD</h3>
+                          <p class="info">Total Withdraw</p>
+                          <h3 class="title"><%= total_withdraw.toLocaleString("en-US") %> USD</h3>
                       </div>
                   </div>
               </div>
+              <div class="col-xl-6 col-xxl-4 col-lg-6 col-md-6">
+                <div class="dashboard__card">
+                    <div class="dashboard__card-icon">
+                        <i class="las la-file-invoice-dollar"></i>
+                    </div>
+                    <div class="dashboard__card-content">
+                        <p class="info">Total Deposit</p>
+                        <h3 class="title"><%= total_deposit.toLocaleString("en-US") %> USD</h3>
+                    </div>
+                </div>
+            </div>
           </div>
           <div class="d-flex flex-wrap align-items-center justify-content-between mt-5 mb-4">
               <h3 class="title">Latest Transactions</h3>

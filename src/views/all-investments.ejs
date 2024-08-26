@@ -38,9 +38,9 @@
                   <% data.docs.forEach(i => { %>
                     <tr data-inv="<%= Object.entries(i).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="inv__details__btn">
                       <td data-label="User Name">
-                        <p class="Plan name"><%= i?.plan_name %></p>
+                        <p class="Plan name"><%= i?.plan %></p>
                       </td>
-                      <td data-label="Capital"><span class="amount">$<%= i?.capitale %></span></td>
+                      <td data-label="Capital"><span class="amount">$<%= i?.capital %></span></td>
                       <td data-label="Profit"><span class="wallet"><%= i?.profit %></span></td>
                       <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>

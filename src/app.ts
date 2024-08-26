@@ -7,9 +7,11 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import Logger from './utility/logger';
 import checkUser from './middleware/check-user';
+import initiateJobs from './cron';
 
 const logger = new Logger("server")
 
+initiateJobs()
 const app = express();
 
 app.set('trust proxy', 1);

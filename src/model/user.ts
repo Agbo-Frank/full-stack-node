@@ -7,6 +7,7 @@ export interface IUser {
   last_name: string
   email: string
   phone_number: string
+  earnings: number
   password: string
   avatar: string
   balance: number
@@ -28,6 +29,10 @@ const user = new Schema<IUser>({
   address: String,
   avatar: String,
   kyc_docs: String,
+  earnings: {
+    type: Number,
+    default: 0
+  },
   verified: {
     type: Boolean,
     default: false

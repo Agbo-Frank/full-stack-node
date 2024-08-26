@@ -69,15 +69,10 @@ class Controller {
 
   async editInvestment(req: any, res: Response, next: NextFunction){
     try {
-      let plan = null
-      if("plan_id" in req.body){
-        plan = await Plan.findById(req.body?.plan_id);
-      }
       const tx = await Investment.findByIdAndUpdate(
         req?.body?._id,
         {
-          plan_name: plan?.name,
-          plan_id: plan?.id,
+          plan: req?.body?.plan,
           capital: req?.body?.capital,
           profit: req?.body?.profit,
           status: req?.body?.status

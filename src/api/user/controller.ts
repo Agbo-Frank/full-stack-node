@@ -104,11 +104,11 @@ class Controller {
   async deposit(req: any, res: Response, next: NextFunction){
     try {
       validateRequest(req)
-      const { amount, hash, currency } = req.body
+      const { amount, hash, network } = req.body
       const tx = await Transaction.create({
         user: req.user,
         type: "deposit",
-        currency,
+        network, currency: "USD",
         amount, hash,
         status: "pending",
         description: "Wallet funding",
@@ -126,8 +126,9 @@ class Controller {
       const { amount, address } = req.body
       const user = await User.findById(req.user)
       if(!user) throw new BadRequestException("user not found");
-
+      if(!user.verified) throw new BadRequestException("Your KYC hasn't verified");
       if(user.balance < Number(amount)) throw new BadRequestException("Insufficient balance to withdraw");
+      
       user.balance = numeral(user.balance).subtract(amount).value()
 
       await user.save()
