@@ -482,6 +482,7 @@ $("#register").submit(async function(e) {
     first_name: e.target.first_name.value,
     last_name: e.target.last_name.value,
     phone_number: e.target.phone_number.value,
+    referral_code: e.target.referral_code.value,
   };
 
   try {
@@ -491,7 +492,10 @@ $("#register").submit(async function(e) {
       body: JSON.stringify(payload)
     })
     const data = await response.json()
-    return notify(data?.message, response.ok ? "succcess" : "error")
+    notify(data?.message, response.ok ? "success" : "error")
+    if(response.ok){
+      location.assign("/")
+    }
   }
   catch(error){
     console.log(error)
@@ -549,7 +553,7 @@ $("#withdraw").submit(async function(e) {
       headers: { 'Content-Type': 'application/json' }
     })
     const data = await response.json()
-    return notify(data?.message, response.ok ? "succcess" : "error")
+    return notify(data?.message, response.ok ? "success" : "error")
   }
   catch(error){
     console.log(error)
@@ -557,6 +561,25 @@ $("#withdraw").submit(async function(e) {
   finally{
     $("#withdraw #loader").toggleClass("d-none")
     $("#withdraw button").prop('disabled', false)
+  }
+})
+
+//referral withdraw
+$("#referral__withdrawal").click(async function(e) {
+  $("#referral__withdrawal #loader").toggleClass("d-none")
+  $("#referral__withdrawal").prop('disabled', true)
+
+  try {
+    const response = await fetch("/user/referral/withdraw", {method: "POST"})
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#referral__withdrawal #loader").toggleClass("d-none")
+    $("#referral__withdrawal").prop('disabled', false)
   }
 })
 

@@ -13,10 +13,11 @@
             <div class="inner">
               <h3 class="title">Referrals</h3>
             </div>
-            <div class="inner">
-              <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
-              </ul>
+            <div class="tabs d-flex justify-content-end flex-wrap align-items-end">
+              <button id="referral__withdrawal" class="btn cmn--btn">
+                Withdraw
+                <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
 
@@ -29,6 +30,17 @@
                 <div class="dashboard__card-content">
                   <p class="info">Referral Balance</p>
                   <h3 class="title"><%= balance %> USD</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-xxl-4 col-lg-6 col-md-6">
+              <div class="dashboard__card">
+                <div class="dashboard__card-icon">
+                  <i class="las la-wallet"></i>
+                </div>
+                <div class="dashboard__card-content">
+                  <p class="info">Pending Balance</p>
+                  <h3 class="title"><%= pending_balance %> USD</h3>
                 </div>
               </div>
             </div>
@@ -51,6 +63,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Amount</th>
+                  <th>Status</th>
                   <th>Date</th>
                 </tr>
             </thead>
@@ -60,8 +73,15 @@
                       <td data-label="User Name">
                         <p class="name"><%= `${i?.referee?.first_name} ${i?.referee?.last_name}` %></p>
                       </td>
-                      <td data-label="Amount"><span class="amount">$1500</span></td>
-                      <td data-label="Date"><span class="date">25 Apr 2021</span></td>
+                      <td data-label="Amount"><span class="amount">$<%= i?.reward %></span></td>
+                      <td data-label="Status">
+                        <% if(i?.completed){ %>
+                          <span class="wallet text-capitalize badge" style="background-color: #198754;">completed</span>
+                        <% } else{ %>
+                          <span class="wallet text-capitalize badge">pending</span>
+                        <% } %>
+                      </td>
+                      <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                   </tr>
                 <% }) %>
             </tbody>

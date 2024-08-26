@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { Schema, Types, model } from "mongoose"
 
 export interface IReferral {
@@ -5,6 +6,8 @@ export interface IReferral {
   referee: string | typeof Types.ObjectId
   reward: number
   completed: boolean
+  paid: boolean
+  created_at: string
 }
 
 const referral = new Schema<IReferral>({
@@ -17,6 +20,16 @@ const referral = new Schema<IReferral>({
   completed: {
     type: Boolean,
     default: false
+  },
+  paid: {
+    type: Boolean,
+    default: true
+  },
+  created_at: {
+    type: String,
+    get(v){
+      return dayjs(v).format("DD MMM YYYY")
+    }
   }
 },{
   timestamps: {

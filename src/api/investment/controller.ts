@@ -8,6 +8,8 @@ import { responsHandler, validateRequest } from "../../utility/helpers";
 import { StatusCodes } from "http-status-codes";
 import numeral from "numeral";
 import Transaction from "../../model/transaction";
+import Referral from "../../model/referral";
+import dayjs from "dayjs";
 
 
 class Controller {
@@ -44,6 +46,11 @@ class Controller {
         type: "charge"
       })
 
+      const referral = await Referral.findOne({ referee: user.id })
+      if(referral && referral.completed){
+        referral.updateOne({ completed: true })
+      }
+
       return responsHandler(res, "Investment created successfully", StatusCodes.CREATED)
     } catch (error) {
       next(error)
@@ -63,10 +70,42 @@ class Controller {
     catch (error) {
       next(error)
     }
-
   }
 
-  async withdraw(){
+  async withdraw(req: any, res: Response, next: NextFunction){
+    try {
+      const inv = await Investment.findById(req.body.id)
+      if(!inv) throw new NotFoundException("Investment not found");
+      if(inv.status !== investment_status.active){
+        throw new NotFoundException("Investment is" + inv.status);
+      }
+      if(dayjs().diff(inv.created_at, "months") < 6) {
+        throw new NotFoundException("Investment not found");
+      };
+
+      const user = await User.findById(req.user)
+      if(!user) throw new NotFoundException("User not found");
+      const amount = numeral(inv.capital).add(inv.profit)
+      user.balance = amount.add(user.balance).value()
+      inv.status = investment_status.completed;
+
+      await inv.save()
+      await user.save()
+
+      await Transaction.create({
+        user: req.user,
+        type: "commission",
+        currency: "USD",
+        amount: amount.value(),
+        status: "approved",
+        description: "Investment withdrawal"
+      })
+
+      return responsHandler(res, "Investment retrieved successfully", StatusCodes.OK)
+    }
+    catch (error) {
+      next(error)
+    }
 
   }
 }

@@ -2617,7 +2617,7 @@ i {
 
 @media (max-width: 991px) {
     .dashboard__sidebar {
-        max-width: 330px;
+        max-width: 300px;
         width: 100%;
         position: fixed;
         left: 0;

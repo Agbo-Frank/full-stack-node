@@ -48,13 +48,13 @@ class Controller {
         referral = await User.findOne({ referral_code: req?.body?.referral_code })
         if(!referral) throw new NotFoundException("Invalid referral code");
       }
+      const referral_code = await generateCode(email)
   
       user = new User({ 
         email, 
         phone_number, 
         password, first_name, 
-        last_name, 
-        referral_code: generateCode(email),
+        last_name, referral_code,
       })
 
       await user.save()
@@ -89,6 +89,7 @@ class Controller {
       // })
       return responsHandler(res, "Registration successful", StatusCodes.CREATED)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }

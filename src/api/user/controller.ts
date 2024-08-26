@@ -147,6 +147,33 @@ class Controller {
     }
   }
 
+  async referalWithdrawl(req: any, res: Response, next: NextFunction){
+    try {
+      const referral = await Referral.find({ user: req.user, paid: false, completed: true })
+      const balance = referral.reduce((acc, d) => acc + d.reward, 0)
+      if(balance === 0) throw new BadRequestException("Low referral balance");
+
+      const user = await User.findById(req.user)
+      if(!user) throw new BadRequestException("user not found");
+      user.balance = numeral(user.balance).add(balance).value()
+      await user.save()
+
+      await Referral.updateMany({ user: req.user }, { paid: true })
+      const tx = await Transaction.create({
+        user: user.id,
+        type: "commission",
+        status: "approved",
+        amount: balance,
+        description: `Referral earnings withdrawal` 
+      })
+
+      return responsHandler(res, "Referral earnings withdrawal successful ", StatusCodes.OK, tx)
+    } catch (error) {
+      console.log(error)
+      next(error)
+    }
+  }
+
   async referrals(req: any, res: Response, next: NextFunction){
     try {
       const data = await Referral.find({ user: req.user })

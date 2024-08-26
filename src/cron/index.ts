@@ -6,7 +6,7 @@ import cron from 'node-cron';
 import User from "../model/user";
 
 async function updateUsersInvestments(){
-  const investments = await Investment.find({ status: investment_status.active)
+  const investments = await Investment.find({ status: investment_status.active })
   if(investments.length === 0) return;
 
   const plans = await Plan.find()

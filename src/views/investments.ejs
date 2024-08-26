@@ -28,6 +28,7 @@
                       <th>Profit</th>
                       <th>Status</th>
                       <th>Date</th>
+                      <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +39,14 @@
                       </td>
                       <td data-label="Capital"><span class="amount">$<%= i?.capital %></span></td>
                       <td data-label="Profit"><span class="amount">$<%= i?.profit %></span></td>
-                      <td data-label="Status"><span class="wallet"><%= i?.status %></span></td>
+                      <td data-label="Status"><span class="wallet text-capitalize badge" style="background-color: <%= i?.status === "active" ? "#198754;" : "#dc3545;" %>;"><%= i?.status %></span></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
+                      <td data-label="">
+                        <button class="cmn--btn" style="width: fit-content; font-size: 14px; padding: 2px 15px;">
+                          Withdraw
+                          <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                      </td>
                     </tr>
                   <% }) %>
                 </tbody>

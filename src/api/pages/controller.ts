@@ -72,9 +72,10 @@ class Controller{
   }
   async referrals(req: any, res: Response){
     const link = APP_URL + "/register/" + res.locals.user?.referral_code
-    const data = await Referral.find({ user: req.user }).populate("refere", "first_name last_name")
-    const balance = data.reduce((acc, d) => acc + d.reward, 0)
-    return res.render('referrals', { balance, data, link });
+    const data = await Referral.find({ user: req.user, paid: false }).populate("referee", "first_name last_name")
+    const balance = data.filter(d => d.completed).reduce((acc, d) => acc + d.reward, 0)
+    const pending_balance = data.filter(d => !d.completed).reduce((acc, d) => acc + d.reward, 0)
+    return res.render('referrals', { balance, pending_balance, data, link });
   }
   async kyc(req: Request, res: Response){
     return res.render('kyc');

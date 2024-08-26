@@ -8,7 +8,7 @@
           <div class="banner__content">
               <h1 class="title">Best Hyip Investment Platform</h1>
               <p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero hyip investment pandding</p>
-              <a href="sign-in.html" class="cmn--btn">Get Started</a>
+              <a href="/<%= user ? user?.role === "admin" ? 'admin/users' : "dashboard" : "login" %>" class="cmn--btn">Get Started</a>
           </div>
           <div class="banner__thumb d-none d-lg-block">
               <img src="assets/images/banner/thumb.png" alt="banner">
@@ -49,8 +49,8 @@
                       <li> Finibus onorum et alorum</li>
                   </ul>
                   <div class="button__wrapper">
-                      <a href="about.html" class="cmn--btn">Know More</a>
-                      <a href="contact.html" class="cmn--btn2">Contact Us</a>
+                      <a href="/about" class="cmn--btn">Know More</a>
+                      <a href="/contact" class="cmn--btn2">Contact Us</a>
                   </div>
               </div>
           </div>
