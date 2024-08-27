@@ -17,6 +17,9 @@ class Controller{
   async login(req: Request, res: Response){
     return res.render('login');
   }
+  async realestate(req: Request, res: Response){
+    return res.render('real-estate');
+  }
   async register(req: Request, res: Response){
     let referral_code = null
     if(!isEmpty(req.params.id)){
@@ -56,6 +59,7 @@ class Controller{
       { user: req.user}, 
       { page, limit, sort: { created_at: "desc"}}
     )
+    console.log(data)
     return res.render('investments', { data });
   }
   async settings(req: Request, res: Response){

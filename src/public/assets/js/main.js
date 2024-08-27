@@ -32,6 +32,13 @@ headerTrigger.on('click', function(){
     $('.overlay').toggleClass('active')
 });
 
+// Responsive Menu
+var headerTrigger3 = $('.header-trigger-3');
+headerTrigger3.on('click', function(){
+    $('.sidebar, .header-trigger-3').toggleClass('active')
+    $('.overlay').toggleClass('active')
+});
+
 var headerTrigger2 = $('.top-bar-trigger');
 headerTrigger2.on('click', function(){
     $('.header-top').toggleClass('active')

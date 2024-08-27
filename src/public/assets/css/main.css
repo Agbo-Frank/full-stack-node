@@ -1521,30 +1521,36 @@ i {
     }
 }
 
-.header-trigger {
+.header-trigger,
+.header-trigger-3 {
     cursor: pointer;
     margin-top: -10px;
 }
 
-.header-trigger.active {
+.header-trigger.active,
+.header-trigger-3.active {
     z-index: 9999;
 }
 
-.header-trigger.active span {
+.header-trigger.active span,
+.header-trigger-3.active span {
     background: none !important;
 }
 
-.header-trigger.active span::before {
+.header-trigger.active span::before,
+.header-trigger-3.active span::before {
     transform: rotate(-45deg) translate(-11px, 0px);
     background: #D7A31F;
 }
 
-.header-trigger.active span::after {
+.header-trigger.active span::after,
+.header-trigger-3.active span::after {
     transform: rotate(45deg) translate(-11px, 0px);
     background: #D7A31F;
 }
 
-.header-trigger span {
+.header-trigger span,
+.header-trigger-3 span {
     width: 25px;
     height: 2px;
     background: #D7A31F;
@@ -1552,7 +1558,10 @@ i {
     transition: all ease 0.3s;
 }
 
-.header-trigger span::after, .header-trigger span::before {
+.header-trigger span::after, 
+.header-trigger span::before,
+.header-trigger-3 span::after,
+.header-trigger-3 span::before {
     position: absolute;
     content: "";
     width: 100%;
@@ -1564,11 +1573,13 @@ i {
     transition: all ease 0.3s;
 }
 
-.header-trigger span::after {
+.header-trigger span::after,
+.header-trigger-3 span::after {
     bottom: -8px;
 }
 
-.header-trigger span::before {
+.header-trigger span::before,
+.header-trigger-3 span::before {
     top: -8px;
 }
 
