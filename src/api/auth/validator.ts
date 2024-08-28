@@ -10,5 +10,9 @@ export default {
     body("first_name").notEmpty().withMessage("First name is required"),
     body("last_name").notEmpty().withMessage("Last name is required"),
     body("phone_number").notEmpty().withMessage("Phone number is required"),
+  ],
+  resetPassword: [
+    passwordValidator,
+    body("token").notEmpty().withMessage("token is required").isJWT().withMessage("Invalid token"),
   ]
 }

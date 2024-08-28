@@ -17,8 +17,27 @@ class Controller{
   async login(req: Request, res: Response){
     return res.render('login');
   }
+  async fogetpassword(req: Request, res: Response){
+    return res.render('foget-password');
+  }
+  async resetpassword(req: Request, res: Response){
+    const { token } = req?.query
+    if(isEmpty(token)){
+      return res.redirect('/login');
+    }
+    return res.render('reset-password', { token });
+  }
+  async verifypassword(req: Request, res: Response){
+    return res.render('verify-password');
+  }
   async realestate(req: Request, res: Response){
     return res.render('real-estate');
+  }
+  async cryptocurrencies(req: Request, res: Response){
+    return res.render('cryptocurrencies');
+  }
+  async agriculture(req: Request, res: Response){
+    return res.render('agriculture');
   }
   async register(req: Request, res: Response){
     let referral_code = null

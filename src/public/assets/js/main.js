@@ -450,7 +450,7 @@ function notify(message, type = 'success'){
 //Login
 $("#login").submit(async function(e) {
   e.preventDefault()
-  $("#loader").toggleClass("d-none")
+  $("#login #loader").toggleClass("d-none")
   $("#login button").prop('disabled', true)
 
   const payload = {
@@ -472,7 +472,7 @@ $("#login").submit(async function(e) {
    
   }
   finally{
-    $("#loader").toggleClass("d-none")
+    $("#login #loader").toggleClass("d-none")
     $("#login button").prop('disabled', false)
   }
 })
@@ -510,6 +510,72 @@ $("#register").submit(async function(e) {
   finally{
     $("#register #loader").toggleClass("d-none")
     $("#register button").prop('disabled', false)
+  }
+})
+
+//forget password
+$("#forget-password").submit(async function(e) {
+  e.preventDefault()
+  $("#forget-password #loader").toggleClass("d-none")
+  $("#forget-password button").prop('disabled', true)
+
+  try {
+    const response = await fetch("/auth/send-otp", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: e.target.email.value })
+    })
+    const data = await response.json()
+    notify(data?.message, response.ok ? "success" : "error")
+    if(response.ok){
+      $("#forget-password p").text(data?.message)
+    }
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#forget-password #loader").toggleClass("d-none")
+    $("#forget-password button").prop('disabled', false)
+  }
+})
+
+//reset password
+$("#reset-password").submit(async function(e) {
+  e.preventDefault()
+  $("#reset-password #loader").toggleClass("d-none")
+  $("#reset-password button").prop('disabled', true)
+
+  const payload = {
+    token: e.target.token.value,
+    password: e.target.password.value,
+    cpassword: e.target.cpassword.value,
+  };
+
+  if(payload.cpassword !== payload.password){
+    $("#reset-password #loader").toggleClass("d-none")
+    $("#reset-password button").prop('disabled', false)
+    return notify("Confirm password", "error")
+  }
+
+  try {
+    const response = await fetch("/auth/reset-password", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    notify(data?.message, response.ok ? "success" : "error")
+    if(response.ok){
+      location.assign("/login")
+    }
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#reset-password #loader").toggleClass("d-none")
+    $("#reset-password button").prop('disabled', false)
   }
 })
 

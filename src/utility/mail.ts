@@ -1,10 +1,11 @@
 import nodemailer from "nodemailer"
-import { MAIL_HOST, MAIL_PASS, MAIL_PORT, MAIL_USER } from "../utility/config";
+import { APP_URL, MAIL_HOST, MAIL_PASS, MAIL_PORT, MAIL_USER } from "../utility/config";
 import { BadRequestException, NotFoundException, ServiceError } from "../utility/service-error";
 import { MailOptions } from "nodemailer/lib/sendmail-transport";
 import { maskEmail, randNum } from "../utility/helpers";
 import dayjs from "dayjs";
 import User from "../model/user";
+import jwt from "./jwt";
 
 class MailService {
   private config
@@ -49,6 +50,25 @@ class MailService {
     } catch (error: any) {
       if(error instanceof ServiceError) throw error
       throw new BadRequestException(`Failed to send OTP, verify this email ${maskEmail(email)} is correct`)
+    }
+  }
+
+  async resetLink(email: string){
+    try {
+      const user = await User.findOne({ email })
+      if(!user) throw new NotFoundException("User not found");
+      
+      const link = APP_URL + "/reset-password?token=" + jwt.create({ id: user?.id, role: user.role }, { expiresIn: 60 * 10 }) //10 mins
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject: "Reset link",
+        text: `Here is your reset link: ${link}`
+      })
+      return { message: "Reset link has been sent to your email " + maskEmail(email) }
+    } catch (error) {
+      if(error instanceof ServiceError) throw error
+      throw new BadRequestException(`Failed to send reset link, verify this email ${maskEmail(email)} is correct`)
     }
   }
 

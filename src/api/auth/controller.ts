@@ -1,11 +1,12 @@
 import { Response, NextFunction } from "express";
-import { generateCode, responsHandler, validateRequest } from "../../utility/helpers";
+import { generateCode, maskEmail, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { BadRequestException, NotFoundException } from "../../utility/service-error";
 import jwt from "../../utility/jwt";
 import { StatusCodes } from "http-status-codes";
 import mail from "../../utility/mail";
 import Referral from "../../model/referral";
+import dayjs from "dayjs";
 
 class Controller {
   async login(req: any, res: Response, next: NextFunction){
@@ -99,23 +100,25 @@ class Controller {
       validateRequest(req)
       const { email } = req.body
 
-      await mail.sendOTP(email)
-
-      return responsHandler(res, "Registration successful", StatusCodes.OK)
+      await mail.resetLink(email)
+      return responsHandler(res, "OTP sent to yout mail " + maskEmail(email) , StatusCodes.OK)
     }
     catch (error) {
       next(error)
     }
   }
 
-  async verifyOTP(req: any, res: Response, next: NextFunction){
+  async resetPassword(req: any, res: Response, next: NextFunction){
     try {
       validateRequest(req)
-      const { email } = req.body
+      const { password, token } = req.body
 
-      await mail.sendOTP(email)
+      const decoded = jwt.verify(token);
+      if(!decoded) return res.redirect('/login');
 
-      return responsHandler(res, "Registration successful", StatusCodes.OK)
+      await User.updateOne({ _id: decoded?.id }, { password })
+
+      return responsHandler(res, "Password reset successfully", StatusCodes.OK)
     }
     catch (error) {
       next(error)
