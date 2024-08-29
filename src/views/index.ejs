@@ -41,16 +41,17 @@
                   </div>
                   <p>Our investment platform stands out for its reliability, transparency, and personalized support. We simplify the investment process, providing you with the tools and insights needed to make informed decisions and grow your wealth securely.</p>
                   <ul class="info__list d-flex flex-wrap mt-4">
-                      <li> Dapivamus elementum</li>
-                      <li> Dapivamus elementum</li>
-                      <li> There are many variations</li>
-                      <li> There are many variations</li>
-                      <li> Finibus onorum et alorum</li>
-                      <li> Finibus onorum et alorum</li>
+                      <li> Proven track record</li>
+                      <li> Licensed and regulated</li>
+                      <li> Client money protection</li>
+                      <li> Risk awareness and management</li>
+                      <li> Help when you need it</li>
+                      <li> Customer-first trading</li>
+                      <li> Your safety, our priority</li>
                   </ul>
                   <div class="button__wrapper">
                       <a href="/about" class="cmn--btn">Know More</a>
-                      <a href="/contact" class="cmn--btn2">Contact Us</a>
+                      <a href="/contact-us" class="cmn--btn2">Contact Us</a>
                   </div>
               </div>
           </div>
@@ -96,19 +97,19 @@
                       <h2 class="section__header-title">Calculate Your Apex investment</h2>
                       <p>Aenean vulputate eleifend tellus. Aenean leo ligul porttitoeu consequat vitae eleifend acenim</p>
                   </div>
-                  <form class="profit__calculation__form">
+                  <form id="profit_calculator" class="profit__calculation__form">
                       <div class="row g-4">
                           <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
                               <div class="form-group">
                                   <label class="form-label">Plan</label>
-                                  <select class="nice-select text-capitalize w-100 h-50">
+                                  <select name="rate" class="nice-select text-capitalize w-100 h-50">
                                     <% data.forEach(plan => {%>
-                                      <option class="text-capitalize" value="<%= plan?._id %>"><%= plan?.name %></option>
+                                      <option class="text-capitalize" value="<%= Object.entries(plan.toJSON()).map(i => `${i[0]}:${i[1]}`).join(',') %>"><%= plan?.name %></option>
                                     <% }) %>
                                   </select>
                               </div>
                           </div>
-                          <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
+                          <!-- <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
                               <div class="form-group">
                                   <label class="form-label">Compounding</label>
                                   <select class="nice-select w-100 h-50">
@@ -118,19 +119,32 @@
                                       <option>25%</option>
                                   </select>
                               </div>
-                          </div>
+                          </div> -->
                           <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
                               <div class="form-group">
-                                  <label class="form-label">Profit</label>
-                                  <input type="text" class="form-control form--control" placeholder="$60,000">
+                                  <label class="form-label">Capital</label>
+                                  <input 
+                                    name="capital" 
+                                    type="number" 
+                                    min="<%= data[0]['min_price'] %>"
+                                    max="<%= data[0]['max_price'] %>"
+                                    class="form-control form--control" 
+                                    placeholder="$60,000"
+                                    >
                               </div>
                           </div>
                           <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Profit</label>
+                                <input name="profit" disabled readonly type="number" class="form-control form--control" placeholder="$60,000">
+                            </div>
+                        </div>
+                          <!-- <div class="col-md-6 col-lg-12 col-xl-6 col-sm-6">
                               <div class="form-group">
                                   <label class="form-label">Total Returns</label>
                                   <input type="text" class="form-control form--control" placeholder="$800000">
                               </div>
-                          </div>
+                          </div> -->
                       </div>
                   </form>
               </div>
@@ -161,7 +175,7 @@
                   </div>
                   <div class="feature__item-content">
                       <h4 class="title">Get More Profit</h4>
-                      <p>Maecenas tempuslusning eget condim entum and rhoncus eumpesit.</p>
+                      <p>Deriv makes trading easy with user-friendly tools and clear guidance. Stay informed and improve your skills with our market news, webinars, tutorials, and more.</p>
                   </div>
               </div>
           </div>
@@ -194,7 +208,7 @@
                   </div>
                   <div class="feature__item-content">
                       <h4 class="title">Relability</h4>
-                      <p>Maecenas tempuslusning eget condim entum and rhoncus eumpesit.</p>
+                      <p>Apex Stack, founded in 1999, pioneered the world's first fixed-odds trading service and has since earned global trust, growing stronger every year.</p>
                   </div>
               </div>
           </div>
@@ -204,8 +218,8 @@
                       <img src="/assets/images/feature/4.png" alt="feature">
                   </div>
                   <div class="feature__item-content">
-                      <h4 class="title">Relability</h4>
-                      <p>Maecenas tempuslusning eget condim entum and rhoncus eumpesit.</p>
+                      <h4 class="title">Licensed</h4>
+                      <p>Apex Stack is regulated by multiple authorities, including the MFSA, Labuan FSA, VFSC, and BVI FSC.</p>
                   </div>
               </div>
           </div>
@@ -244,10 +258,10 @@
   <div class="container">
       <div class="row align-items-center">
           <div class="col-lg-7">
-              <div class="section__header">
+              <!-- <div class="section__header">
                   <h2 class="section__header-title">Download Our App</h2>
                   <p>Curabitur ullamcorper ultricies nisi Tupural Engle  Nam eget dui. Etiam rhoncus.</p>
-              </div>
+              </div> -->
               <!-- <div class="button__wrapper">
                   <a href="sign-up.html" class="cmn--btn download-btn"><div class="icon"><i class="fab fa-google-play"></i></div> <div class="text"><p>DOWNLOAD</p><p class="for">For Android</p></div></a>
                   <a href="sign-up.html" class="cmn--btn download-btn"><div class="icon"><i class="fab fa-apple"></i></div> <div class="text"><p>DOWNLOAD</p><p class="for">For IOS</p></div></a>

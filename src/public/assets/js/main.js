@@ -477,6 +477,27 @@ $("#login").submit(async function(e) {
   }
 })
 
+$("#profit_calculator input[name='capital']").change(e => {
+  const plan = stringToObject($("#profit_calculator select[name='rate']").val())
+  let capital = e.target.value;
+  capital = capital > Number(plan?.max_price) ? Number(plan?.max_price) : capital;
+  const profit = Number(plan?.rate) * 0.01 * capital;
+
+  $("#profit_calculator input[name='profit']").val(profit)
+})
+
+$("#profit_calculator select[name='rate']").change(e => {
+  const capitalEle = $("#profit_calculator input[name='capital']")
+  const plan = stringToObject(e.target.value)
+
+  let capital = capitalEle.val()
+  capital = capital > Number(plan?.max_price) ? Number(plan?.max_price) : capital;
+
+  const profit = capital * 0.01 * Number(plan?.rate);
+  
+  $("#profit_calculator input[name='profit']").val(profit)
+})
+
 //registration
 $("#register").submit(async function(e) {
   e.preventDefault()
