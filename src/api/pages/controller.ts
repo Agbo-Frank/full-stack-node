@@ -33,6 +33,9 @@ class Controller{
   async realestate(req: Request, res: Response){
     return res.render('real-estate');
   }
+  async forex(req: Request, res: Response){
+    return res.render('forex');
+  }
   async cryptocurrencies(req: Request, res: Response){
     return res.render('cryptocurrencies');
   }

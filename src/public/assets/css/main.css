@@ -4268,6 +4268,14 @@ div[class*=col]:last-child .post__item.style--three {
     background: #1A1A33;
 }
 
+.details__content a {
+    color: #D7A31F;
+}
+
+.details__content strong {
+    font-weight: 700 !important;
+}
+
 .comment__area {
     padding: 30px 30px 35px;
     background: #1A1A33;
