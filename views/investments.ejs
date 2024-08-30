@@ -15,7 +15,7 @@
                 </div>
                 <div class="inner">
                   <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                    <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+                    <li><div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div></li>
                   </ul>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                       </td>
                       <td data-label="Capital"><span class="amount">$<%= i?.capital %></span></td>
                       <td data-label="Profit"><span class="amount">$<%= i?.profit %></span></td>
-                      <td data-label="Status"><span class="wallet text-capitalize badge" style="background-color: <%= i?.status === "active" ? "#198754;" : "#dc3545;" %>;"><%= i?.status %></span></td>
+                      <td data-label="Status"><%- include("partials/status", { name: i?.status }) %></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                       <td data-label="">
                         <button data-inv="<%= i?._id  %>" class="cmn--btn inv__withdrawal" style="width: fit-content; font-size: 14px; padding: 2px 15px;">

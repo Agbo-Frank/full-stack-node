@@ -16,7 +16,7 @@
 
               <div class="inner">
                 <ul class="tabs d-flex justify-content-end flex-wrap align-items-center">
-                  <li><div class="user-thumb"><img src="assets/images/dashboard/cc1.png" alt="dashboard"></div></li>
+                  <li><div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div></li>
                 </ul>
               </div>
           </div>
@@ -46,10 +46,10 @@
                     <td data-label="User Name">
                       <p class="name"><%= i?._id %></p>
                     </td>
-                    <td data-label="Transaction type"><span class="amount"><%= i?.type %></span></td>
+                    <td data-label="Transaction type"><span class="amount"><%- include("partials/status", { name: i?.type }) %></span></td>
                     <td data-label="Currency"><span class="wallet"><%= i?.currency %></span></td>
                     <td data-label="Amount"><span class="date"><%= i?.amount?.toLocaleString("en-US") %></span></td>
-                    <td data-label="Status"><span class="currency"><%= i?.status %></span></td>
+                    <td data-label="Status"><span class="currency"><%- include("partials/status", { name: i?.status }) %></span></td>
                     <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                   </tr>
                 <% }) %>

@@ -14,7 +14,7 @@ const logger = new Logger("server")
 // initiateJobs()
 const app = express();
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 app.use(helmet());
 app.use(cors({
 	origin: '*',
@@ -22,12 +22,13 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-app.use(express.static(path.join('public')));
+app.use("/assets", express.static(path.join('public')));
 app.set('views', path.join('views'));
 app.set('view engine', 'ejs');
 
-app.use((req, _, next) => {
+app.use((req, res, next) => {
   logger.log("info", {method: req?.method, endpoint: req?.url})
+  res.setHeader("Content-Security-Policy", "img-src * data:;");
   next()
 })
 

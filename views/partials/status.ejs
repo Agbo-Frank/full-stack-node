@@ -1,0 +1,15 @@
+<span>
+  <% if(["approved", "active", "commission", 'deposit'].includes(name)){ %>
+    <span style="background-color:#198754;" class="text-capitalize badge">  
+      <%= name %>
+    </span>
+  <% }else if (["declined", "withdraw", "charge"].includes(name)) { %>
+    <span style="background-color:#dc3545" class="wallet text-capitalize badge">  
+      <%= name %>
+    </span>
+  <% } else {%>
+    <span class="wallet text-capitalize badge">  
+      <%= name %>
+    </span>
+  <% } %>
+</span>
