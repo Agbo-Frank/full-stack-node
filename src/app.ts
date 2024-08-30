@@ -22,8 +22,8 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join('public')));
+app.set('views', path.join('views'));
 app.set('view engine', 'ejs');
 
 app.use((req, _, next) => {
