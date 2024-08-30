@@ -1,7 +1,5 @@
-import dayjs from "dayjs";
 import Transaction from "../../model/transaction";
 import { isEmpty, pagingParams } from "../../utility/helpers";
-import controller from "../user/controller";
 import { Request, Response } from "express";
 import Referral from "../../model/referral";
 import { APP_URL } from "../../utility/config";
@@ -36,11 +34,17 @@ class Controller{
   async forex(req: Request, res: Response){
     return res.render('forex');
   }
+  async aboutus(req: Request, res: Response){
+    return res.render('about-us');
+  }
   async cryptocurrencies(req: Request, res: Response){
     return res.render('cryptocurrencies');
   }
   async agriculture(req: Request, res: Response){
     return res.render('agriculture');
+  }
+  async indices(req: Request, res: Response){
+    return res.render('indices');
   }
   async register(req: Request, res: Response){
     let referral_code = null
@@ -51,6 +55,9 @@ class Controller{
   }
   async policy(req: Request, res: Response){
     return res.render('policy');
+  }
+  async terms(req: Request, res: Response){
+    return res.render('terms');
   }
   async dashboard(req, res: Response){
     let data = await Transaction.paginate(

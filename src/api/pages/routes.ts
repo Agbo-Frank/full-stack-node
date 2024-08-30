@@ -25,5 +25,8 @@ router.get("/agriculture", cltr.agriculture)
 router.get("/cryptocurrencies", cltr.cryptocurrencies)
 router.get("/real-estate", cltr.realestate)
 router.get("/forex", cltr.forex)
+router.get("/indices", cltr.indices)
+router.get("/terms", cltr.terms)
+router.get("/about-us", cltr.aboutus)
 
 export default router
