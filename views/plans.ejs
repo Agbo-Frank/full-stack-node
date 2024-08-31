@@ -9,89 +9,80 @@
       <%- include('partials/sidebar', {active: "plans"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
-          <div class="dashboard__header">
-            <div class="inner">
-              <h3 class="title">New investment</h3>
-            </div>
-            <div class="inner">
-              <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                <li><div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div></li>
-              </ul>
-            </div>
-        </div>
-        <div class="">
-          <div class="row">
-            <div class="col-lg-7 mt-5">
-              <div class="dashboard__form">
-                <h3 class="title">Select Plan</h3>
-                <small>In Apex stack - Your Trusted Investment Broker, You will receive profits everyday including weekends.</small>
-                <div>
-                  <small>Current balance: $<strong><%= user?.balance %></strong></small>
-                </div>
-                
-                <div>
-                  <form id="plan" class="setting mt-3">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group text-capitalize">
-                          <label class="form-label">Plans</label>
-                          <select name="plan_id" class="nice-select w-100 h-50">
-                            <% data.forEach(plan => {%>
-                              <option class="text-capitalize" value="<%= `id:${plan?._id},name:${plan?.name},rate:${plan?.rate},min_price:${plan?.min_price},max_price:${plan?.max_price}` %>"><%= plan?.name %></option>
-                            <% }) %>
-                          </select>
+          <%- include('partials/dashboard-header', {name: "New Investment"}) %>
+          <div class="">
+            <div class="row">
+              <div class="col-lg-7 mt-5">
+                <div class="dashboard__form">
+                  <h3 class="title">Select Plan</h3>
+                  <small>In Apexstack - Your Trusted Investment Broker, You will receive profits everyday including weekends.</small>
+                  <div>
+                    <small>Current balance: $<strong><%= user?.balance %></strong></small>
+                  </div>
+                  
+                  <div>
+                    <form id="plan" class="setting mt-3">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group text-capitalize">
+                            <label class="form-label">Plans</label>
+                            <select name="plan_id" class="nice-select w-100 h-50">
+                              <% data.forEach(plan => {%>
+                                <option class="text-capitalize" value="<%= `id:${plan?._id},name:${plan?.name},rate:${plan?.rate},min_price:${plan?.min_price},max_price:${plan?.max_price}` %>"><%= plan?.name %></option>
+                              <% }) %>
+                            </select>
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="col-md-12 mt-2">
-                        <div class="form-group">
-                          <label>Amount</label>
-                          <input 
-                            name="amount" 
-                            type="number"
-                            min="<%= data[0]['min_price']%>"
-                            max="<%= data[0]['max_price']%>"
-                            class="form-control form--control" 
-                            placeholder="Enter amount"
-                          >
+                        <div class="col-md-12 mt-2">
+                          <div class="form-group">
+                            <label>Amount</label>
+                            <input 
+                              name="amount" 
+                              type="number"
+                              min="<%= data[0]['min_price']%>"
+                              max="<%= data[0]['max_price']%>"
+                              class="form-control form--control" 
+                              placeholder="Enter amount"
+                            >
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <button class="btn cmn--btn mt-4">
+                            Start investment
+                            <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                          </button>
                         </div>
                       </div>
-                      <div class="col-md-12">
-                        <button class="btn cmn--btn mt-4">
-                          Start investment
-                          <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-5 mt-5">
-              <div id="plan_details" class="plan__item">
-                <div class="plan__item-header">
-                  <h2 class="plan-parcent"><%= data[0]['rate'] %>%</h2>
-                  <p class="plan-parcent-info">After 30 Days</p>
-                </div>
-                <div class="plan__item-body">
-                  <ul class="plan__info">
-                    <li>
-                      <span class="title">Min :</span>
-                      <span id="min" class="value"><%= data[0]['min_price']%> USD</span>
-                    </li>
-                    <li>
-                      <span class="title">Max :</span>
-                      <span id="max" class="value"><%= data[0]['max_price']%> USD</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="plan__item-footer">
-                  <p class="footer-info text-uppercase"> <%= data[0]['name']%></p>
-                </div>
-            </div>
+              <div class="col-lg-5 mt-5">
+                <div id="plan_details" class="plan__item">
+                  <div class="plan__item-header">
+                    <h2 class="plan-parcent"><%= data[0]['rate'] %>%</h2>
+                    <p class="plan-parcent-info">After 30 Days</p>
+                  </div>
+                  <div class="plan__item-body">
+                    <ul class="plan__info">
+                      <li>
+                        <span class="title">Min :</span>
+                        <span id="min" class="value"><%= data[0]['min_price']%> USD</span>
+                      </li>
+                      <li>
+                        <span class="title">Max :</span>
+                        <span id="max" class="value"><%= data[0]['max_price']%> USD</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="plan__item-footer">
+                    <p class="footer-info text-uppercase"> <%= data[0]['name']%></p>
+                  </div>
+              </div>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

@@ -51,7 +51,7 @@ class Controller {
     try {
       validateRequest(req)
 
-      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/okafor/photos'})
+      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/photos'})
       if(!result) throw new BadRequestException(`Unable to upload avatar`);
 
       await User.updateOne(
@@ -189,7 +189,7 @@ class Controller {
   }
 
   async kyc(req: any, res: Response, next: NextFunction){
-    const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/okafor/photos'})
+    const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/kyc'})
     if(!result) throw new BadRequestException(`Unable to upload avatar`);
 
     await User.updateOne(

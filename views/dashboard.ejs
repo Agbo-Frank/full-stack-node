@@ -9,22 +9,7 @@
       <%- include('partials/sidebar', {active: "overview"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
-            <div class="dashboard__header">
-                <div class="inner">
-                    <h3 class="title">Overview</h3>
-                </div>
-                <div class="inner">
-                    <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                        <li>
-                            <div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div>
-                            <div class="header-trigger d-block d--none">
-                                <span></span>
-                            </div>
-                        </li>
-                        
-                    </ul>
-                </div>
-            </div>
+            <%- include('partials/dashboard-header', {name: "Dashboard"}) %>
           <div class="row pt-5 gy-4">
               <div class="col-xl-6 col-xxl-4 col-lg-6 col-md-6">
                   <div class="dashboard__card">

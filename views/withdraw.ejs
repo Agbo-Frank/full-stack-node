@@ -9,16 +9,7 @@
       <%- include('partials/sidebar', {active: "withdraw"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
-          <div class="dashboard__header">
-              <div class="inner">
-                <h3 class="title">Withdraw</h3>
-              </div>
-              <div class="inner">
-                <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                  <li><div class="user-thumb"><img src="<%= user?.avatar %>" alt="dashboard"></div></li>
-                </ul>
-              </div>
-          </div>
+          <%- include('partials/dashboard-header', {name: "Withdraw"}) %>
 
           <div class="dashboard__form mt-5">
             <div>

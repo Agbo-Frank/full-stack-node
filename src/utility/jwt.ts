@@ -8,7 +8,7 @@ class JWT {
     return sign(payload, String(JWT_SECRET_KEY),  {
       expiresIn: '360h',
       audience: 'API',
-      issuer: 'Apex stack',
+      issuer: 'Apexstack',
       ...options
     })
   }

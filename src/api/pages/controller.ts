@@ -35,13 +35,13 @@ class Controller{
     return res.render('forex');
   }
   async aboutus(req: Request, res: Response){
-    return res.render('about-us');
+    return res.render('about');
   }
   async cryptocurrencies(req: Request, res: Response){
     return res.render('cryptocurrencies');
   }
-  async agriculture(req: Request, res: Response){
-    return res.render('agriculture');
+  async faqs(req: Request, res: Response){
+    return res.render('faq');
   }
   async indices(req: Request, res: Response){
     return res.render('indices');
