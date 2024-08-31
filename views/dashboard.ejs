@@ -79,7 +79,7 @@
                     <tbody>
                         <% tx?.forEach(i => {%>
                             <tr style="width: 100%;">
-                                <td data-label="User Name">
+                                <td data-label="Reference">
                                 <p class="name"><%= i?._id %></p>
                                 </td>
                                 <td data-label="Transaction type"><%- include("partials/status", { name: i?.type }) %></td>

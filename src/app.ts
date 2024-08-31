@@ -22,13 +22,15 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-app.use("/assets", express.static(path.join('public')));
+app.use("/assets", express.static(path.join('public'), { maxAge: '1d'}));
 app.set('views', path.join('views'));
 app.set('view engine', 'ejs');
+// app.locals.cache = true;
 
 app.use((req, res, next) => {
   logger.log("info", {method: req?.method, endpoint: req?.url})
-  res.setHeader("Content-Security-Policy", "img-src * data:;");
+  // res.setHeader("Content-Security-Policy", "img-src * data:;");
+  // res.setHeader('Cache-Control', 'public, max-age=86400');
   next()
 })
 
