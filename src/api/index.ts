@@ -11,9 +11,10 @@ import page from "./pages/controller"
 export default function(app: Application){
   app.use("/admin", guard, admin)
   app.use("/", pages)
-  app.use("/user", guard, user)
+  app.use("/user", user)
   app.use("/auth", auth)
   app.use("/investment", guard, investment)
+
   app.get("/*", page.error)
 
 }

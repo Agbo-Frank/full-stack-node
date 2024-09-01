@@ -7,6 +7,7 @@ import cloudinary from "../../utility/cloudinary";
 import Transaction from "../../model/transaction";
 import numeral from "numeral";
 import Referral from "../../model/referral";
+import mail from "../../utility/mail";
 
 class Controller {
   async profile(req: any, res: Response, next: NextFunction){
@@ -113,10 +114,19 @@ class Controller {
         status: "pending",
         description: "Wallet funding",
       })
+      await mail.send({
+        subject: "Confirm new deposit",
+        text: `
+          network: ${network}
+          ref: ${tx.id}
+          amount: ${amount}
+          hash/id: ${hash}
+        `
+      })
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
       console.log("errr:", error)
-      // next(error)
+      next(error)
     }
   }
 
@@ -140,6 +150,16 @@ class Controller {
         recipient: address,
         amount: -amount,
         description: `Withdrawal request` 
+      })
+
+      await mail.send({
+        subject: "You have a new withdrawal request",
+        text: `
+          name: ${user?.first_name + " " + user?.last_name}
+          ref: ${tx.id}
+          amount: ${amount}
+          address: ${address}
+        `
       })
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
@@ -189,17 +209,42 @@ class Controller {
   }
 
   async kyc(req: any, res: Response, next: NextFunction){
-    const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/kyc'})
-    if(!result) throw new BadRequestException(`Unable to upload avatar`);
+    try {
+      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/kyc'})
+      if(!result) throw new BadRequestException(`Unable to upload avatar`);
 
-    await User.updateOne(
-      { _id: req.user },
-      { kyc_docs: result?.secure_url }
-    )
-    return responsHandler(
-      res, "KYC document sent for reveiw", 
-      StatusCodes.OK, { url: result?.secure_url }
-    )
+      await User.updateOne(
+        { _id: req.user },
+        { kyc_docs: result?.secure_url }
+      )
+      return responsHandler(
+        res, "KYC document sent for reveiw", 
+        StatusCodes.OK, { url: result?.secure_url }
+      )
+    } catch (error) {
+        next(error)
+    }
+  }
+
+  async contact(req: any, res: Response, next: NextFunction){
+    try {
+      validateRequest(req)
+      const { message, email, name } = req.body
+      await mail.send({
+        subject: "You have a new message",
+        text: `
+          name: ${name}
+          email: ${email}
+          message: ${message}
+        `
+      })
+      return responsHandler(
+        res, "Your message has been sent successfully", 
+        StatusCodes.OK
+      )
+    } catch (error) {
+      next(error)
+    }
   }
 }
 export default new Controller()

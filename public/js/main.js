@@ -995,8 +995,8 @@ $("#kyc").submit(async function(e) {
   reader.readAsDataURL(e.target.docs.files[0]);
 
   async function upload(image){
-    $("kyc #loader").toggleClass("d-none")
-    $("kyc button").prop('disabled', true)
+    $("#kyc #loader").toggleClass("d-none")
+    $("#kyc button").prop('disabled', true)
     try {
       const response = await fetch("/users/kyc", {
         method: "POST",
@@ -1010,8 +1010,36 @@ $("#kyc").submit(async function(e) {
       console.log(error)
     }
     finally{
-      $("kyc #loader").toggleClass("d-none")
-      $("kyc button").prop('disabled', false)
+      $("#kyc #loader").toggleClass("d-none")
+      $("#kyc button").prop('disabled', false)
     }
+  }
+})
+
+$("#contact").submit(async function(e) {
+  e.preventDefault()
+  $("#contact #loader").toggleClass("d-none")
+  $("#contact button").prop('disabled', true)
+
+  const payload = {
+    name: e.target.name.value,
+    email: e.target.email.value,
+    message: e.target.message.value,
+  };
+  try {
+    const response = await fetch("/users/contact", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    return notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#contact #loader").toggleClass("d-none")
+    $("#contact button").prop('disabled', false)
   }
 })
