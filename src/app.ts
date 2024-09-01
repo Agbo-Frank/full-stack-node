@@ -22,7 +22,7 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-app.use("/assets", express.static(path.join('public'), { maxAge: '1d'}));
+app.use("/assets", express.static(path.join('public')));
 app.set('views', path.join('views'));
 app.set('view engine', 'ejs');
 // app.locals.cache = true;

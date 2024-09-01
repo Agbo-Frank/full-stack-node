@@ -6,6 +6,8 @@ import { maskEmail, randNum } from "../utility/helpers";
 import dayjs from "dayjs";
 import User from "../model/user";
 import jwt from "./jwt";
+import ejs from "ejs"
+import path from "path";
 
 class MailService {
   private config
@@ -59,12 +61,18 @@ class MailService {
       if(!user) throw new NotFoundException("User not found");
       
       const link = APP_URL + "/reset-password?token=" + jwt.create({ id: user?.id, role: user.role }, { expiresIn: 60 * 10 }) //10 mins
+
+      const html = await ejs.renderFile(
+        path.join("views", "email.ejs"), 
+        { link, name: user?.first_name, timestamp: dayjs().format("DD MMM YYYY") }
+      );
       await this.send({
         from: MAIL_USER,
         to: email,
         subject: "Reset link",
-        text: `Here is your reset link: ${link}`
+        html
       })
+      
       return { message: "Reset link has been sent to your email " + maskEmail(email) }
     } catch (error) {
       if(error instanceof ServiceError) throw error

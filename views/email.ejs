@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Apexstack</title>
-
+    <link rel="stylesheet" href="https://apexstack.org/assets/css/main.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .btn {
+        border: 1px black solid; 
+        text-transform: capitalize; 
+        padding: 10px 30px; 
+        background-color: black;
+        color: white;
+        margin: 10px auto;
+      }
+    </style>
   </head>
   <body
     style="
@@ -70,7 +80,7 @@
                 color: #1f1f1f;
               "
             >
-              Your OTP
+              Reset your password
             </h1>
             <p
               style="
@@ -91,20 +101,12 @@
                 letter-spacing: 0.56px;
               "
             >
-              <%= text %>
-              <br />
+              We received a request to reset your password. If you did not make this request, please ignore this email.
             </p>
-            <p
-              style="
-                margin: 0;
-                margin-top: 60px;
-                font-size: 20px;
-                font-weight: 600;
-                color: #DDA26D;
-              "
-            >
-              <%= code %>
-            </p>
+            <br />
+            <div style="">
+              <a href="<%= link %>" class="btn">reset password</a>
+            </div>
             <p
               style="
                 margin: 0;
@@ -113,8 +115,9 @@
                 letter-spacing: 0.56px;
               "
             >
-              Please note that the token will expire in <span style="font-weight: 600; color: #1f1f1f;">5 minutes</span>. so it is important to complete this step quickly.
+              Please note that this link will expire in <span style="font-weight: 600; color: #1f1f1f;">5 minutes</span>. so it is important to complete this step quickly.
             </p>
+            
           </div>
         </div>
 
@@ -132,11 +135,11 @@
           <a
             href="mailto:archisketch@gmail.com"
             style="color: #DDA26D; text-decoration: none;"
-            >office@vendo.club</a
+            >support@apexstack.org</a
           >
           or visit our
           <a
-            href=""
+            href="https://apexstack.org/contact-us"
             target="_blank"
             style="color: #DDA26D; text-decoration: none;"
             >Help Center</a
@@ -162,11 +165,11 @@
             color: #434343;
           "
         >
-          Vendo
+          Apexstack
         </p>
         <p style="margin: 0; margin-top: 16px; color: #434343;">
           <% const date = new Date() %>
-          Copyright © <%= date.getFullYear() %> Vendo. All rights reserved.
+          Copyright © <%= date.getFullYear() %> Apexstack. All rights reserved.
         </p>
       </footer>
     </div>
