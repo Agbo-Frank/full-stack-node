@@ -121,7 +121,7 @@ export const generateCode = async (email: string) =>  {
   if(email && email?.length > 0){
     do {
         code =  extractNameFromEmail(email)
-        is_unique = await User.findOne({ code })
+        is_unique = await User.findOne({ referral_code: code })
     }
     while(is_unique);
   }
