@@ -1027,7 +1027,7 @@ $("#contact").submit(async function(e) {
     message: e.target.message.value,
   };
   try {
-    const response = await fetch("/users/contact", {
+    const response = await fetch("/user/contact", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' }
