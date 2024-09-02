@@ -16,6 +16,6 @@
         </ul>
     </div>
     <div class="plan__item-footer">
-        <p class="footer-info text-uppercase"> <%= plan?.name %></p>
+        <a href="<% user ? "/plans" : "/login" %>" class="footer-info text-uppercase"> <%= plan?.name %></a>
     </div>
 </div>
