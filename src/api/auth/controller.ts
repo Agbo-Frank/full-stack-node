@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { generateCode, maskEmail, responsHandler, validateRequest } from "../../utility/helpers";
+import { generateCode, isEmpty, maskEmail, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { BadRequestException, NotFoundException } from "../../utility/service-error";
 import jwt from "../../utility/jwt";
@@ -45,7 +45,7 @@ class Controller {
       if(user)throw new BadRequestException("User with same email/username already exist");
 
       let referral = null
-      if("referral_code" in req.body){
+      if("referral_code" in req.body && isEmpty(req.body?.referral_code)){
         referral = await User.findOne({ referral_code: req?.body?.referral_code })
         if(!referral) throw new NotFoundException("Invalid referral code");
       }
