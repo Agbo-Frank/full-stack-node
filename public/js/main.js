@@ -407,25 +407,21 @@ function generateQRCode(text) {
 }
 
 const addresses = {
-  "ethereum": "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03",
-  "bitcoin": "bc1q6gxju7st2da7frxekk4ar6na68rly9m0zq7cuh",
-  "usdt": "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
+  "ethereum": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
+  "bitcoin": "bc1q2ggnqnxppdkat25fhcu8g3lfwj4ychqkp49092",
+  "usdt.erc20": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
+  "usdt.bep20": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
+  "usdt.trc20": "TZ5i12ak6YJKhTre1cuY5X5z8PGPKmFjQT"
 }
 
 // Event listener for the button
 $('#deposit #currency').change(function(e) {
   console.log("on change", e.target.value);
   const currency = e.target.value.toLowerCase();
-  const address = addresses[currency] || "0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03"
+  const address = addresses[currency] || "0x157678029acbF2f308D0F521e99359a8eafFdb04"
   $("input[name='address']").val(address)
 
-  generateQRCode("0x70f9eEf20b89A2E9dAF0a900804Fe46238F4CA03")
-  // var text = $('#text-input').val();
-  // if (text.trim() !== '') {
-  //     generateQRCode(text);
-  // } else {
-  //     alert('Please enter some text.');
-  // }
+  generateQRCode(address)
 });
 
 function stringToObject(str){
