@@ -79,7 +79,7 @@ class Controller {
       if(inv.status !== investment_status.active){
         throw new NotFoundException("Investment is " + inv.status);
       }
-      if(dayjs().diff(inv.created_at, "months") < 6) {
+      if(dayjs().diff(inv.created_at, "days") < 10) {
         throw new NotFoundException("Investment not found");
       };
 

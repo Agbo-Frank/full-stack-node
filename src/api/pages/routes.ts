@@ -29,5 +29,6 @@ router.get("/commodities", cltr.commodities)
 router.get("/indices", cltr.indices)
 router.get("/terms", cltr.terms)
 router.get("/about-us", cltr.aboutus)
+router.get("/stocks", cltr.stocks)
 
 export default router

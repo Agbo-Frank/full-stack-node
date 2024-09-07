@@ -1,7 +1,7 @@
 <div class="plan__item">
     <div class="plan__item-header">
         <h2 class="plan-parcent"><%= plan?.rate %>%</h2>
-        <p class="plan-parcent-info">After 30 days</p>
+        <p class="plan-parcent-info">After <%= plan?.duration %> days</p>
     </div>
     <div class="plan__item-body">
         <ul class="plan__info">
@@ -11,7 +11,7 @@
             </li>
             <li>
                 <span class="title">Max :</span>
-                <span class="value"><%= plan?.max_price?.toLocaleString("en-US") %> USD</span>
+                <span class="value"><%= plan?.max_price ? plan?.max_price?.toLocaleString("en-US") + " USD" : "Unlimited" %></span>
             </li>
         </ul>
     </div>

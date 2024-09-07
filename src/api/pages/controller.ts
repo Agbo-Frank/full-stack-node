@@ -40,6 +40,9 @@ class Controller{
   async commodities(req: Request, res: Response){
     return res.render('commodities');
   }
+  async stocks(req: Request, res: Response){
+    return res.render('stocks');
+  }
   async cryptocurrencies(req: Request, res: Response){
     return res.render('cryptocurrencies');
   }
