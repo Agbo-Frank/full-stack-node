@@ -42,7 +42,7 @@ class Controller {
         user: req?.user,
         amount, currency: "USD",
         status: "approved",
-        description: `Investment initiation: ${plan?.name}`,
+        description: `Investment initialization: ${plan?.name}`,
         type: "charge"
       })
 
@@ -80,12 +80,13 @@ class Controller {
         throw new NotFoundException("Investment is " + inv.status);
       }
       if(dayjs().diff(inv.created_at, "days") < 10) {
-        throw new NotFoundException("Investment not found");
+        throw new BadRequestException("Withdrawal allowed only after 10 days of investment.");
       };
 
       const user = await User.findById(req.user)
       if(!user) throw new NotFoundException("User not found");
       const amount = numeral(inv.capital).add(inv.profit)
+
       user.balance = amount.add(user.balance).value()
       inv.status = investment_status.completed;
 
