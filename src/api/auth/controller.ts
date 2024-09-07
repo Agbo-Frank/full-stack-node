@@ -6,7 +6,6 @@ import jwt from "../../utility/jwt";
 import { StatusCodes } from "http-status-codes";
 import mail from "../../utility/mail";
 import Referral from "../../model/referral";
-import dayjs from "dayjs";
 
 class Controller {
   async login(req: any, res: Response, next: NextFunction){
