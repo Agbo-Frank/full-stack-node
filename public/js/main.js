@@ -1044,3 +1044,23 @@ $("#contact").submit(async function(e) {
     $("#contact button").prop('disabled', false)
   }
 })
+
+// $("input[name='password']")
+
+// <script type="text/javascript">
+//     const passwordInput = document.querySelector("input[name='password']")
+//     const visible = document.getElementById("visible")
+//     const hide = document.getElementById("hide")
+
+//     visible.addEventListener("click", function(e){
+//       passwordInput.setAttribute('type', "text");
+//       visible.classList.add("hidden")
+//       hide.classList.remove("hidden")
+//     })
+
+//     hide.addEventListener("click", function(e){
+//       passwordInput.setAttribute('type', "password");
+//       hide.classList.add("hidden")
+//       visible.classList.remove("hidden")
+//     })
+//   </script>
