@@ -59,6 +59,110 @@ class MailService {
     }
   }
 
+  async sendWithTemplate(payload){
+    const { to, subject, message } = payload
+    const html = await ejs.renderFile(
+      path.join("views", "email-template", "general.ejs"), 
+      { text: message, subject, timestamp: dayjs().format("DD MMM YYYY") }
+    );
+    await this.send({
+      from: MAIL_USER,
+      to, subject, html
+    })
+  }
+
+  async onRegistration(email: string, name: string){
+    try {
+      const html = await ejs.renderFile(
+        path.join("views", "email-template", "registration.ejs"), 
+        { name, timestamp: dayjs().format("DD MMM YYYY") }
+      );
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject: `Welcome to Apexstack ${name}`,
+        html
+      })
+      
+      return { message: "Mail sent", status: true  }
+    } catch (error) {
+      return { message: "Mail failed", status: false  }
+    }
+  }
+
+  async onDeposit(email: string, name: string, order: {amount: string, ref: string, currency: string}){
+    try {
+      const html = await ejs.renderFile(
+        path.join("views", "email-template", "deposit.ejs"), 
+        { 
+          name, 
+          timestamp: dayjs().format("DD MMM YYYY"),
+          ...order
+        }
+      );
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject: `Deposit Request Received`,
+        html
+      })
+      
+      return { message: "Mail sent", status: true  }
+    } catch (error) {
+      return { message: "Mail failed", status: false  }
+    }
+  }
+
+  async onTxUpdate(payload){
+    const { to, name, status, type, ref, amount, network } = payload
+    const request = ejs.render(`
+      <p>Your request is as follows:</p>
+      <div>
+        <p>- Ref: <%= "*".repeat(5) + ref.slice(-5) %></p>
+        <p>- Amount: <%= amount %></p>
+        <p style="text-transform: uppercase;">- Currency: <%= network %></p>
+      </div>
+    `, {ref, amount, network})
+
+    console.log(request, `${type}.${status}`)
+
+    const { title: subject, subtitle } = this.txmail_content[`${type}.${status}`]
+    const message = ejs.render(subtitle, { order: request, name })
+
+    try {
+      await this.sendWithTemplate({ message, to, subject })
+      return { message: "Mail sent", status: true  }
+    } catch {
+      return { message: "Mail failed", status: false  }
+    }
+  }
+
+  async onWithdrawal(
+    email: string, name: string, 
+    order: { amount: string, ref: string, currency: string, address: string }
+  ){
+    try {
+      const html = await ejs.renderFile(
+        path.join("views", "email-template", "withdraw.ejs"), 
+        { 
+          name, 
+          timestamp: dayjs().format("DD MMM YYYY"),
+          ...order
+        }
+      );
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject: `Withdrawal Request Received`,
+        html
+      })
+      
+      return { message: "Mail sent", status: true  }
+    } catch (error) {
+      return { message: "Mail failed", status: false  }
+    }
+  }
+
   async resetLink(email: string){
     try {
       const user = await User.findOne({ email })
@@ -89,6 +193,49 @@ class MailService {
     if(!user) throw new NotFoundException("User not found")
 
     return user
+  }
+
+  private txmail_content = {
+    'withdraw.declined': {
+      title: "Withdrawal Request Declined",
+      subtitle: `
+      <p>Dear <%= name %>,</p>
+      <br />
+      <p>We regret to inform you that your recent withdrawal request has been declined.</p>
+      <%- order %>
+      <p>If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      `
+    },
+    'withdraw.approved': {
+      title: "Your Withdrawal Request has been Approved",
+      subtitle: `
+      <p>Dear <%= name %>,</p>
+      <br />
+      <p>We are pleased to inform you that your recent withdrawal request has been approved successfully</p>
+      <%- order %>
+      <p>The amount of <%= amount %> has been processed and should be reflected in your account shortly. If you have any questions or require further assistance, please reach out to us at <a href="mailto:support@apexstack.org">support@apexstack.org</a>.</p>
+      `
+    },
+    'deposit.approved': {
+      title: "Your Deposit Request has been Approved",
+      subtitle: `
+      <p>Dear <%= name %>,</p>
+      <br />
+      <p>We are pleased to inform you that your recent deposit has been successfully approved.</p>
+      <%- order %>
+      <p>If you have any questions or need further assistance, feel free to contact us at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      `
+    },
+    'deposit.declined': {
+      title: "Deposit Request Declined",
+      subtitle: `
+      <p>Dear <%= name %>,</p>
+      <br />
+      <p>We regret to inform you that your recent deposit attempt has been declined.</p>
+      <%- order %>
+      <p>Please review the details of your transaction and ensure that all information is correct. If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      `
+    }
   }
 }
 

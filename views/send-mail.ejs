@@ -1,0 +1,56 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/banner', {name: "Send mails"}) %>
+
+<!-- Dashboard Section Starts Here -->
+<div class="dashbaord-section padding-bottom">
+  <div class="container">
+    <div class="row">
+      <%- include('partials/sidebar', {active: "admin/sendmail"}) %>
+      <div class="col-lg-8 col-xl-8 col-xxl-9">
+        <div class="dashboard__wrapper">
+          <%- include('partials/dashboard-header', {name: "Send Mail"}) %>
+
+          <div class="dashboard__form mt-5">
+            <div>
+              <form id="send_mail" class="setting mt-3">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>To: </label>
+                      <input name="to" type="email" required class="form-control form--control" placeholder="Enter email">
+                    </div>
+                  </div>
+                  <div class="col-md-12"></div>
+                    <div class="form-group">
+                      <label>Subject: </label>
+                      <input name="subject" type="text" required class="form-control form--control" placeholder="Enter subject">
+                    </div>
+                  </div>
+                  <div class="col-md-12"></div>
+                    <div class="form-group">
+                      <label>Message: </label>
+                      <div class="form-group">
+                        <textarea required class="form-control form--control" name="message" placeholder="Write Your Messages"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button class="btn cmn--btn mt-4">
+                      Send mail
+                      <span id="send_mail_loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dashboard Section Ends Here -->
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

@@ -2984,6 +2984,7 @@ i {
     flex-direction: column;
     background: linear-gradient(180deg, #04083F 0%, rgba(0, 0, 28, 0.7) 100%);
     opacity: 0;
+    overflow-y: auto;
     visibility: hidden;
     transform: scaleY(0.6);
     transform-origin: top;

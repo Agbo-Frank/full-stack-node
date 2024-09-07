@@ -3,7 +3,7 @@
 <%- include('partials/banner', {name: "Withdraw"}) %>
 
 <!-- Dashboard Section Starts Here -->
-<div class="dashbaord-section padding-bottom">
+<div class="dashbaord-section padding-bottom"></div>
   <div class="container">
     <div class="row">
       <%- include('partials/sidebar', {active: "withdraw"}) %>
@@ -26,8 +26,10 @@
                       <label class="form-label">Select method</label>
                       <select name="currency" id="currency" class="nice-select w-100 h-50">
                         <option value="btc">Bitcoin</option>
-                        <option value="eth">Ethereum</option>
-                        <option value="usdt">USDT</option>
+                        <option value="usdt.erc20">USDT(ERC20)</option>
+                        <option value="usdt.trc20">USDT(TRC20)</option>
+                        <option value="usdt.bep20">USDT(TRC20)</option>
+                        <option value="eth">Etherum</option>
                       </select>
                     </div>
                   </div>

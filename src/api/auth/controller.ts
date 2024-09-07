@@ -66,27 +66,7 @@ class Controller {
           reward: 10
         })
       }
-      
-      // await mail.send({
-      //   to: email,
-      //   from: "noreply@artversehub.com", 
-      //   subject: "🎉 Welcome to Artverse! 🎉",
-      //   html: `
-      //   Hello ${username}, <br /> <br />
-
-      //   Thank you for joining our vibrant community of NFT enthusiasts! We’re thrilled to have you on board. <br /><br />
-
-      //   At Artverse, you can explore a world of unique and captivating NFTs. Whether you're here to discover, collect, or invest in digital art, we have something for everyone. <br /><br />
-
-      //   To get started, check out the latest collections, connect with other collectors, and immerse yourself in the art and creativity that makes our platform special. <br /><br />
-
-      //   If you have any questions or need assistance, our support team is here to help. Enjoy your journey through the Artverse!
-      //   you have a new registration.<br /> <br />
-        
-      //   Happy exploring,<br />
-      //   The Artverse Team<br />
-      //   `
-      // })
+      mail.onRegistration(email, first_name) 
       return responsHandler(res, "Registration successful", StatusCodes.CREATED)
     } catch (error) {
       console.log(error)

@@ -9,20 +9,7 @@
       <%- include('partials/sidebar', {active: "admin/users"}) %>
       <div class="col-lg-8 col-xl-8 col-xxl-9">
         <div class="dashboard__wrapper">
-            <div class="dashboard__header">
-                <div class="inner">
-                  <h3 class="title">Users</h3>
-                </div>
-                <div class="inner">
-                  <ul class="tabs d-flex justify-content-end flex-wrap align-items-end">
-                    <li>
-                      <div class="user-thumb">
-                        <img src="<%= user?.avatar %>" alt="dashboard">
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-            </div>
+          <%- include('partials/dashboard-header', {name: "Users"}) %>
             <div class="dashboard__table__container">
               <table style="width: 100%;" class="table mt-5 table-responsive transection__table dashboard__table">
                 <thead>
@@ -36,7 +23,7 @@
                 </thead>
                 <tbody>
                   <% data.docs.forEach(i => { %>
-                    <tr data-user="<%= Object.entries(i.toJSON()).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="user__details__btn">
+                    <tr data-user="<%= Object.entries(i.toJSON()).map(i => `${i[0]}::${i[1]}`).join(',') %>" class="user__details__btn">
                       <td data-label="Name">
                         <div class="user d-flex align-items-center">
                             <div class="thumb">

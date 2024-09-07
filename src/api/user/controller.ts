@@ -106,6 +106,9 @@ class Controller {
     try {
       validateRequest(req)
       const { amount, hash, network } = req.body
+      const user = await User.findById(req.user)
+      if(!user) throw new NotFoundException("User not found")
+
       const tx = await Transaction.create({
         user: req.user,
         type: "deposit",
@@ -123,6 +126,10 @@ class Controller {
           hash/id: ${hash}
         `
       })
+      mail.onDeposit(
+        user.email, user.first_name,
+        { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5)}
+      )
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
       console.log("errr:", error)
@@ -133,10 +140,10 @@ class Controller {
   async withdraw(req: any, res: Response, next: NextFunction){
     try {
       validateRequest(req)
-      const { amount, address } = req.body
+      const { amount, currency, address } = req.body
       const user = await User.findById(req.user)
       if(!user) throw new BadRequestException("user not found");
-      if(!user.verified) throw new BadRequestException("Your KYC hasn't verified");
+      // if(!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
       if(user.balance < Number(amount)) throw new BadRequestException("Insufficient balance to withdraw");
       
       user.balance = numeral(user.balance).subtract(amount).value()
@@ -157,10 +164,15 @@ class Controller {
         text: `
           name: ${user?.first_name + " " + user?.last_name}
           ref: ${tx.id}
+          currency: ${currency}
           amount: ${amount}
           address: ${address}
         `
       })
+      mail.onWithdrawal(
+        user.email, user.first_name,
+        { amount, address, currency, ref: "*".repeat(6) + tx.id.slice(-5) }
+      )
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
       next(error)

@@ -334,9 +334,18 @@ $('.user__details__btn').click(function() {
   $('.overlay').addClass('active')
 
   $(this).attr('data-user').split(",").forEach(i => {
-    const [key, val] = i.split(":")
+    const [key, val] = i.split("::")
     $(`#user__details__form input[name='${key}']`).val(val)
+
+    if(key === "kyc_docs" && val){
+      $(`#user__details__form .view-docs`).removeClass("d-none")
+      $(`#user__details__form .view-docs`).attr("href",val)
+    }
+    if(key === "verified"){
+      $(`#user__details__form input[name='verified']`).attr("checked", val === "true")
+    }
   })
+
   
 });
 
@@ -607,7 +616,7 @@ $("#deposit").submit(async function(e) {
     amount: e.target.amount.value,
     address: e.target.address.value,
     hash: e.target.hash.value,
-    nework: e.target.currency.value
+    network: e.target.currency.value
   };
 
   try {
@@ -866,12 +875,13 @@ $("#user__details__form").submit(async function(e) {
   e.preventDefault()
   $("#user__details__form #loader").toggleClass("d-none")
   $("#user__details__form button").prop('disabled', true)
-
+  
   const payload = {
     first_name: e.target.first_name.value,
     last_name: e.target.last_name.value,
     _id: e.target._id.value,
     balance: e.target.balance.value,
+    verified: $("#verify-kyc").is(":checked"),
     password: e.target.password.value
   };
   try {
@@ -933,7 +943,7 @@ $("#tx__details__form").submit(async function(e) {
     amount: e.target.amount.value,
     currency: e.target.currency.value,
     status: e.target.status.value,
-    description: e.target.description.value
+    description: e.target?.description?.value
   };
   try {
     const response = await fetch("/admin/transactions", {
@@ -979,6 +989,37 @@ $("#inv__details__form").submit(async function(e) {
   finally{
     $("#inv__details__form #loader").toggleClass("d-none")
     $("#inv__details__form button").prop('disabled', false)
+  }
+})
+
+//registration
+$("#send_mail").submit(async function(e) {
+  e.preventDefault()
+
+  $("#send_mail_loader").removeClass("d-none")
+  $("button").prop('disabled', true)
+
+  const payload = {
+    to: e.target.to.value,
+    subject: e.target.subject.value,
+    message: e.target.message.value
+  };
+
+  try {
+    const response = await fetch("/admin/sendmail", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    notify(data?.message, response.ok ? "success" : "error")
+  }
+  catch(error){
+    console.log(error)
+  }
+  finally{
+    $("#send-mail #send-mail-loader").toggleClass("d-none")
+    $("#send-mail button").prop('disabled', false)
   }
 })
 
@@ -1040,6 +1081,17 @@ $("#contact").submit(async function(e) {
     $("#contact button").prop('disabled', false)
   }
 })
+
+$('.toggle-password').click(function() {
+  const passwordField = $('.toggle-password-field');
+  const passwordFieldType = passwordField.attr('type');
+
+  // Toggle between 'password' and 'text'
+  passwordField.attr('type', passwordFieldType === 'password' ? 'text' : 'password');
+
+  // // Optionally toggle the icon (optional)
+  // $(this).text(passwordFieldType === 'password' ? '🙈' : '👁️');
+});
 
 // $("input[name='password']")
 

@@ -35,10 +35,10 @@
 
   $(window).on('load', function () {
    const randomName = faker.person.firstName();
-   const events = ["withdraw", 'signup', 'investment', 'deposit']
+   const events = ["withdraw", 'signup', 'deposit']
   
    setInterval(() => {
-      const index = faker.number.int({min: 0, max: 3});
+      const index = faker.number.int({min: 0, max: 2});
       const { title, subtitle } = getEvents(events[index])
       tata.text(title, subtitle, { position: "br", progress: true, duration: 3000, animate: "slide" });
     }, 25000) 

@@ -5,6 +5,9 @@ import { StatusCodes } from "http-status-codes";
 import Transaction from "../../model/transaction";
 import Plan from "../../model/plans";
 import Investment from "../../model/investment";
+import mail from "../../utility/mail";
+import { NotFoundException } from "../../utility/service-error";
+import numeral from "numeral";
 
 class Controller {
   async users(req: any, res: Response, next: NextFunction){
@@ -112,6 +115,11 @@ class Controller {
 
   async editTxn(req: any, res: Response, next: NextFunction){
     try {
+      const transaction = await Transaction.findById(req?.body?._id)
+      if(!transaction) throw new NotFoundException("Transaction not found");
+
+      const user = await User.findById(transaction.user)
+
       const tx = await Transaction.findByIdAndUpdate(
         req?.body?._id,
         {
@@ -123,6 +131,30 @@ class Controller {
         },
         { new: true }
       )
+
+      if(tx.status === "approved"){
+        if(tx.type === "deposit"){
+          user.balance = numeral(user.balance).add(tx.amount).value()
+        }
+        if(tx.type === "withdraw"){
+          user.balance = numeral(user.balance).subtract(tx.amount).value()
+        }
+      }
+      if(
+        ["withdrawal", "deposit"].includes(tx.type) &&
+        ["approved", "declined"].includes(tx.status)
+      ){
+        mail.onTxUpdate({
+          user: transaction.user,
+          to: user?.email,
+          name: user?.first_name,
+          status: tx.status,
+          type: tx.type,
+          ref: tx.id,
+          amount: tx.amount,
+          network: tx.network
+        })
+      }
       return responsHandler(res, "Transaction updated successfully", StatusCodes.OK, tx)
     } catch (error) {
       next(error)
@@ -132,6 +164,20 @@ class Controller {
   async plans(req: any, res: Response, next: NextFunction){
     const data = await Plan.find()
     return res.render('all-plans', { data });
+  }
+
+  async sendmails(req: any, res: Response, next: NextFunction){
+    return res.render('send-mail');
+  }
+
+  async sendMails(req: any, res: Response, next: NextFunction){
+    try {
+      validateRequest(req)
+      await mail.sendWithTemplate(req.body)
+      return responsHandler(res, "Message sent successfully", StatusCodes.OK)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async createPlan(req: any, res: Response, next: NextFunction){

@@ -9,7 +9,7 @@ import isAdmin from "../middleware/is-admin";
 import page from "./pages/controller"
 
 export default function(app: Application){
-  app.use("/admin", guard, admin)
+  app.use("/admin", guard, isAdmin, admin)
   app.use("/", pages)
   app.use("/user", user)
   app.use("/auth", auth)
