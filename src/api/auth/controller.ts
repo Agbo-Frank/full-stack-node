@@ -44,7 +44,7 @@ class Controller {
       if(user)throw new BadRequestException("User with same email/username already exist");
 
       let referral = null
-      if("referral_code" in req.body && isEmpty(req.body?.referral_code)){
+      if("referral_code" in req.body && !isEmpty(req.body?.referral_code)){
         referral = await User.findOne({ referral_code: req?.body?.referral_code })
         if(!referral) throw new NotFoundException("Invalid referral code");
       }
