@@ -26,10 +26,12 @@
                     <tr data-user="<%= Object.entries(i.toJSON()).map(i => `${i[0]}::${i[1]}`).join(',') %>" class="user__details__btn">
                       <td data-label="Name">
                         <div class="user d-flex align-items-center">
+                          <% if(i?.avatar){ %>
                             <div class="thumb">
-                                <img src="/assets/images/dashboard/item1.png" alt="dashboard">
+                                <img src="<%= i?.avatar %>" alt="dashboard">
                             </div>
-                            <p class="name"><%= i?.first_name + " " + i?.last_name %></p>
+                          <% } %>
+                            <p class="name text-capitalize"><%= i?.first_name + " " + i?.last_name %></p>
                         </div>
                       </td>
                       <td data-label="Email"><span class="wallet"><%= i?.email %></span></td>
@@ -48,6 +50,4 @@
   </div>
 </div>
 <!-- Dashboard Section Ends Here -->
-
-<%- include('partials/footer') %>
 <%- include('partials/scripts') %>

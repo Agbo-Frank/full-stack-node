@@ -40,7 +40,7 @@
                       </div>
                       <div class="dashboard__card-content">
                           <p class="info">Total Withdraw</p>
-                          <h3 class="title"><%= total_withdraw.toLocaleString("en-US") %> USD</h3>
+                          <h3 class="title"><%= user?.total_withdrawal.toLocaleString("en-US") %> USD</h3>
                       </div>
                   </div>
               </div>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="dashboard__card-content">
                         <p class="info">Total Deposit</p>
-                        <h3 class="title"><%= total_deposit.toLocaleString("en-US") %> USD</h3>
+                        <h3 class="title"><%= user?.total_deposit.toLocaleString("en-US") %> USD</h3>
                     </div>
                 </div>
             </div>
@@ -99,5 +99,4 @@
 </div>
 <!-- Dashboard Section Ends Here -->
 
-<%- include('partials/footer') %>
 <%- include('partials/scripts') %>

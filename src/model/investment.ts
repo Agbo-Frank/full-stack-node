@@ -21,7 +21,7 @@ export interface IInvestment {
 
 const investmentSchema = new Schema<IInvestment>({
   plan: String,
-  user: String,
+  user: { type: String, ref: "user" },
   capital: { type: Number, default: 0 }, 
   profit: { type: Number, default: 0 },
   status: {

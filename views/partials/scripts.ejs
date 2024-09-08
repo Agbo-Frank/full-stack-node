@@ -22,8 +22,9 @@
 
   const getEvents = (type) => {
     const name = faker.person.firstName();
-    const amount = faker.number.int({min: 500, max: 20000}).toLocaleString("en-US");
+    const rand = faker.number.int({min: 5, max: 50, multipleOf: 5})
     const country = faker.location.country()
+    const amount = (rand * 1000).toLocaleString("en-US");
 
     return {
       'withdraw': { title: "New Withdrawal", subtitle: `${name} withdrawal request of $${amount} has been processed` },
@@ -41,7 +42,7 @@
       const index = faker.number.int({min: 0, max: 2});
       const { title, subtitle } = getEvents(events[index])
       tata.text(title, subtitle, { position: "br", progress: true, duration: 3000, animate: "slide" });
-    }, 25000) 
+    }, 50000) 
   });
 
  

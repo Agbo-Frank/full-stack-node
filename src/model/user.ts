@@ -10,6 +10,8 @@ export interface IUser {
   earnings: number
   password: string
   avatar: string
+  total_withdrawal: number
+  total_deposit: number
   balance: number
   address: string
   verified: boolean
@@ -44,6 +46,14 @@ const user = new Schema<IUser>({
     unique: true
   },
   balance: {
+    type: Number,
+    default: 0
+  },
+  total_withdrawal: {
+    type: Number,
+    default: 0
+  },
+  total_deposit: {
     type: Number,
     default: 0
   },

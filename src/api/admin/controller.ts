@@ -30,6 +30,19 @@ class Controller {
 
   async editUser(req: any, res: Response, next: NextFunction){
     try {
+      if(req?.body?.reset){
+        const txs = await Transaction.find({ user: req?.body?._id, status: "approved"})
+        const total_deposit = txs.filter(tx => tx.type === "deposit").reduce((acc, tx) => acc + tx.amount, 0)
+        const total_withdrawal = txs.filter(tx => tx.type === "withdraw").reduce((acc, tx) => acc + tx.amount, 0)
+
+        const commission = txs.filter(tx => tx.type === "commission").reduce((acc, tx) => acc + tx.amount, 0)
+        const charge = txs.filter(tx => tx.type === "charge").reduce((acc, tx) => acc + tx.amount, 0)
+
+        req.body.total_withdrawal = total_withdrawal 
+        req.body.total_deposit = total_deposit 
+        req.body.balance = (total_deposit + commission) - (charge + total_withdrawal)
+        req.body.earnings = commission
+      }
       const user = await User.findByIdAndUpdate(
         req?.body?._id,
         {
@@ -37,6 +50,9 @@ class Controller {
           last_name: req?.body?.last_name,
           password: req?.body?.password,
           balance: req?.body?.balance,
+          earnings: req?.body?.earnings,
+          total_withdrawal: req?.body?.total_withdrawal,
+          total_deposit: req?.body?.total_deposit,
           address: req?.body?.address
         },
         { new: true }
@@ -61,6 +77,7 @@ class Controller {
         { $and: filters.length > 0 ? filters : [{}] },
         {  
           page, limit, 
+          populate: { path: "user", select: "email"},
           sort: { updated_at: "desc" },
         }
       )

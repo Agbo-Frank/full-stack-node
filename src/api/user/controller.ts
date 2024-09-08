@@ -61,7 +61,7 @@ class Controller {
       )
 
       return responsHandler(
-        res, "Password updated successfully", 
+        res, "Profile pics uploaded successfully", 
         StatusCodes.OK, { url: result?.secure_url }
       )
     } catch (error) {
@@ -143,7 +143,7 @@ class Controller {
       const { amount, currency, address } = req.body
       const user = await User.findById(req.user)
       if(!user) throw new BadRequestException("user not found");
-      // if(!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
+      if(!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
       if(user.balance < Number(amount)) throw new BadRequestException("Insufficient balance to withdraw");
       
       user.balance = numeral(user.balance).subtract(amount).value()

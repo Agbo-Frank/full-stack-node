@@ -13,52 +13,43 @@
 <div id="user__details__form" class="search__form__wrapper">
   <div class="form__inner">
       <form class="search__form">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>First name</label>
-              <input 
-                name="first_name" 
-                class="form-control form--control" 
-              >
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Last name</label>
-              <input 
-                name="last_name" 
-                class="form-control form--control" 
-              >
-            </div>
-          </div>
-        </div>
         <%
           const inputs = [
+            {name: "first_name", label: "First name", class: "col-6"  },
+            {name: "last_name", label: "Last name", class: "col-6"  },
             {name: "email", label: "Email", type: "email" },
             // {name: "phone_number", label: "Phone Number", type: "text" },
-            {name: "balance", label: "Balance", type: "number" },
-            {name: "earnings", label: "Earning balance", type: "number" },
+            {name: "balance", label: "Balance", type: "number", class: "col-6" },
+            {name: "earnings", label: "Earning balance", type: "number", class: "col-6" },
+            {name: "total_withdrawal", label: "Total Withdrawal", type: "number", class: "col-6" },
+            {name: "total_deposit", label: "Total deposit", type: "number",class: "col-6" },
             {name: "password", label: "Password" },
           ]
         %>
-        <% inputs.forEach(i => { %>
-          <div class="<%= i?.class || "col-md-12" %> mb-3">
-            <div class="form-group">
-              <label><%= i?.label %></label>
-              <input 
-                name="<%= i?.name %>" 
-                type="<%= i?.type || 'text' %>"
-                class="form-control form--control" 
-              >
+        <div class="row">
+          <% inputs.forEach(i => { %>
+            <div class="<%= i?.class || "col-md-12" %> mb-3">
+              <div class="form-group">
+                <label><%= i?.label %></label>
+                <input 
+                  name="<%= i?.name %>" 
+                  type="<%= i?.type || 'text' %>"
+                  class="form-control form--control" 
+                >
+              </div>
             </div>
-          </div>
-        <% }) %>
+          <% }) %>
+        </div>
         <div class=" d-flex justify-content-between flex-wrap align-items-center">
-            <div class="form--check me-4">
-              <input type="checkbox" name="verified" id="verify-kyc">
-              <label for="verify-kyc">Verify KYC</label>
+            <div class="d-flex">
+              <div class="form--check me-4">
+                <input type="checkbox" name="reset" id="reset">
+                <label for="reset">Reset Balance</label>
+              </div>
+              <div class="form--check me-4">
+                <input type="checkbox" name="verified" id="verify-kyc">
+                <label for="verify-kyc">Verify KYC</label>
+              </div>
             </div>
             <a target="_blank" class="view-docs text--base d-none">View Document</a>
         </div>

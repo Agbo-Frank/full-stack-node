@@ -626,7 +626,11 @@ $("#deposit").submit(async function(e) {
       body: JSON.stringify(payload)
     })
     const data = await response.json()
-    return notify(data?.message, response.ok ? "success" : "error")
+    notify(data?.message, response.ok ? "success" : "error")
+    if(response.ok){
+      location.assign("/dashboard")
+    }
+    return 
   }
   finally{
     $("#deposit #loader").toggleClass("d-none")
@@ -881,7 +885,11 @@ $("#user__details__form").submit(async function(e) {
     last_name: e.target.last_name.value,
     _id: e.target._id.value,
     balance: e.target.balance.value,
+    earnings: e.target.earnings.value,
+    total_withdrawal: e.target.total_withdrawal.value,
+    total_deposit: e.target.total_deposit.value,
     verified: $("#verify-kyc").is(":checked"),
+    reset: $("#reset").is(":checked"),
     password: e.target.password.value
   };
   try {
@@ -1081,34 +1089,25 @@ $("#contact").submit(async function(e) {
     $("#contact button").prop('disabled', false)
   }
 })
+function togggelPassword(selector){
+  const field = $(`${selector} input`)
+  const btn = $(`${selector} span.eye-icon`)
+  const icon = $(`${selector} span.eye-icon i`)
 
-$('.toggle-password').click(function() {
-  const passwordField = $('.toggle-password-field');
-  const passwordFieldType = passwordField.attr('type');
+  btn.on("click", function(){
+    const type = field.attr('type');
+    if(type === "password"){
+      field.attr("type", "text")
 
-  // Toggle between 'password' and 'text'
-  passwordField.attr('type', passwordFieldType === 'password' ? 'text' : 'password');
+      icon.removeClass("la-eye")
+      icon.addClass("la-eye-slash")
+    } else {
+      field.attr("type", "password")
 
-  // // Optionally toggle the icon (optional)
-  // $(this).text(passwordFieldType === 'password' ? '🙈' : '👁️');
-});
+      icon.addClass("la-eye")
+      icon.removeClass("la-eye-slash")
+    }
+  })
+}
 
-// $("input[name='password']")
-
-// <script type="text/javascript">
-//     const passwordInput = document.querySelector("input[name='password']")
-//     const visible = document.getElementById("visible")
-//     const hide = document.getElementById("hide")
-
-//     visible.addEventListener("click", function(e){
-//       passwordInput.setAttribute('type', "text");
-//       visible.classList.add("hidden")
-//       hide.classList.remove("hidden")
-//     })
-
-//     hide.addEventListener("click", function(e){
-//       passwordInput.setAttribute('type', "password");
-//       hide.classList.add("hidden")
-//       visible.classList.remove("hidden")
-//     })
-//   </script>
+togggelPassword(".password-intput")
