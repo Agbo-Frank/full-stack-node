@@ -16,7 +16,10 @@ export interface ITransaction {
 }
 
 const tx = new Schema<ITransaction>({
-  user: String,
+  user: {
+    type: String,
+    ref: "user"
+  },
   type: String,
   currency: String,
   amount: Number,
@@ -28,7 +31,7 @@ const tx = new Schema<ITransaction>({
   created_at: {
     type: String,
     get(v){
-      return dayjs(v).format("DD MMM YYYY")
+      return dayjs(v).format("DD MMM YYYY HH:mm a")
     }
   }
 }, {

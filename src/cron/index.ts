@@ -30,27 +30,26 @@ async function updateUsersInvestments(){
   console.log("Updating investment completed...")
 }
 
+export default async function initiateJobs() {
+  try {
+    cron.schedule(
+      "*/5 * * * *",  //0 0 * * *
+      updateUsersInvestments, 
+      { timezone: "UTC" }
+    );
+    console.log("cron job set up successfully")
+  } catch (error: any) {
+    console.log("cron job set up failed")
+  }
+}
 
-mongoose.connect(MONGODB_URL as string, {autoIndex: false})
-  .then(async () => {
-    console.log("MongoDB connected successfully...");
+
+// mongoose.connect(MONGODB_URL as string, {autoIndex: false})
+//   .then(async () => {
+//     console.log("MongoDB connected successfully...");
     
-    await updateUsersInvestments()
+//     await updateUsersInvestments()
 
-    await mongoose.connection.close()
-  })
-  .catch((err) => console.log("MongoDB Error just occured " + err))
-
-
-// export default async function initiateJobs() {
-//   try {
-//     cron.schedule(
-//       "*/1 * * * *",  //0 0 * * *
-//       updateUsersInvestments, 
-//       { timezone: "UTC" }
-//     );
-//     console.log("cron job set up successfully")
-//   } catch (error: any) {
-//     console.log("cron job set up failed")
-//   }
-// }
+//     await mongoose.connection.close()
+//   })
+//   .catch((err) => console.log("MongoDB Error just occured " + err))

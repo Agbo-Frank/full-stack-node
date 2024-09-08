@@ -7,7 +7,10 @@ const dayjs_1 = __importDefault(require("dayjs"));
 const mongoose_1 = require("mongoose");
 const mongoose_paginate_v2_1 = __importDefault(require("mongoose-paginate-v2"));
 const tx = new mongoose_1.Schema({
-    user: String,
+    user: {
+        type: String,
+        ref: "user"
+    },
     type: String,
     currency: String,
     amount: Number,
@@ -19,7 +22,7 @@ const tx = new mongoose_1.Schema({
     created_at: {
         type: String,
         get(v) {
-            return (0, dayjs_1.default)(v).format("DD MMM YYYY");
+            return (0, dayjs_1.default)(v).format("DD MMM YYYY HH:mm a");
         }
     }
 }, {

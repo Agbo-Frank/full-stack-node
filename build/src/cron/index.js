@@ -26,13 +26,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = initiateJobs;
 const dayjs_1 = __importDefault(require("dayjs"));
 const investment_1 = __importStar(require("../model/investment"));
 const plans_1 = __importDefault(require("../model/plans"));
 const numeral_1 = __importDefault(require("numeral"));
+const node_cron_1 = __importDefault(require("node-cron"));
 const user_1 = __importDefault(require("../model/user"));
-const config_1 = require("../utility/config");
-const mongoose_1 = __importDefault(require("mongoose"));
 async function updateUsersInvestments() {
     console.log("Updating investment initialized...");
     const investments = await investment_1.default.find({ status: investment_1.investment_status.active });
@@ -50,23 +50,21 @@ async function updateUsersInvestments() {
     });
     console.log("Updating investment completed...");
 }
-mongoose_1.default.connect(config_1.MONGODB_URL, { autoIndex: false })
-    .then(async () => {
-    console.log("MongoDB connected successfully...");
-    await updateUsersInvestments();
-    await mongoose_1.default.connection.close();
-})
-    .catch((err) => console.log("MongoDB Error just occured " + err));
-// export default async function initiateJobs() {
-//   try {
-//     cron.schedule(
-//       "*/1 * * * *",  //0 0 * * *
-//       updateUsersInvestments, 
-//       { timezone: "UTC" }
-//     );
-//     console.log("cron job set up successfully")
-//   } catch (error: any) {
-//     console.log("cron job set up failed")
-//   }
-// }
+async function initiateJobs() {
+    try {
+        node_cron_1.default.schedule("*/5 * * * *", //0 0 * * *
+        updateUsersInvestments, { timezone: "UTC" });
+        console.log("cron job set up successfully");
+    }
+    catch (error) {
+        console.log("cron job set up failed");
+    }
+}
+// mongoose.connect(MONGODB_URL as string, {autoIndex: false})
+//   .then(async () => {
+//     console.log("MongoDB connected successfully...");
+//     await updateUsersInvestments()
+//     await mongoose.connection.close()
+//   })
+//   .catch((err) => console.log("MongoDB Error just occured " + err))
 //# sourceMappingURL=index.js.map

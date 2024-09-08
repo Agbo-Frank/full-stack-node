@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                       <th>Ref</th>
+                      <th>User email</th>
                       <th>Type</th>
                       <th>Currency</th>
                       <th>Amount</th>
@@ -25,9 +26,10 @@
                 <tbody>
                   <% data.docs.forEach(i => { %>
                     <tr data-tx="<%= Object.entries(i.toJSON()).map(i => `${i[0]}:${i[1]}`).join(',') %>" class="tx__details__btn">
-                      <td data-label="User Name">
+                      <td data-label="Ref">
                         <p class="name"><%= i?._id %></p>
                       </td>
+                      <td data-label="User email"><span class="wallet"><%= i?.user?.email %></span></td>
                       <td data-label="Transaction Type"><span class="wallet"><%= i?.type %></span></td>
                       <td data-label="Currency"><span class="wallet"><%= i?.currency %></span></td>
                       <td data-label="Amount"><span class="amount"><%= i?.amount?.toLocaleString("en-US") %></span></td>

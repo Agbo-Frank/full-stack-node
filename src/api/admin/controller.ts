@@ -22,7 +22,7 @@ class Controller {
       { $and: filters.length > 0 ? filters : [{}] },
       {  
         page, limit, 
-        sort: { created_at: "desc" },
+        sort: { updated_at: "desc" },
       }
     )
     return res.render('users', { data });
@@ -61,7 +61,7 @@ class Controller {
         { $and: filters.length > 0 ? filters : [{}] },
         {  
           page, limit, 
-          sort: { created_at: "desc" },
+          sort: { updated_at: "desc" },
         }
       )
       return res.render('all-investments', { data });
@@ -104,9 +104,11 @@ class Controller {
         { $and: filters.length > 0 ? filters : [{}] },
         {  
           page, limit, 
-          sort: { created_at: "desc" },
+          sort: { updated_at: "desc" },
+          populate: { path: "user", select: "email"}
         }
       )
+      console.log(data[0])
       return res.render('all-transactions', { data });
     } catch (error) {
       next(error)
@@ -139,6 +141,8 @@ class Controller {
         if(tx.type === "withdraw"){
           user.balance = numeral(user.balance).subtract(tx.amount).value()
         }
+
+        await user.save()
       }
       if(
         ["withdrawal", "deposit"].includes(tx.type) &&

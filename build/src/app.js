@@ -12,7 +12,6 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const logger_1 = __importDefault(require("./utility/logger"));
 const check_user_1 = __importDefault(require("./middleware/check-user"));
-// import initiateJobs from './cron';
 const logger = new logger_1.default("server");
 // initiateJobs()
 const app = (0, express_1.default)();

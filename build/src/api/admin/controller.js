@@ -18,7 +18,7 @@ class Controller {
         const filters = (0, helpers_1.extractFilters)(req.query, ['search', 'email', 'first_name', 'last_name'], ['email', 'first_name', 'last_name']);
         let data = await user_1.default.paginate({ $and: filters.length > 0 ? filters : [{}] }, {
             page, limit,
-            sort: { created_at: "desc" },
+            sort: { updated_at: "desc" },
         });
         return res.render('users', { data });
     }
@@ -44,7 +44,7 @@ class Controller {
             const filters = (0, helpers_1.extractFilters)(req.query, ['search', 'email', 'first_name', 'last_name'], ['email', 'first_name', 'last_name']);
             const data = await investment_1.default.paginate({ $and: filters.length > 0 ? filters : [{}] }, {
                 page, limit,
-                sort: { created_at: "desc" },
+                sort: { updated_at: "desc" },
             });
             return res.render('all-investments', { data });
         }
@@ -73,8 +73,10 @@ class Controller {
             const filters = (0, helpers_1.extractFilters)(req.query, ['search', 'type', 'hash'], ['recipient', 'type', 'hash']);
             const data = await transaction_1.default.paginate({ $and: filters.length > 0 ? filters : [{}] }, {
                 page, limit,
-                sort: { created_at: "desc" },
+                sort: { updated_at: "desc" },
+                populate: { path: "user", select: "email" }
             });
+            console.log(data[0]);
             return res.render('all-transactions', { data });
         }
         catch (error) {
@@ -102,6 +104,7 @@ class Controller {
                 if (tx.type === "withdraw") {
                     user.balance = (0, numeral_1.default)(user.balance).subtract(tx.amount).value();
                 }
+                await user.save();
             }
             if (["withdrawal", "deposit"].includes(tx.type) &&
                 ["approved", "declined"].includes(tx.status)) {
