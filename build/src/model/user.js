@@ -32,6 +32,14 @@ const user = new mongoose_1.Schema({
         type: Number,
         default: 0
     },
+    total_withdrawal: {
+        type: Number,
+        default: 0
+    },
+    total_deposit: {
+        type: Number,
+        default: 0
+    },
     role: {
         type: String,
         trim: true,

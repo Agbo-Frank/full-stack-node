@@ -14,7 +14,7 @@ exports.investment_status = Object.freeze({
 });
 const investmentSchema = new mongoose_1.Schema({
     plan: String,
-    user: String,
+    user: { type: String, ref: "user" },
     capital: { type: Number, default: 0 },
     profit: { type: Number, default: 0 },
     status: {

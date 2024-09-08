@@ -51,7 +51,7 @@ class Controller {
             if (!result)
                 throw new service_error_1.BadRequestException(`Unable to upload avatar`);
             await user_1.default.updateOne({ _id: req.user }, { avatar: result === null || result === void 0 ? void 0 : result.secure_url });
-            return (0, helpers_1.responsHandler)(res, "Password updated successfully", http_status_codes_1.StatusCodes.OK, { url: result === null || result === void 0 ? void 0 : result.secure_url });
+            return (0, helpers_1.responsHandler)(res, "Profile pics uploaded successfully", http_status_codes_1.StatusCodes.OK, { url: result === null || result === void 0 ? void 0 : result.secure_url });
         }
         catch (error) {
             next(error);
@@ -123,7 +123,8 @@ class Controller {
             const user = await user_1.default.findById(req.user);
             if (!user)
                 throw new service_error_1.BadRequestException("user not found");
-            // if(!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
+            if (!user.verified)
+                throw new service_error_1.BadRequestException("Your KYC hasn't been verified");
             if (user.balance < Number(amount))
                 throw new service_error_1.BadRequestException("Insufficient balance to withdraw");
             user.balance = (0, numeral_1.default)(user.balance).subtract(amount).value();

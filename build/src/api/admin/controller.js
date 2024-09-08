@@ -23,14 +23,28 @@ class Controller {
         return res.render('users', { data });
     }
     async editUser(req, res, next) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
         try {
-            const user = await user_1.default.findByIdAndUpdate((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a._id, {
-                first_name: (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.first_name,
-                last_name: (_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c.last_name,
-                password: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.password,
-                balance: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.balance,
-                address: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.address
+            if ((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.reset) {
+                const txs = await transaction_1.default.find({ user: (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b._id, status: "approved" });
+                const total_deposit = txs.filter(tx => tx.type === "deposit").reduce((acc, tx) => acc + tx.amount, 0);
+                const total_withdrawal = txs.filter(tx => tx.type === "withdraw").reduce((acc, tx) => acc + tx.amount, 0);
+                const commission = txs.filter(tx => tx.type === "commission").reduce((acc, tx) => acc + tx.amount, 0);
+                const charge = txs.filter(tx => tx.type === "charge").reduce((acc, tx) => acc + tx.amount, 0);
+                req.body.total_withdrawal = total_withdrawal;
+                req.body.total_deposit = total_deposit;
+                req.body.balance = (total_deposit + commission) - (charge + total_withdrawal);
+                req.body.earnings = commission;
+            }
+            const user = await user_1.default.findByIdAndUpdate((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c._id, {
+                first_name: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.first_name,
+                last_name: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.last_name,
+                password: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.password,
+                balance: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.balance,
+                earnings: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.earnings,
+                total_withdrawal: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.total_withdrawal,
+                total_deposit: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.total_deposit,
+                address: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.address
             }, { new: true });
             return (0, helpers_1.responsHandler)(res, "User updated successfully", http_status_codes_1.StatusCodes.OK, user);
         }
@@ -44,6 +58,7 @@ class Controller {
             const filters = (0, helpers_1.extractFilters)(req.query, ['search', 'email', 'first_name', 'last_name'], ['email', 'first_name', 'last_name']);
             const data = await investment_1.default.paginate({ $and: filters.length > 0 ? filters : [{}] }, {
                 page, limit,
+                populate: { path: "user", select: "email" },
                 sort: { updated_at: "desc" },
             });
             return res.render('all-investments', { data });

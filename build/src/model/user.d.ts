@@ -7,6 +7,8 @@ export interface IUser {
     earnings: number;
     password: string;
     avatar: string;
+    total_withdrawal: number;
+    total_deposit: number;
     balance: number;
     address: string;
     verified: boolean;
