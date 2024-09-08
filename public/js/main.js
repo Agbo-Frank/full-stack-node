@@ -996,7 +996,7 @@ $("#inv__details__form").submit(async function(e) {
 $("#send_mail").submit(async function(e) {
   e.preventDefault()
 
-  $("#send_mail_loader").removeClass("d-none")
+  $("#send_mail_loader").toggleClass("d-none")
   $("button").prop('disabled', true)
 
   const payload = {
@@ -1018,7 +1018,7 @@ $("#send_mail").submit(async function(e) {
     console.log(error)
   }
   finally{
-    $("#send-mail #send-mail-loader").toggleClass("d-none")
+    $("#send_mail_loader").toggleClass("d-none")
     $("#send-mail button").prop('disabled', false)
   }
 })

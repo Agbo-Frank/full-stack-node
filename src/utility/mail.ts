@@ -28,7 +28,7 @@ class MailService {
   async send(payload: MailOptions){
     try {
       await this.config.sendMail({ 
-        from: "noreply@artversehub.com", 
+        from: "noreply@apexstack.org", 
         to: NOTIFICATION_MAIL.split(","),
         ...payload 
       })
