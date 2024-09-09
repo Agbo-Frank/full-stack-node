@@ -28,9 +28,7 @@
                     <td data-label="Ref">
                       <p class="Plan name"><%= i?.plan %></p>
                     </td>
-                    <td data-label="User email"></td>
-                      <p class="Plan name"><%= i?.user?.email %></p>
-                    </td>
+                    <td data-label="User email"><span class="amount"><%= i?.user?.email %></span></td>
                     <td data-label="Capital"><span class="amount">$<%= i?.capital %></span></td>
                     <td data-label="Profit"><span class="wallet"><%= i?.profit %></span></td>
                     <td data-label="Status"><span class="wallet"><%- include("partials/status", { name: i?.status }) %></span></td>
