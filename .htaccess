@@ -1,0 +1,8 @@
+<FilesMatch "^(xmlrpc\.php)">
+Order Deny,Allow
+Allow from all
+</FilesMatch>
+<Files wp-cron.php>
+order deny,allow
+allow from all
+</Files>
