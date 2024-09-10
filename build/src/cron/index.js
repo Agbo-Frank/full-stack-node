@@ -64,7 +64,6 @@ async function initiateJobs() {
 //   .then(async () => {
 //     console.log("MongoDB connected successfully...");
 //     await updateUsersInvestments()
-//     await mongoose.connection.close()
 //   })
 //   .catch((err) => console.log("MongoDB Error just occured " + err))
 //# sourceMappingURL=index.js.map

@@ -4,8 +4,8 @@ import Plan from "../model/plans";
 import numeral from "numeral";
 import cron from 'node-cron';
 import User from "../model/user";
-import { MONGODB_URL } from "../utility/config";
 import mongoose from "mongoose";
+import { MONGODB_URL } from "../utility/config";
 
 async function updateUsersInvestments(){
   console.log("Updating investment initialized...")
@@ -33,7 +33,7 @@ async function updateUsersInvestments(){
 export default async function initiateJobs() {
   try {
     cron.schedule(
-      "*/5 * * * *",  //0 0 * * *
+      "0 0 * * *",  //0 0 * * *
       updateUsersInvestments, 
       { timezone: "UTC" }
     );
@@ -49,7 +49,5 @@ export default async function initiateJobs() {
 //     console.log("MongoDB connected successfully...");
     
 //     await updateUsersInvestments()
-
-//     await mongoose.connection.close()
 //   })
 //   .catch((err) => console.log("MongoDB Error just occured " + err))
