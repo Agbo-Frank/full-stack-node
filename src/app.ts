@@ -11,7 +11,7 @@ import initiateJobs from './cron';
 
 const logger = new Logger("server")
 
-// initiateJobs()
+initiateJobs()
 const app = express();
 
 // app.set('trust proxy', 1);

@@ -12,8 +12,9 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const logger_1 = __importDefault(require("./utility/logger"));
 const check_user_1 = __importDefault(require("./middleware/check-user"));
+const cron_1 = __importDefault(require("./cron"));
 const logger = new logger_1.default("server");
-// initiateJobs()
+(0, cron_1.default)();
 const app = (0, express_1.default)();
 // app.set('trust proxy', 1);
 app.use((0, helmet_1.default)());
