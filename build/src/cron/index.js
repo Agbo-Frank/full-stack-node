@@ -52,7 +52,7 @@ async function updateUsersInvestments() {
 }
 async function initiateJobs() {
     try {
-        node_cron_1.default.schedule("*/5 * * * *", //0 0 * * *
+        node_cron_1.default.schedule("0 0 * * *", //0 0 * * *
         updateUsersInvestments, { timezone: "UTC" });
         console.log("cron job set up successfully");
     }
