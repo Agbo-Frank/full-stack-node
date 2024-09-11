@@ -48,6 +48,7 @@ class Controller {
         {
           first_name: req?.body?.first_name,
           last_name: req?.body?.last_name,
+          role: req?.body?.role,
           password: req?.body?.password,
           balance: req?.body?.balance,
           earnings: req?.body?.earnings,

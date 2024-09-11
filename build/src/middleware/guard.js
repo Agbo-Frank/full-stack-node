@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = guard;
 const helpers_1 = require("../utility/helpers");
 const jwt_1 = __importDefault(require("../utility/jwt"));
-function guard(req, res, next) {
+const user_1 = __importDefault(require("../model/user"));
+async function guard(req, res, next) {
     var _a;
     try {
         (0, helpers_1.validateRequest)(req);
@@ -17,7 +18,8 @@ function guard(req, res, next) {
         if (!decoded)
             return res.redirect('/login');
         req.user = decoded === null || decoded === void 0 ? void 0 : decoded.id;
-        req.role = decoded === null || decoded === void 0 ? void 0 : decoded.role;
+        const user = await user_1.default.findById(decoded === null || decoded === void 0 ? void 0 : decoded.id);
+        req.role = user === null || user === void 0 ? void 0 : user.role;
         next();
     }
     catch (error) {

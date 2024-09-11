@@ -335,14 +335,20 @@ $('.user__details__btn').click(function() {
 
   $(this).attr('data-user').split(",").forEach(i => {
     const [key, val] = i.split("::")
+    console.log(key, val)
     $(`#user__details__form input[name='${key}']`).val(val)
 
     if(key === "kyc_docs" && val){
       $(`#user__details__form .view-docs`).removeClass("d-none")
       $(`#user__details__form .view-docs`).attr("href",val)
     }
-    if(key === "verified"){
-      $(`#user__details__form input[name='verified']`).attr("checked", val === "true")
+    if(key === "kyc_docs" && val){
+      $(`#user__details__form .view-docs`).removeClass("d-none")
+      $(`#user__details__form .view-docs`).attr("href",val)
+    }
+    if(key === "role"){
+      console.log(key, val)
+      $(`#user__details__form input[name='role']`).attr("checked", val === "admin")
     }
   })
 
@@ -889,6 +895,7 @@ $("#user__details__form").submit(async function(e) {
     total_withdrawal: e.target.total_withdrawal.value,
     total_deposit: e.target.total_deposit.value,
     verified: $("#verify-kyc").is(":checked"),
+    role: $("#role").is(":checked") ? "admin" : "user",
     reset: $("#reset").is(":checked"),
     password: e.target.password.value
   };

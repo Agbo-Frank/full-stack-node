@@ -23,7 +23,7 @@ class Controller {
         return res.render('users', { data });
     }
     async editUser(req, res, next) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         try {
             if ((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.reset) {
                 const txs = await transaction_1.default.find({ user: (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b._id, status: "approved" });
@@ -39,12 +39,13 @@ class Controller {
             const user = await user_1.default.findByIdAndUpdate((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c._id, {
                 first_name: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.first_name,
                 last_name: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.last_name,
-                password: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.password,
-                balance: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.balance,
-                earnings: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.earnings,
-                total_withdrawal: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.total_withdrawal,
-                total_deposit: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.total_deposit,
-                address: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.address
+                role: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.role,
+                password: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.password,
+                balance: (_h = req === null || req === void 0 ? void 0 : req.body) === null || _h === void 0 ? void 0 : _h.balance,
+                earnings: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.earnings,
+                total_withdrawal: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.total_withdrawal,
+                total_deposit: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.total_deposit,
+                address: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.address
             }, { new: true });
             return (0, helpers_1.responsHandler)(res, "User updated successfully", http_status_codes_1.StatusCodes.OK, user);
         }

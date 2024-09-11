@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { validateRequest } from "../utility/helpers";
 import jwt from "../utility/jwt";
+import User from "../model/user";
 
-export default function guard(req: any, res: Response, next: NextFunction){
+export default async function guard(req: any, res: Response, next: NextFunction){
   try{
     validateRequest(req)
     const token = req.cookies?.jwt;
@@ -12,7 +13,8 @@ export default function guard(req: any, res: Response, next: NextFunction){
     if(!decoded) return res.redirect('/login');
 
     req.user = decoded?.id;
-    req.role = decoded?.role;
+    const user = await User.findById(decoded?.id)
+    req.role = user?.role;
     next();
   }
   catch(error){
