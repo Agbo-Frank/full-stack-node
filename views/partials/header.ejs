@@ -1,5 +1,5 @@
 <div class="header">
-  <div class="header-top">
+    <div class="header-top">
       <div class="container">
           <div class="header__top__wrapper d-flex flex-wrap align-items-center justify-content-center justify-content-md-between text-center">
             <% if(user){ %>
@@ -9,19 +9,26 @@
                 </ul>
             <% } %>
               <div class="right__area d-flex flex-wrap align-items-center mt-3 mt-md-0">
-                <div id="google_translate_element"></div>
+                
                 <% if(user){ %>
                   <a href="/dashboard" class="user__thumb ms-3 me-3 me-lg-0"></a>
                 <% } %>
               </div>
-           
           </div>
       </div>
-  </div>
+    </div>
+    <div class="container d-flex justify-content-end">
+        <div id="google_translate_element"></div>
+    </div>
+    
   <div class="header-bottom">
       <div class="container">
           <div class="header-bottom-area">
-              <div class="logo"><a href="/"><img src="/assets/images/logo.png" alt="logo"></a></div>
+              <div class="logo">
+                <a href="/">
+                    <img src="/assets/images/logo.png" alt="logo">
+                </a>
+            </div>
               <ul class="menu">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about-us">About</a></li>
@@ -74,9 +81,7 @@
                         <a href="/login" class="cmn--btn">Login</a>
                     <% } %>
                 </div>
-                
               <div style="gap: 10px;" class="header-trigger-wrapper d-flex d-lg-none align-items-center">
-                <div id="google_translate_element"></div>
                   <div class="mobile-nav-right d-flex align-items-center"></div>
                   <div class="header-trigger d-block d--none">
                       <span></span>
