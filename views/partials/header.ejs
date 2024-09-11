@@ -7,11 +7,14 @@
                     <li><a href="mailto:<%= user?.email %>"><%= user?.email %></a></li>
                     <li><a href="tel:<%= user?.phone_number %>"><i class="las la-phone-volume"></i> <%= user?.phone_number %> </a></li>
                 </ul>
+            <% } %>
               <div class="right__area d-flex flex-wrap align-items-center mt-3 mt-md-0">
                 <div id="google_translate_element"></div>
+                <% if(user){ %>
                   <a href="/dashboard" class="user__thumb ms-3 me-3 me-lg-0"></a>
+                <% } %>
               </div>
-            <% } %>
+           
           </div>
       </div>
   </div>
