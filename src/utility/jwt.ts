@@ -6,7 +6,7 @@ class JWT {
 
   create(payload: object, options: Partial<SignOptions> = {}){
     return sign(payload, String(JWT_SECRET_KEY),  {
-      expiresIn: '360h',
+      expiresIn: '2h',
       audience: 'API',
       issuer: 'Apexstack',
       ...options

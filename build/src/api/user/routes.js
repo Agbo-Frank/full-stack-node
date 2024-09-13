@@ -15,5 +15,6 @@ router.post("/withdraw", guard_1.default, validator_1.default.withdraw, controll
 router.post("/referral/withdraw", guard_1.default, controller_1.default.referalWithdrawl);
 router.post("/deposit", guard_1.default, validator_1.default.deposit, controller_1.default.deposit);
 router.post("/contact", validator_1.default.contact, controller_1.default.contact);
+router.post("/kyc", controller_1.default.kyc);
 exports.default = router;
 //# sourceMappingURL=routes.js.map

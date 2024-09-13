@@ -1051,12 +1051,16 @@ $("#kyc").submit(async function(e) {
     $("#kyc #loader").toggleClass("d-none")
     $("#kyc button").prop('disabled', true)
     try {
-      const response = await fetch("/users/kyc", {
+      const response = await fetch("/user/kyc", {
         method: "POST",
         body: JSON.stringify({ image }),
         headers: { 'Content-Type': 'application/json' }
       })
       const data = await response.json()
+      console.log(
+        data,
+        response.ok
+      )
       return notify(data?.message, response.ok ? "success" : "error")
     }
     catch(error){

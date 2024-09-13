@@ -12,7 +12,7 @@ exports.default = {
     ],
     withdraw: [
         (0, express_validator_1.body)("amount").notEmpty().withMessage("Amount is required").isNumeric().withMessage("Must be a number").isInt({ min: 30 }).withMessage("Minimum withdrawal amount is $30"),
-        (0, express_validator_1.body)("address").notEmpty().withMessage("Address is required").isEthereumAddress().withMessage("Invalid address")
+        (0, express_validator_1.body)("address").notEmpty().withMessage("Address is required")
     ],
     contact: [
         (0, express_validator_1.body)("name").notEmpty().withMessage("Full name is required"),

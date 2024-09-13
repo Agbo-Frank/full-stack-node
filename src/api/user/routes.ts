@@ -12,5 +12,6 @@ router.post("/withdraw", guard, valid.withdraw, cltr.withdraw)
 router.post("/referral/withdraw", guard, cltr.referalWithdrawl)
 router.post("/deposit", guard, valid.deposit, cltr.deposit)
 router.post("/contact", valid.contact, cltr.contact)
+router.post("/kyc", cltr.kyc)
 
 export default router

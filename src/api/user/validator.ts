@@ -11,7 +11,7 @@ export default {
   ],
   withdraw: [
     body("amount").notEmpty().withMessage("Amount is required").isNumeric().withMessage("Must be a number").isInt({ min: 30 }).withMessage("Minimum withdrawal amount is $30"),
-    body("address").notEmpty().withMessage("Address is required").isEthereumAddress().withMessage("Invalid address")
+    body("address").notEmpty().withMessage("Address is required")
   ],
   contact: [
     body("name").notEmpty().withMessage("Full name is required"),

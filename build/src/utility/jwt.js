@@ -6,7 +6,7 @@ const service_error_1 = require("./service-error");
 class JWT {
     create(payload, options = {}) {
         return (0, jsonwebtoken_1.sign)(payload, String(config_1.JWT_SECRET_KEY), {
-            expiresIn: '360h',
+            expiresIn: '2h',
             audience: 'API',
             issuer: 'Apexstack',
             ...options
