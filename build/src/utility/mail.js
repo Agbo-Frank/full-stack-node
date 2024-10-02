@@ -22,7 +22,7 @@ class MailService {
       <br />
       <p>We regret to inform you that your recent withdrawal request has been declined.</p>
       <%- order %>
-      <p>If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      <p>If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.net">support@apexstack.net</a> .</p>
       `
             },
             'withdraw.approved': {
@@ -32,7 +32,7 @@ class MailService {
       <br />
       <p>We are pleased to inform you that your recent withdrawal request has been approved successfully</p>
       <%- order %>
-      <p>The amount of <%= amount %> has been processed and should be reflected in your account shortly. If you have any questions or require further assistance, please reach out to us at <a href="mailto:support@apexstack.org">support@apexstack.org</a>.</p>
+      <p>The amount of <%= amount %> has been processed and should be reflected in your account shortly. If you have any questions or require further assistance, please reach out to us at <a href="mailto:support@apexstack.net">support@apexstack.net</a>.</p>
       `
             },
             'deposit.approved': {
@@ -42,7 +42,7 @@ class MailService {
       <br />
       <p>We are pleased to inform you that your recent deposit has been successfully approved.</p>
       <%- order %>
-      <p>If you have any questions or need further assistance, feel free to contact us at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      <p>If you have any questions or need further assistance, feel free to contact us at <a href="mailto:support@apexstack.net">support@apexstack.net</a> .</p>
       `
             },
             'deposit.declined': {
@@ -52,7 +52,7 @@ class MailService {
       <br />
       <p>We regret to inform you that your recent deposit attempt has been declined.</p>
       <%- order %>
-      <p>Please review the details of your transaction and ensure that all information is correct. If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.org">support@apexstack.org</a> .</p>
+      <p>Please review the details of your transaction and ensure that all information is correct. If you need further assistance or if you believe this is an error, please contact our support team at <a href="mailto:support@apexstack.net">support@apexstack.net</a> .</p>
       `
             }
         };
@@ -70,7 +70,7 @@ class MailService {
     async send(payload) {
         try {
             await this.config.sendMail({
-                from: "noreply@apexstack.org",
+                from: "noreply@apexstack.net",
                 to: config_1.NOTIFICATION_MAIL.split(","),
                 ...payload
             });
