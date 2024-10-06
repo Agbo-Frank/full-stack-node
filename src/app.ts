@@ -30,8 +30,11 @@ app.set('view engine', 'ejs');
 app.use((req, res, next) => {
   logger.log("info", {method: req?.method, endpoint: req?.url})
   res.setHeader("Content-Security-Policy", "img-src * data:;");
-  // res.setHeader('Cache-Control', 'public, max-age=86400');
-  next()
+  const userAgent = req.headers['user-agent'];
+  res.set('X-Robots-Tag', 'noindex, nofollow')
+  if (!/bot|crawl|slurp|spider/i.test(userAgent)) {
+    next()
+  }
 })
 
 app.use(cookieParser());
