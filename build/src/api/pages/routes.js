@@ -1,0 +1,37 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controller_1 = __importDefault(require("./controller"));
+const guard_1 = __importDefault(require("../../middleware/guard"));
+const router = (0, express_1.Router)();
+router.get("/", controller_1.default.home);
+router.get("/login", controller_1.default.login);
+router.get("/register", controller_1.default.register);
+router.get("/register/:id", controller_1.default.register);
+router.get("/forget-password", controller_1.default.forgetpassword);
+router.get("/reset-password", controller_1.default.resetpassword);
+router.get("/policy", controller_1.default.policy);
+router.get("/dashboard", guard_1.default, controller_1.default.dashboard);
+router.get("/transactions", guard_1.default, controller_1.default.transactions);
+router.get("/plans", controller_1.default.plans);
+router.get("/investments", guard_1.default, controller_1.default.investments);
+router.get("/settings", guard_1.default, controller_1.default.settings);
+router.get("/deposit", guard_1.default, controller_1.default.deposit);
+router.get("/withdraw", controller_1.default.withdraw);
+router.get("/contact-us", controller_1.default.contact);
+router.get("/referrals", guard_1.default, controller_1.default.referrals);
+router.get("/kyc", controller_1.default.kyc);
+router.get("/faqs", controller_1.default.faqs);
+router.get("/cryptocurrencies", controller_1.default.cryptocurrencies);
+router.get("/real-estate", controller_1.default.realestate);
+router.get("/forex", controller_1.default.forex);
+router.get("/commodities", controller_1.default.commodities);
+router.get("/indices", controller_1.default.indices);
+router.get("/terms", controller_1.default.terms);
+router.get("/about-us", controller_1.default.aboutus);
+router.get("/stocks", controller_1.default.stocks);
+exports.default = router;
+//# sourceMappingURL=routes.js.map

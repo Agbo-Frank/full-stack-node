@@ -1,0 +1,33 @@
+import { Request, Response } from "express";
+declare class Controller {
+    home(req: Request, res: Response): Promise<void>;
+    login(req: Request, res: Response): Promise<void>;
+    fogetpassword(req: Request, res: Response): Promise<void>;
+    resetpassword(req: Request, res: Response): Promise<void>;
+    verifypassword(req: Request, res: Response): Promise<void>;
+    realestate(req: Request, res: Response): Promise<void>;
+    forex(req: Request, res: Response): Promise<void>;
+    aboutus(req: Request, res: Response): Promise<void>;
+    commodities(req: Request, res: Response): Promise<void>;
+    stocks(req: Request, res: Response): Promise<void>;
+    cryptocurrencies(req: Request, res: Response): Promise<void>;
+    faqs(req: Request, res: Response): Promise<void>;
+    indices(req: Request, res: Response): Promise<void>;
+    register(req: Request, res: Response): Promise<void>;
+    policy(req: Request, res: Response): Promise<void>;
+    terms(req: Request, res: Response): Promise<void>;
+    dashboard(req: any, res: Response): Promise<void>;
+    transactions(req: any, res: Response): Promise<void>;
+    plans(req: Request, res: Response): Promise<void>;
+    investments(req: any, res: Response): Promise<void>;
+    settings(req: Request, res: Response): Promise<void>;
+    deposit(req: Request, res: Response): Promise<void>;
+    withdraw(req: Request, res: Response): Promise<void>;
+    contact(req: Request, res: Response): Promise<void>;
+    referrals(req: any, res: Response): Promise<void>;
+    kyc(req: Request, res: Response): Promise<void>;
+    forgetpassword(req: Request, res: Response): Promise<void>;
+    error(req: Request, res: Response): Promise<void>;
+}
+declare const _default: Controller;
+export default _default;
