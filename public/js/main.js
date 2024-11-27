@@ -1012,7 +1012,7 @@ $("#send_mail").submit(async function(e) {
   e.preventDefault()
 
   $("#send_mail_loader").toggleClass("d-none")
-  $("button").prop('disabled', true)
+  $("#send-mail button").prop('disabled', true)
 
   const payload = {
     to: e.target.to.value,

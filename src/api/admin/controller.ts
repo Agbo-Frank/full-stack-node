@@ -198,6 +198,7 @@ class Controller {
       await mail.sendWithTemplate(req.body)
       return responsHandler(res, "Message sent successfully", StatusCodes.OK)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
