@@ -840,8 +840,8 @@ $("#plan select").change(function(e){
   $("#plan input[type='number']").attr("max", plan?.max_price)
 
   $("#plan_details h2").text(plan?.rate + "%")
-  $("#plan_details #min").text(formatCurrency(plan?.min_price) + " USD")
-  $("#plan_details #max").text(formatCurrency(plan?.max_price) + " USD")
+  $("#plan_details #min").text(formatCurrency(Number(plan?.min_price)) + " USD")
+  $("#plan_details #max").text( plan?.max_price === "null" ? "Unlimited" : formatCurrency(Number(plan?.max_price)) + " USD")
   $("#plan_details .plan__item-footer p").text(plan?.name)
 })
 
