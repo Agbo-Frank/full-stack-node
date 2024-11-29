@@ -423,7 +423,7 @@ function generateQRCode(text) {
 
 const addresses = {
   "ethereum": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
-  "bitcoin": "bc1q2ggnqnxppdkat25fhcu8g3lfwj4ychqkp49092",
+  "btc": "bc1q2ggnqnxppdkat25fhcu8g3lfwj4ychqkp49092",
   "usdt.erc20": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
   "usdt.bep20": "0x157678029acbF2f308D0F521e99359a8eafFdb04",
   "usdt.trc20": "TZ5i12ak6YJKhTre1cuY5X5z8PGPKmFjQT"
