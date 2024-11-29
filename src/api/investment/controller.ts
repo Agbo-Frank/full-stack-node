@@ -36,7 +36,9 @@ class Controller {
         status: investment_status.active
       })
 
-      user.balance = numeral(user?.balance).subtract(amount).value()
+      user.total_deposit = numeral(user?.total_deposit).subtract(amount).value()
+      user.balance = numeral(user?.balance).add(amount).value()
+
       await user.save()
       await Transaction.create({
         user: req?.user,
@@ -85,9 +87,12 @@ class Controller {
 
       const user = await User.findById(req.user)
       if(!user) throw new NotFoundException("User not found");
-      const amount = numeral(inv.capital).add(inv.profit)
+      const amount = numeral(inv.capital).add(inv.profit).value()
 
-      user.balance = amount.add(user.balance).value()
+      user.total_deposit = numeral(amount).add(user.total_deposit).value()
+      user.balance = numeral(user.balance).subtract(amount).value()
+      user.earnings = numeral(user.earnings).subtract(inv.profit).value()
+
       inv.status = investment_status.completed;
 
       await inv.save()
@@ -97,7 +102,7 @@ class Controller {
         user: req.user,
         type: "commission",
         currency: "USD",
-        amount: amount.value(),
+        amount,
         status: "approved",
         description: "Investment withdrawal"
       })

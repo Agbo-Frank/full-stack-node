@@ -154,10 +154,10 @@ class Controller {
 
       if(tx.status === "approved"){
         if(tx.type === "deposit"){
-          user.balance = numeral(user.balance).add(tx.amount).value()
+          user.total_deposit = numeral(user.total_deposit).add(tx.amount).value()
         }
         if(tx.type === "withdraw"){
-          user.balance = numeral(user.balance).subtract(tx.amount).value()
+          user.total_deposit = numeral(user.total_deposit).subtract(tx.amount).value()
         }
 
         await user.save()

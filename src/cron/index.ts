@@ -23,7 +23,12 @@ async function updateUsersInvestments(){
     await inv.save()
     await User.updateOne(
       { _id: inv.user },
-      { $inc: { earnings: profit } }
+      { 
+        $inc: { 
+          earnings: profit,
+          balance: profit
+        } 
+      }
     )
   })
 
