@@ -14,7 +14,7 @@ async function updateUsersInvestments(){
 
   const plans = await Plan.find()
   investments.forEach(async inv => {
-    // if(dayjs().diff(inv.created_at, "hours") < 24) return;
+    if(dayjs().diff(inv.created_at, "hours") < 24) return;
 
     const plan = plans.find(p => p.id === inv.plan)
     const profit = numeral(inv.capital).multiply(plan.rate).multiply(0.01).value()
