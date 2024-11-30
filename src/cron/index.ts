@@ -17,7 +17,7 @@ async function updateUsersInvestments(){
     // if(dayjs().diff(inv.created_at, "hours") < 24) return;
 
     const plan = plans.find(p => p.id === inv.plan)
-    const profit = numeral(inv.capital).multiply(plan.rate).multiply(0.01).divide(plan?.duration).value()
+    const profit = numeral(inv.capital).multiply(plan.rate).multiply(0.01).value()
 
     inv.profit = numeral(inv.profit).add(profit).value()
     await inv.save()
