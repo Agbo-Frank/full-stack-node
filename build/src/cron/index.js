@@ -43,10 +43,14 @@ async function updateUsersInvestments() {
         if ((0, dayjs_1.default)().diff(inv.created_at, "hours") < 24)
             return;
         const plan = plans.find(p => p.id === inv.plan);
-        const profit = (0, numeral_1.default)(inv.capital).multiply(plan.rate).multiply(0.01).divide(plan === null || plan === void 0 ? void 0 : plan.duration).value();
-        inv.profit = (0, numeral_1.default)(inv.profit).add(profit).value();
-        await inv.save();
-        await user_1.default.updateOne({ _id: inv.user }, { $inc: { earnings: profit } });
+        const profit = (0, numeral_1.default)(inv.capital).multiply(plan.rate).multiply(0.01).value();
+        await inv.updateOne({ $inc: { profit } });
+        await user_1.default.updateOne({ _id: inv.user }, {
+            $inc: {
+                earnings: profit,
+                balance: profit
+            }
+        });
     });
     console.log("Updating investment completed...");
 }

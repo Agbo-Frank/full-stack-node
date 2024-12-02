@@ -57,7 +57,8 @@ class Controller {
                 user: req === null || req === void 0 ? void 0 : req.user,
                 status: investment_1.investment_status.active
             });
-            user.balance = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.balance).subtract(amount).value();
+            user.total_deposit = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.total_deposit).subtract(amount).value();
+            user.balance = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.balance).add(amount).value();
             await user.save();
             await transaction_1.default.create({
                 user: req === null || req === void 0 ? void 0 : req.user,
@@ -100,8 +101,10 @@ class Controller {
             const user = await user_1.default.findById(req.user);
             if (!user)
                 throw new service_error_1.NotFoundException("User not found");
-            const amount = (0, numeral_1.default)(inv.capital).add(inv.profit);
-            user.balance = amount.add(user.balance).value();
+            const amount = (0, numeral_1.default)(inv.capital).add(inv.profit).value();
+            user.total_deposit = (0, numeral_1.default)(amount).add(user.total_deposit).value();
+            user.balance = (0, numeral_1.default)(user.balance).subtract(amount).value();
+            user.earnings = (0, numeral_1.default)(user.earnings).subtract(inv.profit).value();
             inv.status = investment_1.investment_status.completed;
             await inv.save();
             await user.save();
@@ -109,7 +112,7 @@ class Controller {
                 user: req.user,
                 type: "commission",
                 currency: "USD",
-                amount: amount.value(),
+                amount,
                 status: "approved",
                 description: "Investment withdrawal"
             });

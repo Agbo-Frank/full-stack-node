@@ -115,10 +115,10 @@ class Controller {
             }, { new: true });
             if (tx.status === "approved") {
                 if (tx.type === "deposit") {
-                    user.balance = (0, numeral_1.default)(user.balance).add(tx.amount).value();
+                    user.total_deposit = (0, numeral_1.default)(user.total_deposit).add(tx.amount).value();
                 }
                 if (tx.type === "withdraw") {
-                    user.balance = (0, numeral_1.default)(user.balance).subtract(tx.amount).value();
+                    user.total_deposit = (0, numeral_1.default)(user.total_deposit).subtract(tx.amount).value();
                 }
                 await user.save();
             }
@@ -155,6 +155,7 @@ class Controller {
             return (0, helpers_1.responsHandler)(res, "Message sent successfully", http_status_codes_1.StatusCodes.OK);
         }
         catch (error) {
+            console.log(error);
             next(error);
         }
     }
