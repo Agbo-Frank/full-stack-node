@@ -19,8 +19,7 @@ async function updateUsersInvestments(){
     const plan = plans.find(p => p.id === inv.plan)
     const profit = numeral(inv.capital).multiply(plan.rate).multiply(0.01).value()
 
-    inv.profit = numeral(inv.profit).add(profit).value()
-    await inv.save()
+    await inv.updateOne({ $inc: { profit }})
     await User.updateOne(
       { _id: inv.user },
       { 
