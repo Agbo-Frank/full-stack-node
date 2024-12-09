@@ -10,15 +10,15 @@ import Referral from "../../model/referral";
 import mail from "../../utility/mail";
 
 class Controller {
-  async profile(req: any, res: Response, next: NextFunction){
+  async profile(req: any, res: Response, next: NextFunction) {
     try {
       const user = await User.findById(req.user).select("-password")
-      if(!user) throw new NotFoundException("user not found");
+      if (!user) throw new NotFoundException("user not found");
 
       return responsHandler(
-        res, 
-        "User profile retrieved successfully", 
-        StatusCodes.OK, 
+        res,
+        "User profile retrieved successfully",
+        StatusCodes.OK,
         user
       )
     } catch (error) {
@@ -26,13 +26,13 @@ class Controller {
     }
   }
 
-  async update(req: any, res: Response, next: NextFunction){
+  async update(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const payload = req.body
 
       let user = await User.findById(req.user)
-      if(!user) throw new NotFoundException("user not found");
+      if (!user) throw new NotFoundException("user not found");
 
       user = await User.findByIdAndUpdate(req.user, {
         first_name: payload?.first_name,
@@ -48,12 +48,12 @@ class Controller {
     }
   }
 
-  async uploadAvatar(req: any, res: Response, next: NextFunction){
+  async uploadAvatar(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
 
-      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/photos'})
-      if(!result) throw new BadRequestException(`Unable to upload avatar`);
+      const result = await cloudinary.uploader.upload(req?.body.image, { folder: '/apexstack/photos' })
+      if (!result) throw new BadRequestException(`Unable to upload avatar`);
 
       await User.updateOne(
         { _id: req.user },
@@ -61,7 +61,7 @@ class Controller {
       )
 
       return responsHandler(
-        res, "Profile pics uploaded successfully", 
+        res, "Profile pics uploaded successfully",
         StatusCodes.OK, { url: result?.secure_url }
       )
     } catch (error) {
@@ -69,15 +69,15 @@ class Controller {
     }
   }
 
-  async changePassword(req: any, res: Response, next: NextFunction){
+  async changePassword(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const { old_password, new_password } = req.body
 
       let user = await User.findById(req.user)
-      if(!user) throw new NotFoundException("user not found");
+      if (!user) throw new NotFoundException("user not found");
 
-      if(old_password !== user.password) {
+      if (old_password !== user.password) {
         throw new BadRequestException(`Incorrect password`);
       }
 
@@ -89,7 +89,7 @@ class Controller {
     }
   }
 
-  async transactions(req: any, res: Response, next: NextFunction){
+  async transactions(req: any, res: Response, next: NextFunction) {
     try {
       const { page, limit } = pagingParams(req)
       const txs = await Transaction.paginate(
@@ -102,12 +102,12 @@ class Controller {
     }
   }
 
-  async deposit(req: any, res: Response, next: NextFunction){
+  async deposit(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const { amount, hash, network } = req.body
       const user = await User.findById(req.user)
-      if(!user) throw new NotFoundException("User not found")
+      if (!user) throw new NotFoundException("User not found")
 
       const tx = await Transaction.create({
         user: req.user,
@@ -128,7 +128,7 @@ class Controller {
       })
       mail.onDeposit(
         user.email, user.first_name,
-        { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5)}
+        { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5) }
       )
       return responsHandler(res, "Deposit intiated, wait for confirmation ", StatusCodes.OK, tx)
     } catch (error) {
@@ -137,15 +137,15 @@ class Controller {
     }
   }
 
-  async withdraw(req: any, res: Response, next: NextFunction){
+  async withdraw(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const { amount, currency, address } = req.body
       const user = await User.findById(req.user)
-      if(!user) throw new BadRequestException("user not found");
-      if(!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
-      if(user.balance < Number(amount)) throw new BadRequestException("Insufficient balance to withdraw");
-      
+      if (!user) throw new BadRequestException("user not found");
+      if (!user.verified) throw new BadRequestException("Your KYC hasn't been verified");
+      if (user.balance < Number(amount)) throw new BadRequestException("Insufficient balance to withdraw");
+
       user.balance = numeral(user.balance).subtract(amount).value()
 
       await user.save()
@@ -156,7 +156,7 @@ class Controller {
         status: "pending",
         recipient: address,
         amount: -amount,
-        description: `Withdrawal request` 
+        description: `Withdrawal request`
       })
 
       await mail.send({
@@ -179,14 +179,14 @@ class Controller {
     }
   }
 
-  async referalWithdrawl(req: any, res: Response, next: NextFunction){
+  async referalWithdrawl(req: any, res: Response, next: NextFunction) {
     try {
       const referral = await Referral.find({ user: req.user, paid: false, completed: true })
       const balance = referral.reduce((acc, d) => acc + d.reward, 0)
-      if(balance === 0) throw new BadRequestException("Low referral balance");
+      if (balance === 0) throw new BadRequestException("Low referral balance");
 
       const user = await User.findById(req.user)
-      if(!user) throw new BadRequestException("user not found");
+      if (!user) throw new BadRequestException("user not found");
       user.balance = numeral(user.balance).add(balance).value()
       await user.save()
 
@@ -196,7 +196,7 @@ class Controller {
         type: "commission",
         status: "approved",
         amount: balance,
-        description: `Referral earnings withdrawal` 
+        description: `Referral earnings withdrawal`
       })
 
       return responsHandler(res, "Referral earnings withdrawal successful ", StatusCodes.OK, tx)
@@ -206,13 +206,13 @@ class Controller {
     }
   }
 
-  async referrals(req: any, res: Response, next: NextFunction){
+  async referrals(req: any, res: Response, next: NextFunction) {
     try {
       const data = await Referral.find({ user: req.user })
       const balance = data.reduce((acc, d) => acc + d.reward, 0)
 
       return responsHandler(
-        res, "Referrals retrived successfully", 
+        res, "Referrals retrived successfully",
         StatusCodes.OK, { balance, refferees: data }
       )
     } catch (error) {
@@ -220,25 +220,24 @@ class Controller {
     }
   }
 
-  async kyc(req: any, res: Response, next: NextFunction){
+  async kyc(req: any, res: Response, next: NextFunction) {
     try {
-      const result = await cloudinary.uploader.upload(req?.body.image, {folder: '/apexstack/kyc'})
-      if(!result) throw new BadRequestException(`Unable to upload avatar`);
-
+      const result = await cloudinary.uploader.upload(req?.body.image, { folder: '/apexstack/kyc' })
+      if (!result) throw new BadRequestException(`Unable to upload avatar`);
       await User.updateOne(
         { _id: req.user },
         { kyc_docs: result?.secure_url }
       )
       return responsHandler(
-        res, "KYC document sent for reveiw", 
+        res, "KYC document sent for reveiw",
         StatusCodes.OK, { url: result?.secure_url }
       )
     } catch (error) {
-        next(error)
+      next(error)
     }
   }
 
-  async contact(req: any, res: Response, next: NextFunction){
+  async contact(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const { message, email, name } = req.body
@@ -251,7 +250,7 @@ class Controller {
         `
       })
       return responsHandler(
-        res, "Your message has been sent successfully", 
+        res, "Your message has been sent successfully",
         StatusCodes.OK
       )
     } catch (error) {

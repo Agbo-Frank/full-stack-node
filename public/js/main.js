@@ -339,6 +339,7 @@ $('.user__details__btn').click(function () {
     $(`#user__details__form input[name='${key}']`).val(val)
 
     if (key === "kyc_docs" && val) {
+      console.log(val)
       $(`#user__details__form .view-docs`).removeClass("d-none")
       $(`#user__details__form .view-docs`).attr("href", val)
     }
