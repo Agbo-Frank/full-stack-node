@@ -350,9 +350,15 @@ $('.user__details__btn').click(function () {
       $(`#user__details__form input[name='role']`).attr("checked", val === "admin")
     }
   })
-
-
 });
+
+$('#user__details__form .btn-close, .overlay').on('click', function () {
+  $('.dashboard__sidebar').removeClass('active')
+  $('.overlay').removeClass('active')
+
+  $(`#user__details__form .view-docs`).addClass("d-none")
+  $(`#user__details__form .view-docs`).attr("href", "")
+})
 
 $('.tx__details__btn').click(function () {
   $('#tx__details__form').addClass('active')
@@ -388,11 +394,6 @@ $('.btn-close, .overlay').on('click', function () {
 $('.user-thumb').on('click', function () {
   $('.dashboard__sidebar').addClass('active')
   $('.overlay').addClass('active')
-})
-
-$('.btn-close, .overlay').on('click', function () {
-  $('.dashboard__sidebar').removeClass('active')
-  $('.overlay').removeClass('active')
 })
 
 // Header Right Clone to Bottom
