@@ -23,7 +23,7 @@ class Controller {
         return res.render('users', { data });
     }
     async editUser(req, res, next) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         try {
             if ((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.reset) {
                 const txs = await transaction_1.default.find({ user: (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b._id, status: "approved" });
@@ -36,6 +36,7 @@ class Controller {
                 req.body.balance = (total_deposit + commission) - (charge + total_withdrawal);
                 req.body.earnings = commission;
             }
+            console.log(req === null || req === void 0 ? void 0 : req.body);
             const user = await user_1.default.findByIdAndUpdate((_c = req === null || req === void 0 ? void 0 : req.body) === null || _c === void 0 ? void 0 : _c._id, {
                 first_name: (_d = req === null || req === void 0 ? void 0 : req.body) === null || _d === void 0 ? void 0 : _d.first_name,
                 last_name: (_e = req === null || req === void 0 ? void 0 : req.body) === null || _e === void 0 ? void 0 : _e.last_name,
@@ -45,7 +46,8 @@ class Controller {
                 earnings: (_j = req === null || req === void 0 ? void 0 : req.body) === null || _j === void 0 ? void 0 : _j.earnings,
                 total_withdrawal: (_k = req === null || req === void 0 ? void 0 : req.body) === null || _k === void 0 ? void 0 : _k.total_withdrawal,
                 total_deposit: (_l = req === null || req === void 0 ? void 0 : req.body) === null || _l === void 0 ? void 0 : _l.total_deposit,
-                address: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.address
+                address: (_m = req === null || req === void 0 ? void 0 : req.body) === null || _m === void 0 ? void 0 : _m.address,
+                verified: (_o = req === null || req === void 0 ? void 0 : req.body) === null || _o === void 0 ? void 0 : _o.verified
             }, { new: true });
             return (0, helpers_1.responsHandler)(res, "User updated successfully", http_status_codes_1.StatusCodes.OK, user);
         }
