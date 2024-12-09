@@ -3,7 +3,7 @@
 // Preloader
 $(window).on('load', function () {
   $('.preloader').fadeOut(1000);
-  
+
 });
 
 
@@ -28,28 +28,28 @@ $('.menu li a').on('click', function () {
 
 // Responsive Menu
 var headerTrigger = $('.header-trigger');
-headerTrigger.on('click', function(){
-    $('.menu, .header-trigger').toggleClass('active')
-    $('.overlay').toggleClass('active')
+headerTrigger.on('click', function () {
+  $('.menu, .header-trigger').toggleClass('active')
+  $('.overlay').toggleClass('active')
 });
 
 // Responsive Menu
 var headerTrigger3 = $('.header-trigger-3');
-headerTrigger3.on('click', function(){
-    $('.sidebar, .header-trigger-3').toggleClass('active')
-    $('.overlay').toggleClass('active')
+headerTrigger3.on('click', function () {
+  $('.sidebar, .header-trigger-3').toggleClass('active')
+  $('.overlay').toggleClass('active')
 });
 
 var headerTrigger2 = $('.top-bar-trigger');
-headerTrigger2.on('click', function(){
-    $('.header-top').toggleClass('active')
-    $('.overlay').addClass('active')
-    $('.overlay').removeClass('active')
+headerTrigger2.on('click', function () {
+  $('.header-top').toggleClass('active')
+  $('.overlay').addClass('active')
+  $('.overlay').removeClass('active')
 });
 
 // Overlay Event
 var over = $('.overlay');
-over.on('click', function() {
+over.on('click', function () {
   $('.overlay').removeClass('overlay-color')
   $('.overlay').removeClass('active')
   $('.menu, .header-trigger').removeClass('active')
@@ -86,12 +86,12 @@ $('.scrollToTop').on('click', function () {
 });
 
 
-$('.header-top-trigger').on('click', function() {
+$('.header-top-trigger').on('click', function () {
   var e = $('.header-top')
-  if(e.hasClass('active')) {
+  if (e.hasClass('active')) {
     $('.header-top').removeClass('active')
     $('.overlay').removeClass('active')
-  }else {
+  } else {
     $('.header-top').addClass('active')
     $('.overlay').addClass('active')
   }
@@ -112,7 +112,7 @@ $('.testimonial__content__slider').slick({
   arrows: true,
   nextArrow: '<i class="las la-arrow-right arrow-right"></i>',
   prevArrow: '<i class="las la-arrow-left arrow-left"></i> ',
- 
+
 });
 
 $('.testimonial__img__slider').slick({
@@ -314,12 +314,12 @@ $('.faq__item-title').on('click', function (e) {
 });
 
 
-$('.search--btn').on('click', function() {
+$('.search--btn').on('click', function () {
   $('.search__form__wrapper').addClass('active')
   $('.overlay').addClass('active')
 })
 
-$('.plan__details__btn').on('click', function() {
+$('.plan__details__btn').on('click', function () {
   $('#plan__details__form').addClass('active')
   $('.overlay').addClass('active')
 
@@ -329,7 +329,7 @@ $('.plan__details__btn').on('click', function() {
   })
 })
 
-$('.user__details__btn').click(function() {
+$('.user__details__btn').click(function () {
   $('#user__details__form').addClass('active')
   $('.overlay').addClass('active')
 
@@ -338,24 +338,22 @@ $('.user__details__btn').click(function() {
     console.log(key, val)
     $(`#user__details__form input[name='${key}']`).val(val)
 
-    if(key === "kyc_docs" && val){
+    if (key === "kyc_docs" && val) {
       $(`#user__details__form .view-docs`).removeClass("d-none")
-      $(`#user__details__form .view-docs`).attr("href",val)
+      $(`#user__details__form .view-docs`).attr("href", val)
     }
-    if(key === "kyc_docs" && val){
-      $(`#user__details__form .view-docs`).removeClass("d-none")
-      $(`#user__details__form .view-docs`).attr("href",val)
+    if (key === "verified" && val) {
+      $(`#user__details__form input[name='verified']`).attr("checked", val)
     }
-    if(key === "role"){
-      console.log(key, val)
+    if (key === "role") {
       $(`#user__details__form input[name='role']`).attr("checked", val === "admin")
     }
   })
 
-  
+
 });
 
-$('.tx__details__btn').click(function() {
+$('.tx__details__btn').click(function () {
   $('#tx__details__form').addClass('active')
   $('.overlay').addClass('active')
 
@@ -364,10 +362,10 @@ $('.tx__details__btn').click(function() {
     $(`#tx__details__form input[name='${key}']`).val(val)
     $(`#tx__details__form select[name='${key}']`).val(val)
   })
-  
+
 });
 
-$('.inv__details__btn').click(function() {
+$('.inv__details__btn').click(function () {
   $('#inv__details__form').addClass('active')
   $('.overlay').addClass('active')
 
@@ -376,22 +374,22 @@ $('.inv__details__btn').click(function() {
     $(`#inv__details__form input[name='${key}']`).val(val)
     $(`#inv__details__form select[name='${key}']`).val(val)
   })
-  
+
 });
 
 
-$('.btn-close, .overlay').on('click', function() {
+$('.btn-close, .overlay').on('click', function () {
   $('.search__form__wrapper').removeClass('active')
   $('.overlay').removeClass('active')
 })
 
 
-$('.user-thumb').on('click', function() {
+$('.user-thumb').on('click', function () {
   $('.dashboard__sidebar').addClass('active')
   $('.overlay').addClass('active')
 })
 
-$('.btn-close, .overlay').on('click', function() {
+$('.btn-close, .overlay').on('click', function () {
   $('.dashboard__sidebar').removeClass('active')
   $('.overlay').removeClass('active')
 })
@@ -402,22 +400,22 @@ $('.right__area .nice-select').clone().appendTo('.mobile-nav-right');
 
 
 // Privacy Tab Menu
-$('.privacy__tab__menu li a').on('click', function() {
+$('.privacy__tab__menu li a').on('click', function () {
   $('.privacy__tab__menu li a').removeClass('active')
   $(this).addClass('active')
 })
 
 function generateQRCode(text) {
   $('#qrcode').empty();
-  
+
   // Create a new QR code
   new QRCode(document.getElementById("qrcode"), {
-      text,
-      width: 128,
-      height: 128,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
+    text,
+    width: 128,
+    height: 128,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
   });
 }
 
@@ -430,7 +428,7 @@ const addresses = {
 }
 
 // Event listener for the button
-$('#deposit #currency').change(function(e) {
+$('#deposit #currency').change(function (e) {
   console.log("on change", e.target.value);
   const currency = e.target.value.toLowerCase();
   const address = addresses[currency] || "0x157678029acbF2f308D0F521e99359a8eafFdb04"
@@ -439,7 +437,7 @@ $('#deposit #currency').change(function(e) {
   generateQRCode(address)
 });
 
-function stringToObject(str){
+function stringToObject(str) {
   const raw = str.split(",")
   const obj = {}
   raw.forEach(p => {
@@ -450,8 +448,8 @@ function stringToObject(str){
   return obj
 }
 
-function notify(message, type = 'success'){
-  if(type === 'success'){
+function notify(message, type = 'success') {
+  if (type === 'success') {
     tata.success('Success', message);
   }
   else {
@@ -460,7 +458,7 @@ function notify(message, type = 'success'){
 }
 
 //Login
-$("#login").submit(async function(e) {
+$("#login").submit(async function (e) {
   e.preventDefault()
   $("#login #loader").toggleClass("d-none")
   $("#login button").prop('disabled', true)
@@ -473,17 +471,17 @@ $("#login").submit(async function(e) {
   try {
     const response = await fetch("/auth/login", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
-    if(response.ok){
+    if (response.ok) {
       location.assign("/")
     }
-   
+
   }
-  finally{
+  finally {
     $("#login #loader").toggleClass("d-none")
     $("#login button").prop('disabled', false)
   }
@@ -506,12 +504,12 @@ $("#profit_calculator select[name='rate']").change(e => {
   capital = capital > Number(plan?.max_price) ? Number(plan?.max_price) : capital;
 
   const profit = capital * 0.01 * Number(plan?.rate);
-  
+
   $("#profit_calculator input[name='profit']").val(profit)
 })
 
 //registration
-$("#register").submit(async function(e) {
+$("#register").submit(async function (e) {
   e.preventDefault()
   $("#register #loader").toggleClass("d-none")
   $("#register button").prop('disabled', true)
@@ -533,21 +531,21 @@ $("#register").submit(async function(e) {
     })
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
-    if(response.ok){
+    if (response.ok) {
       location.assign("/")
     }
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#register #loader").toggleClass("d-none")
     $("#register button").prop('disabled', false)
   }
 })
 
 //forget password
-$("#forget-password").submit(async function(e) {
+$("#forget-password").submit(async function (e) {
   e.preventDefault()
   $("#forget-password #loader").toggleClass("d-none")
   $("#forget-password button").prop('disabled', true)
@@ -560,21 +558,21 @@ $("#forget-password").submit(async function(e) {
     })
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
-    if(response.ok){
+    if (response.ok) {
       $("#forget-password p").text(data?.message)
     }
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#forget-password #loader").toggleClass("d-none")
     $("#forget-password button").prop('disabled', false)
   }
 })
 
 //reset password
-$("#reset-password").submit(async function(e) {
+$("#reset-password").submit(async function (e) {
   e.preventDefault()
   $("#reset-password #loader").toggleClass("d-none")
   $("#reset-password button").prop('disabled', true)
@@ -585,7 +583,7 @@ $("#reset-password").submit(async function(e) {
     cpassword: e.target.cpassword.value,
   };
 
-  if(payload.cpassword !== payload.password){
+  if (payload.cpassword !== payload.password) {
     $("#reset-password #loader").toggleClass("d-none")
     $("#reset-password button").prop('disabled', false)
     return notify("Confirm password", "error")
@@ -599,21 +597,21 @@ $("#reset-password").submit(async function(e) {
     })
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
-    if(response.ok){
+    if (response.ok) {
       location.assign("/login")
     }
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#reset-password #loader").toggleClass("d-none")
     $("#reset-password button").prop('disabled', false)
   }
 })
 
 //deposit
-$("#deposit").submit(async function(e) {
+$("#deposit").submit(async function (e) {
   e.preventDefault()
   $("#deposit #loader").toggleClass("d-none")
   $("#deposit button").prop('disabled', true)
@@ -633,19 +631,19 @@ $("#deposit").submit(async function(e) {
     })
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
-    if(response.ok){
+    if (response.ok) {
       location.assign("/dashboard")
     }
-    return 
+    return
   }
-  finally{
+  finally {
     $("#deposit #loader").toggleClass("d-none")
     $("#deposit button").prop('disabled', false)
   }
 })
 
 //withdraw
-$("#withdraw").submit(async function(e) {
+$("#withdraw").submit(async function (e) {
   e.preventDefault()
   $("#withdraw #loader").toggleClass("d-none")
   $("#withdraw button").prop('disabled', true)
@@ -665,36 +663,36 @@ $("#withdraw").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#withdraw #loader").toggleClass("d-none")
     $("#withdraw button").prop('disabled', false)
   }
 })
 
 //referral withdraw
-$("#referral__withdrawal").click(async function(e) {
+$("#referral__withdrawal").click(async function (e) {
   $("#referral__withdrawal #loader").toggleClass("d-none")
   $("#referral__withdrawal").prop('disabled', true)
 
   try {
-    const response = await fetch("/user/referral/withdraw", {method: "POST"})
+    const response = await fetch("/user/referral/withdraw", { method: "POST" })
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#referral__withdrawal #loader").toggleClass("d-none")
     $("#referral__withdrawal").prop('disabled', false)
   }
 })
 
 //investment withdrawal
-$(".inv__withdrawal").click(async function(e) {
+$(".inv__withdrawal").click(async function (e) {
   $(".inv__withdrawal #loader").toggleClass("d-none")
   $(".inv__withdrawal").prop('disabled', true)
 
@@ -702,23 +700,23 @@ $(".inv__withdrawal").click(async function(e) {
   try {
     const response = await fetch("/investment/withdraw", {
       method: "POST",
-      body: JSON.stringify({ id: $(this).attr('data-inv')}),
+      body: JSON.stringify({ id: $(this).attr('data-inv') }),
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $(".inv__withdrawal #loader").toggleClass("d-none")
     $(".inv__withdrawal").prop('disabled', false)
   }
 })
 
 //logout
-$("#logout").click(async function(e) {
+$("#logout").click(async function (e) {
   $("#logout #loader").toggleClass("d-none")
   $("#logout").prop('disabled', true)
 
@@ -728,17 +726,17 @@ $("#logout").click(async function(e) {
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await response.json()
-    if(response.ok) location.replace('/')
+    if (response.ok) location.replace('/')
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  finally{
+  finally {
     $("#logout #loader").toggleClass("d-none")
     $("#logout").prop('disabled', false)
   }
 })
 
 //update profile
-$("#profile").submit(async function(e) {
+$("#profile").submit(async function (e) {
   e.preventDefault()
   $("#profile #loader").toggleClass("d-none")
   $("#profile button").prop('disabled', true)
@@ -758,17 +756,17 @@ $("#profile").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#profile #loader").toggleClass("d-none")
     $("#profile button").prop('disabled', false)
   }
 })
 
 //update password
-$("#password").submit(async function(e) {
+$("#password").submit(async function (e) {
   e.preventDefault()
   $("#password #loader").toggleClass("d-none")
   $("#password button").prop('disabled', true)
@@ -786,19 +784,19 @@ $("#password").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#password #loader").toggleClass("d-none")
     $("#password button").prop('disabled', false)
   }
 })
 
 //upload avatar
-$("#avatar-form input[name='avatar']").change(async function(e) {
+$("#avatar-form input[name='avatar']").change(async function (e) {
   const reader = new FileReader();
-  reader.onload = async function(e) {
+  reader.onload = async function (e) {
     $("#avatar-form img").attr("src", e.target.result)
     const response = await fetch("/user/avatar", {
       method: "POST",
@@ -811,7 +809,7 @@ $("#avatar-form input[name='avatar']").change(async function(e) {
   reader.readAsDataURL(e.target.files[0]);
 })
 
-$("#copy").click(function(e){
+$("#copy").click(function (e) {
   navigator.clipboard.writeText($("input[name='code']").val())
     .then(fulfilled => {
       $("#copy").text("Copied")
@@ -820,7 +818,7 @@ $("#copy").click(function(e){
     .catch(console.log)
 })
 
-$("#copy__addr").click(function(e){
+$("#copy__addr").click(function (e) {
   navigator.clipboard.writeText($("input[name='address']").val())
     .then(fulfilled => {
       $("#copy__addr").text("Copied")
@@ -830,10 +828,10 @@ $("#copy__addr").click(function(e){
 })
 
 function formatCurrency(amount, locale = 'en-US', currency = 'USD') {
-  return amount.toLocaleString(locale, { style: 'currency', currency});
+  return amount.toLocaleString(locale, { style: 'currency', currency });
 }
 
-$("#plan select").change(function(e){
+$("#plan select").change(function (e) {
   const plan = stringToObject(e.target.value)
 
   $("#plan input[type='number']").attr("min", plan?.min_price)
@@ -841,12 +839,12 @@ $("#plan select").change(function(e){
 
   $("#plan_details h2").text(plan?.rate + "%")
   $("#plan_details #min").text(formatCurrency(Number(plan?.min_price)) + " USD")
-  $("#plan_details #max").text( plan?.max_price === "null" ? "Unlimited" : formatCurrency(Number(plan?.max_price)) + " USD")
+  $("#plan_details #max").text(plan?.max_price === "null" ? "Unlimited" : formatCurrency(Number(plan?.max_price)) + " USD")
   $("#plan_details .plan__item-footer p").text(plan?.name)
 })
 
 //create investment
-$("#plan").submit(async function(e) {
+$("#plan").submit(async function (e) {
   e.preventDefault()
   $("#plan #loader").toggleClass("d-none")
   $("#plan button").prop('disabled', true)
@@ -871,21 +869,21 @@ $("#plan").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#plan #loader").toggleClass("d-none")
     $("#plan button").prop('disabled', false)
   }
 })
 
 //edit user
-$("#user__details__form").submit(async function(e) {
+$("#user__details__form").submit(async function (e) {
   e.preventDefault()
   $("#user__details__form #loader").toggleClass("d-none")
   $("#user__details__form button").prop('disabled', true)
-  
+
   const payload = {
     first_name: e.target.first_name.value,
     last_name: e.target.last_name.value,
@@ -908,16 +906,16 @@ $("#user__details__form").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#user__details__form #loader").toggleClass("d-none")
     $("#user__details__form button").prop('disabled', false)
   }
 })
 
-$("#plan__details__form").submit(async function(e) {
+$("#plan__details__form").submit(async function (e) {
   e.preventDefault()
   $("#plan__details__form #loader").toggleClass("d-none")
   $("#plan__details__form button").prop('disabled', true)
@@ -938,16 +936,16 @@ $("#plan__details__form").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#plan__details__form #loader").toggleClass("d-none")
     $("#plan__details__form button").prop('disabled', false)
   }
 })
 
-$("#tx__details__form").submit(async function(e) {
+$("#tx__details__form").submit(async function (e) {
   e.preventDefault()
   $("#tx__details__form #loader").toggleClass("d-none")
   $("#tx__details__form button").prop('disabled', true)
@@ -969,16 +967,16 @@ $("#tx__details__form").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#tx__details__form #loader").toggleClass("d-none")
     $("#tx__details__form button").prop('disabled', false)
   }
 })
 
-$("#inv__details__form").submit(async function(e) {
+$("#inv__details__form").submit(async function (e) {
   e.preventDefault()
   $("#inv__details__form #loader").toggleClass("d-none")
   $("#inv__details__form button").prop('disabled', true)
@@ -998,17 +996,17 @@ $("#inv__details__form").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#inv__details__form #loader").toggleClass("d-none")
     $("#inv__details__form button").prop('disabled', false)
   }
 })
 
 //registration
-$("#send_mail").submit(async function(e) {
+$("#send_mail").submit(async function (e) {
   e.preventDefault()
 
   $("#send_mail_loader").toggleClass("d-none")
@@ -1029,25 +1027,25 @@ $("#send_mail").submit(async function(e) {
     const data = await response.json()
     notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#send_mail_loader").toggleClass("d-none")
     $("#send-mail button").prop('disabled', false)
   }
 })
 
-$("#kyc").submit(async function(e) {
+$("#kyc").submit(async function (e) {
   e.preventDefault()
 
   const reader = new FileReader();
-  reader.onload = async function(e) {
+  reader.onload = async function (e) {
     await upload(e.target.result)
   };
   reader.readAsDataURL(e.target.docs.files[0]);
 
-  async function upload(image){
+  async function upload(image) {
     $("#kyc #loader").toggleClass("d-none")
     $("#kyc button").prop('disabled', true)
     try {
@@ -1063,17 +1061,17 @@ $("#kyc").submit(async function(e) {
       )
       return notify(data?.message, response.ok ? "success" : "error")
     }
-    catch(error){
+    catch (error) {
       console.log(error)
     }
-    finally{
+    finally {
       $("#kyc #loader").toggleClass("d-none")
       $("#kyc button").prop('disabled', false)
     }
   }
 })
 
-$("#contact").submit(async function(e) {
+$("#contact").submit(async function (e) {
   e.preventDefault()
   $("#contact #loader").toggleClass("d-none")
   $("#contact button").prop('disabled', true)
@@ -1092,22 +1090,22 @@ $("#contact").submit(async function(e) {
     const data = await response.json()
     return notify(data?.message, response.ok ? "success" : "error")
   }
-  catch(error){
+  catch (error) {
     console.log(error)
   }
-  finally{
+  finally {
     $("#contact #loader").toggleClass("d-none")
     $("#contact button").prop('disabled', false)
   }
 })
-function togggelPassword(selector){
+function togggelPassword(selector) {
   const field = $(`${selector} input`)
   const btn = $(`${selector} span.eye-icon`)
   const icon = $(`${selector} span.eye-icon i`)
 
-  btn.on("click", function(){
+  btn.on("click", function () {
     const type = field.attr('type');
-    if(type === "password"){
+    if (type === "password") {
       field.attr("type", "text")
 
       icon.removeClass("la-eye")
