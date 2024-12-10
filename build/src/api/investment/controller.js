@@ -94,8 +94,11 @@ class Controller {
             if (inv.status !== investment_1.investment_status.active) {
                 throw new service_error_1.NotFoundException("Investment is " + inv.status);
             }
-            if ((0, dayjs_1.default)().diff(inv.created_at, "days") < 10) {
-                throw new service_error_1.BadRequestException("Withdrawal allowed only after 10 days of investment.");
+            const plan = await plans_1.default.findById(inv.plan);
+            if (!plan)
+                throw new service_error_1.BadRequestException("Plan not found");
+            if ((0, dayjs_1.default)().diff(inv.created_at, "days") < plan.duration) {
+                throw new service_error_1.BadRequestException(`Withdrawal allowed only after ${plan.duration} days of investment.`);
             }
             ;
             const user = await user_1.default.findById(req.user);

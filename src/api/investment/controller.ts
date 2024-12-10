@@ -13,19 +13,19 @@ import dayjs from "dayjs";
 
 
 class Controller {
-  async create(req: any, res: Response, next: NextFunction){
+  async create(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
       const { plan_id, amount } = req.body
 
       const plan = await Plan.findById(plan_id)
-      if(!plan) throw new NotFoundException("Plan not found");
-      if(amount < plan.min_price || ( plan.max_price !== null && amount > plan.max_price)){
+      if (!plan) throw new NotFoundException("Plan not found");
+      if (amount < plan.min_price || (plan.max_price !== null && amount > plan.max_price)) {
         throw new BadRequestException(`Amount should be within the range of $${plan.min_price} - $${plan.max_price}`)
       }
 
       const user = await User.findById(req.user)
-      if(amount > user.balance){
+      if (amount > user.balance) {
         throw new BadRequestException("Insufficient funds")
       }
 
@@ -49,7 +49,7 @@ class Controller {
       })
 
       const referral = await Referral.findOne({ referee: user.id })
-      if(referral && referral.completed){
+      if (referral && referral.completed) {
         referral.updateOne({ completed: true })
       }
 
@@ -57,10 +57,10 @@ class Controller {
     } catch (error) {
       next(error)
     }
-    
+
   }
 
-  async investments(req: any, res: Response, next: NextFunction){
+  async investments(req: any, res: Response, next: NextFunction) {
     try {
       const data = await Investment.paginate(
         { user: req.user },
@@ -74,19 +74,21 @@ class Controller {
     }
   }
 
-  async withdraw(req: any, res: Response, next: NextFunction){
+  async withdraw(req: any, res: Response, next: NextFunction) {
     try {
       const inv = await Investment.findById(req.body.id)
-      if(!inv) throw new NotFoundException("Investment not found");
-      if(inv.status !== investment_status.active){
+      if (!inv) throw new NotFoundException("Investment not found");
+      if (inv.status !== investment_status.active) {
         throw new NotFoundException("Investment is " + inv.status);
       }
-      if(dayjs().diff(inv.created_at, "days") < 10) {
-        throw new BadRequestException("Withdrawal allowed only after 10 days of investment.");
+      const plan = await Plan.findById(inv.plan)
+      if (!plan) throw new BadRequestException("Plan not found");
+      if (dayjs().diff(inv.created_at, "days") < plan.duration) {
+        throw new BadRequestException(`Withdrawal allowed only after ${plan.duration} days of investment.`);
       };
 
       const user = await User.findById(req.user)
-      if(!user) throw new NotFoundException("User not found");
+      if (!user) throw new NotFoundException("User not found");
       const amount = numeral(inv.capital).add(inv.profit).value()
 
       user.total_deposit = numeral(amount).add(user.total_deposit).value()
