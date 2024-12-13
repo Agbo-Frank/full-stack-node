@@ -57,7 +57,7 @@ async function updateUsersInvestments() {
 async function initiateJobs() {
     try {
         node_cron_1.default.schedule("0 0 * * *", //0 0 * * *
-        updateUsersInvestments, { timezone: "UTC" });
+        console.log, { timezone: "UTC" });
         console.log("cron job set up successfully");
     }
     catch (error) {

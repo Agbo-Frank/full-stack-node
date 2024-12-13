@@ -11,7 +11,6 @@ const plans_1 = __importDefault(require("../../model/plans"));
 const investment_1 = __importDefault(require("../../model/investment"));
 const mail_1 = __importDefault(require("../../utility/mail"));
 const service_error_1 = require("../../utility/service-error");
-const numeral_1 = __importDefault(require("numeral"));
 class Controller {
     async users(req, res, next) {
         const { page, limit } = (0, helpers_1.pagingParams)(req);
@@ -115,15 +114,15 @@ class Controller {
                 status: (_f = req === null || req === void 0 ? void 0 : req.body) === null || _f === void 0 ? void 0 : _f.status,
                 description: (_g = req === null || req === void 0 ? void 0 : req.body) === null || _g === void 0 ? void 0 : _g.description,
             }, { new: true });
-            if (tx.status === "approved") {
-                if (tx.type === "deposit") {
-                    user.total_deposit = (0, numeral_1.default)(user.total_deposit).add(tx.amount).value();
-                }
-                if (tx.type === "withdraw") {
-                    user.total_deposit = (0, numeral_1.default)(user.total_deposit).subtract(tx.amount).value();
-                }
-                await user.save();
-            }
+            // if (tx.status === "approved") {
+            //   if (tx.type === "deposit") {
+            //     user.total_deposit = numeral(user.total_deposit).add(tx.amount).value()
+            //   }
+            //   if (tx.type === "withdraw") {
+            //     user.total_deposit = numeral(user.total_deposit).subtract(tx.amount).value()
+            //   }
+            //   await user.save()
+            // }
             if (["withdrawal", "deposit"].includes(tx.type) &&
                 ["approved", "declined"].includes(tx.status)) {
                 mail_1.default.onTxUpdate({

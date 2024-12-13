@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { MONGODB_URL } from "../utility/config";
 
 async function updateUsersInvestments(){
+  
   console.log("Updating investment initialized...")
   const investments = await Investment.find({ status: investment_status.active })
   if(investments.length === 0) return;
@@ -38,7 +39,7 @@ export default async function initiateJobs() {
   try {
     cron.schedule(
       "0 0 * * *",  //0 0 * * *
-      updateUsersInvestments, 
+      console.log, 
       { timezone: "UTC" }
     );
     console.log("cron job set up successfully")
