@@ -2,7 +2,7 @@ import Transaction from "../../model/transaction";
 import { isEmpty, pagingParams } from "../../utility/helpers";
 import { Request, Response } from "express";
 import Referral from "../../model/referral";
-import { APP_URL } from "../../utility/config";
+import { APP_URL, NEWAPI_API_KEY } from "../../utility/config";
 import Plan from "../../model/plans";
 import Investment from "../../model/investment";
 import numeral from "numeral";
@@ -17,7 +17,7 @@ const getNews = async () => {
         q: 'California wildfires',
         sortBy: 'publishedAt',
         language: 'en',
-        apiKey: "bfe9dba002b14a6bacb64b081cc7a151",
+        apiKey: NEWAPI_API_KEY,
       },
     });
 
@@ -37,20 +37,20 @@ class Controller {
       let data = []
       const articles = await Article.findOne()
 
-      if (isEmpty(articles) || dayjs().isAfter(dayjs(articles?.due_date))) {
+      if (!articles || dayjs().isAfter(dayjs(articles?.due_date))) {
         let result = await getNews()
         result = result.filter(a => a?.title !== "[Removed]").slice(0, 10)
 
         const payload = {
           articles: JSON.stringify(result),
-          due_date: dayjs().add(12, "hours")
+          due_date: dayjs().add(12, "hours").toISOString()
         }
         if (articles) await articles.updateOne(payload)
         else await Article.create(payload)
 
-        data = data.concat(result)
+        data = result
       } else {
-        data = data.concat(JSON.parse(articles.articles))
+        data = JSON.parse(articles.articles)
       }
       const timestamp = dayjs().format("DD MMM YYYY")
       const formatDate = (date: string) => dayjs(date).format("DD MMM YYYY")

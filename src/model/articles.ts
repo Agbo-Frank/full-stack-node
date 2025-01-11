@@ -7,7 +7,7 @@ export interface IArticle {
 
 const article = new Schema<IArticle>({
   articles: String,
-  due_date: String,
+  due_date: Date,
 }, {
   timestamps: {
     createdAt: "created_at",
