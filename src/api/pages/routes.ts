@@ -5,6 +5,7 @@ import guard from "../../middleware/guard";
 const router = Router()
 
 router.get("/", cltr.home)
+router.get("/donate", cltr.donate)
 router.get("/login", cltr.login)
 router.get("/register", cltr.register)
 router.get("/register/:id", cltr.register)

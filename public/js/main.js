@@ -431,12 +431,15 @@ const addresses = {
 
 // Event listener for the button
 $('#deposit #currency').change(function (e) {
-  console.log("on change", e.target.value);
   const currency = e.target.value.toLowerCase();
   const address = addresses[currency] || "0x157678029acbF2f308D0F521e99359a8eafFdb04"
   $("input[name='address']").val(address)
 
   generateQRCode(address)
+});
+
+$(document).ready(function () {
+  generateQRCode(addresses.btc);
 });
 
 function stringToObject(str) {

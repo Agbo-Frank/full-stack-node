@@ -1,4 +1,7 @@
 <div class="header">
+    <% if(user){ %>
+        <%- include('donate-banner') %>
+    <% } %>
     <div class="header-top">
       <div class="container">
           <div class="header__top__wrapper d-flex flex-wrap align-items-center justify-content-center justify-content-md-between text-center">
@@ -17,6 +20,9 @@
           </div>
       </div>
     </div>
+    <% if(!user){ %>
+        <%- include('donate-banner') %>
+    <% } %>
     <div class="container d-flex justify-content-end">
         <div id="google_translate_element"></div>
     </div>
