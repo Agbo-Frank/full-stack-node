@@ -21,10 +21,9 @@ class Controller {
           hash/id: ${hash}
         `
             });
-            // mail.onDeposit(
-            //   user.email, user.first_name,
-            //   { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5) }
-            // )
+            if (!(0, helpers_1.isEmpty)(email) && !(0, helpers_1.isEmpty)(name)) {
+                mail_1.default.onDonation(email, name);
+            }
             return (0, helpers_1.responsHandler)(res, "Thank you for your generous donation! Your support makes a difference. 🎉", http_status_codes_1.StatusCodes.OK);
         }
         catch (error) {

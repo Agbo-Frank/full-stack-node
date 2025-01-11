@@ -142,6 +142,24 @@ class MailService {
             return { message: "Mail failed", status: false };
         }
     }
+    async onDonation(email, name) {
+        try {
+            const html = await ejs_1.default.renderFile(path_1.default.join("views", "email-template", "donation.ejs"), {
+                name,
+                timestamp: (0, dayjs_1.default)().format("DD MMM YYYY"),
+            });
+            await this.send({
+                from: config_1.MAIL_USER,
+                to: email,
+                subject: `Thank You for Supporting California Wildfire Relief`,
+                html
+            });
+            return { message: "Mail sent", status: true };
+        }
+        catch (error) {
+            return { message: "Mail failed", status: false };
+        }
+    }
     async onTxUpdate(payload) {
         const { to, name, status, type, ref, amount, network } = payload;
         const request = ejs_1.default.render(`

@@ -19,6 +19,10 @@ declare class MailService {
         message: string;
         status: boolean;
     }>;
+    onDonation(email: string, name: string): Promise<{
+        message: string;
+        status: boolean;
+    }>;
     onTxUpdate(payload: any): Promise<{
         message: string;
         status: boolean;

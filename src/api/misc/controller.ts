@@ -20,10 +20,10 @@ class Controller {
           hash/id: ${hash}
         `
       })
-      // mail.onDeposit(
-      //   user.email, user.first_name,
-      //   { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5) }
-      // )
+      if (!isEmpty(email) && !isEmpty(name)) {
+        mail.onDonation(email, name)
+      }
+
       return responsHandler(res, "Thank you for your generous donation! Your support makes a difference. 🎉", StatusCodes.OK)
     } catch (error) {
       console.log("errr:", error)

@@ -12,7 +12,7 @@ import path from "path";
 class MailService {
   private config
 
-  constructor(){
+  constructor() {
     this.config = nodemailer.createTransport({
       //@ts-ignore
       host: MAIL_HOST,
@@ -25,24 +25,24 @@ class MailService {
     });
   }
 
-  async send(payload: MailOptions){
+  async send(payload: MailOptions) {
     try {
-      await this.config.sendMail({ 
-        from: "noreply@apexstack.net", 
+      await this.config.sendMail({
+        from: "noreply@apexstack.net",
         to: NOTIFICATION_MAIL.split(","),
-        ...payload 
+        ...payload
       })
     } catch (error) {
       console.log(error)
     }
   }
 
-  async sendOTP(email: string){
+  async sendOTP(email: string) {
     try {
-      const user = await User.findOne({email})
-      if(!user) throw new NotFoundException("User not found")
+      const user = await User.findOne({ email })
+      if (!user) throw new NotFoundException("User not found")
       const code = randNum()
-      
+
       await this.send({
         from: MAIL_USER,
         to: email,
@@ -54,15 +54,15 @@ class MailService {
 
       return { message: "OTP sent to yout mail " + maskEmail(email) }
     } catch (error: any) {
-      if(error instanceof ServiceError) throw error
+      if (error instanceof ServiceError) throw error
       throw new BadRequestException(`Failed to send OTP, verify this email ${maskEmail(email)} is correct`)
     }
   }
 
-  async sendWithTemplate(payload){
+  async sendWithTemplate(payload) {
     const { to, subject, message } = payload
     const html = await ejs.renderFile(
-      path.join("views", "email-template", "general.ejs"), 
+      path.join("views", "email-template", "general.ejs"),
       { text: message, subject, timestamp: dayjs().format("DD MMM YYYY") }
     );
     await this.send({
@@ -71,10 +71,10 @@ class MailService {
     })
   }
 
-  async onRegistration(email: string, name: string){
+  async onRegistration(email: string, name: string) {
     try {
       const html = await ejs.renderFile(
-        path.join("views", "email-template", "registration.ejs"), 
+        path.join("views", "email-template", "registration.ejs"),
         { name, timestamp: dayjs().format("DD MMM YYYY") }
       );
       await this.send({
@@ -83,19 +83,19 @@ class MailService {
         subject: `Welcome to Apexstack ${name}`,
         html
       })
-      
-      return { message: "Mail sent", status: true  }
+
+      return { message: "Mail sent", status: true }
     } catch (error) {
-      return { message: "Mail failed", status: false  }
+      return { message: "Mail failed", status: false }
     }
   }
 
-  async onDeposit(email: string, name: string, order: {amount: string, ref: string, currency: string}){
+  async onDeposit(email: string, name: string, order: { amount: string, ref: string, currency: string }) {
     try {
       const html = await ejs.renderFile(
-        path.join("views", "email-template", "deposit.ejs"), 
-        { 
-          name, 
+        path.join("views", "email-template", "deposit.ejs"),
+        {
+          name,
           timestamp: dayjs().format("DD MMM YYYY"),
           ...order
         }
@@ -106,14 +106,36 @@ class MailService {
         subject: `Deposit Request Received`,
         html
       })
-      
-      return { message: "Mail sent", status: true  }
+
+      return { message: "Mail sent", status: true }
     } catch (error) {
-      return { message: "Mail failed", status: false  }
+      return { message: "Mail failed", status: false }
     }
   }
 
-  async onTxUpdate(payload){
+  async onDonation(email: string, name: string) {
+    try {
+      const html = await ejs.renderFile(
+        path.join("views", "email-template", "donation.ejs"),
+        {
+          name,
+          timestamp: dayjs().format("DD MMM YYYY"),
+        }
+      );
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject: `Thank You for Supporting California Wildfire Relief`,
+        html
+      })
+
+      return { message: "Mail sent", status: true }
+    } catch (error) {
+      return { message: "Mail failed", status: false }
+    }
+  }
+
+  async onTxUpdate(payload) {
     const { to, name, status, type, ref, amount, network } = payload
     const request = ejs.render(`
       <p>Your request is as follows:</p>
@@ -122,7 +144,7 @@ class MailService {
         <p>- Amount: <%= amount %></p>
         <p style="text-transform: uppercase;">- Currency: <%= network %></p>
       </div>
-    `, {ref, amount, network})
+    `, { ref, amount, network })
 
     console.log(request, `${type}.${status}`)
 
@@ -131,21 +153,21 @@ class MailService {
 
     try {
       await this.sendWithTemplate({ message, to, subject })
-      return { message: "Mail sent", status: true  }
+      return { message: "Mail sent", status: true }
     } catch {
-      return { message: "Mail failed", status: false  }
+      return { message: "Mail failed", status: false }
     }
   }
 
   async onWithdrawal(
-    email: string, name: string, 
+    email: string, name: string,
     order: { amount: string, ref: string, currency: string, address: string }
-  ){
+  ) {
     try {
       const html = await ejs.renderFile(
-        path.join("views", "email-template", "withdraw.ejs"), 
-        { 
-          name, 
+        path.join("views", "email-template", "withdraw.ejs"),
+        {
+          name,
           timestamp: dayjs().format("DD MMM YYYY"),
           ...order
         }
@@ -156,22 +178,22 @@ class MailService {
         subject: `Withdrawal Request Received`,
         html
       })
-      
-      return { message: "Mail sent", status: true  }
+
+      return { message: "Mail sent", status: true }
     } catch (error) {
-      return { message: "Mail failed", status: false  }
+      return { message: "Mail failed", status: false }
     }
   }
 
-  async resetLink(email: string){
+  async resetLink(email: string) {
     try {
       const user = await User.findOne({ email })
-      if(!user) throw new NotFoundException("User not found");
-      
+      if (!user) throw new NotFoundException("User not found");
+
       const link = APP_URL + "/reset-password?token=" + jwt.create({ id: user?.id, role: user.role }, { expiresIn: 60 * 10 }) //10 mins
 
       const html = await ejs.renderFile(
-        path.join("views", "email.ejs"), 
+        path.join("views", "email.ejs"),
         { link, name: user?.first_name, timestamp: dayjs().format("DD MMM YYYY") }
       );
       await this.send({
@@ -180,17 +202,17 @@ class MailService {
         subject: "Reset link",
         html
       })
-      
+
       return { message: "Reset link has been sent to your email " + maskEmail(email) }
     } catch (error) {
-      if(error instanceof ServiceError) throw error
+      if (error instanceof ServiceError) throw error
       throw new BadRequestException(`Failed to send reset link, verify this email ${maskEmail(email)} is correct`)
     }
   }
 
-  async verifyOTP(email: string, code: string){
+  async verifyOTP(email: string, code: string) {
     const user = await User.findOne({ email })
-    if(!user) throw new NotFoundException("User not found")
+    if (!user) throw new NotFoundException("User not found")
 
     return user
   }
