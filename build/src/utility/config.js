@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CLOUDINARY_API_SECRET = exports.CLOUDINARY_API_KEY = exports.CLOUDINARY_NAME = exports.APP_URL = exports.NOTIFICATION_MAIL = exports.MAIL_PASS = exports.MAIL_USER = exports.MAIL_PORT = exports.MAIL_HOST = exports.MONGODB_URL = exports.JWT_SECRET_KEY = exports.PORT = exports.NODE_ENV = void 0;
+exports.NEWAPI_API_KEY = exports.CLOUDINARY_API_SECRET = exports.CLOUDINARY_API_KEY = exports.CLOUDINARY_NAME = exports.APP_URL = exports.NOTIFICATION_MAIL = exports.MAIL_PASS = exports.MAIL_USER = exports.MAIL_PORT = exports.MAIL_HOST = exports.MONGODB_URL = exports.JWT_SECRET_KEY = exports.PORT = exports.NODE_ENV = void 0;
 require("dotenv/config");
 exports.NODE_ENV = process.env.NODE_ENV;
 exports.PORT = process.env.PORT;
@@ -15,4 +15,5 @@ exports.APP_URL = process.env.APP_URL;
 exports.CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
 exports.CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 exports.CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+exports.NEWAPI_API_KEY = process.env.NEWAPI_API_KEY;
 //# sourceMappingURL=config.js.map

@@ -6,6 +6,7 @@ declare class Controller {
     changePassword(req: any, res: Response, next: NextFunction): Promise<void>;
     transactions(req: any, res: Response, next: NextFunction): Promise<void>;
     deposit(req: any, res: Response, next: NextFunction): Promise<void>;
+    donation(req: any, res: Response, next: NextFunction): Promise<void>;
     withdraw(req: any, res: Response, next: NextFunction): Promise<void>;
     referalWithdrawl(req: any, res: Response, next: NextFunction): Promise<void>;
     referrals(req: any, res: Response, next: NextFunction): Promise<void>;

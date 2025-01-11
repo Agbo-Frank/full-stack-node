@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 declare class Controller {
     home(req: Request, res: Response): Promise<void>;
+    donate(req: Request, res: Response): Promise<void>;
     login(req: Request, res: Response): Promise<void>;
     fogetpassword(req: Request, res: Response): Promise<void>;
     resetpassword(req: Request, res: Response): Promise<void>;

@@ -12,3 +12,4 @@ export declare const APP_URL: string;
 export declare const CLOUDINARY_NAME: string;
 export declare const CLOUDINARY_API_KEY: string;
 export declare const CLOUDINARY_API_SECRET: string;
+export declare const NEWAPI_API_KEY: string;

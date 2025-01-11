@@ -8,6 +8,7 @@ const controller_1 = __importDefault(require("./controller"));
 const guard_1 = __importDefault(require("../../middleware/guard"));
 const router = (0, express_1.Router)();
 router.get("/", controller_1.default.home);
+router.get("/donate", controller_1.default.donate);
 router.get("/login", controller_1.default.login);
 router.get("/register", controller_1.default.register);
 router.get("/register/:id", controller_1.default.register);

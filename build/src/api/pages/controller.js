@@ -10,10 +10,57 @@ const config_1 = require("../../utility/config");
 const plans_1 = __importDefault(require("../../model/plans"));
 const investment_1 = __importDefault(require("../../model/investment"));
 const numeral_1 = __importDefault(require("numeral"));
+const dayjs_1 = __importDefault(require("dayjs"));
+const axios_1 = __importDefault(require("axios"));
+const articles_1 = __importDefault(require("../../model/articles"));
+const getNews = async () => {
+    try {
+        const response = await axios_1.default.get('https://newsapi.org/v2/everything', {
+            params: {
+                q: 'California wildfires',
+                sortBy: 'publishedAt',
+                language: 'en',
+                apiKey: config_1.NEWAPI_API_KEY,
+            },
+        });
+        return response.data.articles;
+    }
+    catch (error) {
+        console.error('Error fetching updates:', error.message);
+    }
+};
 class Controller {
     async home(req, res) {
         const plans = await plans_1.default.find();
         return res.render('index', { data: plans });
+    }
+    async donate(req, res) {
+        try {
+            let data = [];
+            const articles = await articles_1.default.findOne();
+            if (!articles || (0, dayjs_1.default)().isAfter((0, dayjs_1.default)(articles === null || articles === void 0 ? void 0 : articles.due_date))) {
+                let result = await getNews();
+                result = result.filter(a => (a === null || a === void 0 ? void 0 : a.title) !== "[Removed]").slice(0, 10);
+                const payload = {
+                    articles: JSON.stringify(result),
+                    due_date: (0, dayjs_1.default)().add(12, "hours").toISOString()
+                };
+                if (articles)
+                    await articles.updateOne(payload);
+                else
+                    await articles_1.default.create(payload);
+                data = result;
+            }
+            else {
+                data = JSON.parse(articles.articles);
+            }
+            const timestamp = (0, dayjs_1.default)().format("DD MMM YYYY");
+            const formatDate = (date) => (0, dayjs_1.default)(date).format("DD MMM YYYY");
+            return res.render('donate', { timestamp, formatDate, articles: data });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     async login(req, res) {
         return res.render('login');

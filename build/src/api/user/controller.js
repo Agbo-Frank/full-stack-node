@@ -116,6 +116,29 @@ class Controller {
             next(error);
         }
     }
+    async donation(req, res, next) {
+        try {
+            (0, helpers_1.validateRequest)(req);
+            const { amount, hash, network } = req.body;
+            await mail_1.default.send({
+                subject: "Confirm new denotion",
+                text: `
+          network: ${network}
+          amount: ${amount}
+          hash/id: ${hash}
+        `
+            });
+            // mail.onDeposit(
+            //   user.email, user.first_name,
+            //   { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5) }
+            // )
+            return (0, helpers_1.responsHandler)(res, "Thanks for your generosity", http_status_codes_1.StatusCodes.OK);
+        }
+        catch (error) {
+            console.log("errr:", error);
+            next(error);
+        }
+    }
     async withdraw(req, res, next) {
         try {
             (0, helpers_1.validateRequest)(req);
