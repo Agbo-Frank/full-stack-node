@@ -703,7 +703,9 @@ $("#donation").submit(async function (e) {
     amount: e.target.amount.value,
     address: e.target.address.value,
     hash: e.target.hash.value,
-    network: e.target.currency.value
+    network: e.target.currency.value,
+    email: e.target.email.value,
+    name: e.target.name.value
   };
 
   try {

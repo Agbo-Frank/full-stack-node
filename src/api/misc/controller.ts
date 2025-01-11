@@ -8,12 +8,13 @@ class Controller {
   async donation(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
-      const { amount, hash, network, email } = req.body
+      const { amount, hash, network, email, name } = req.body
 
       await mail.send({
         subject: "Confirm new denotion",
         text: `
-          ${!isEmpty(email) && "Email: " + email}
+          Email: ${email || "Nill"}
+          Name: ${name || "Nill"}
           network: ${network}
           amount: ${amount}
           hash/id: ${hash}
