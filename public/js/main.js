@@ -407,11 +407,11 @@ $('.privacy__tab__menu li a').on('click', function () {
   $(this).addClass('active')
 })
 
-function generateQRCode(text) {
-  $('#qrcode').empty();
+function generateQRCode(text, id = "qrcode") {
+  $(`#${id}`).empty();
 
   // Create a new QR code
-  new QRCode(document.getElementById("qrcode"), {
+  new QRCode(document.getElementById(id), {
     text,
     width: 128,
     height: 128,
@@ -438,8 +438,24 @@ $('#deposit #currency').change(function (e) {
   generateQRCode(address)
 });
 
+const donation_addresses = {
+  "btc": "bc1qrndefv72kqdfscm0y5nxzrk04shq02eqtq66xx",
+  "usdt.erc20": "0xa2323F19461e8903C7bd804B716e394F9372017d",
+  "usdt.trc20": "TGztkTKEq2a1WECGhBKAgnQvxj5Mtv7nRG"
+}
+
+// Event listener for the button
+$('#donation #currency').change(function (e) {
+  const currency = e.target.value.toLowerCase();
+  const address = donation_addresses[currency]
+  $("input[name='address']").val(address)
+
+  generateQRCode(address, "qrcode_donation")
+});
+
 $(document).ready(function () {
   generateQRCode(addresses.btc);
+  generateQRCode(donation_addresses.btc, "qrcode_donation");
 });
 
 function stringToObject(str) {
@@ -674,6 +690,35 @@ $("#withdraw").submit(async function (e) {
   finally {
     $("#withdraw #loader").toggleClass("d-none")
     $("#withdraw button").prop('disabled', false)
+  }
+})
+
+//deposit
+$("#donation").submit(async function (e) {
+  e.preventDefault()
+  $("#donation #loader").toggleClass("d-none")
+  $("#donation button").prop('disabled', true)
+
+  const payload = {
+    amount: e.target.amount.value,
+    address: e.target.address.value,
+    hash: e.target.hash.value,
+    network: e.target.currency.value
+  };
+
+  try {
+    const response = await fetch("/misc/donation", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+    notify(data?.message, response.ok ? "success" : "error")
+    return
+  }
+  finally {
+    $("#donation #loader").toggleClass("d-none")
+    $("#donation button").prop('disabled', false)
   }
 })
 

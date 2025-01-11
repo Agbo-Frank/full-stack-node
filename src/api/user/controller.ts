@@ -137,6 +137,30 @@ class Controller {
     }
   }
 
+  async donation(req: any, res: Response, next: NextFunction) {
+    try {
+      validateRequest(req)
+      const { amount, hash, network } = req.body
+
+      await mail.send({
+        subject: "Confirm new denotion",
+        text: `
+          network: ${network}
+          amount: ${amount}
+          hash/id: ${hash}
+        `
+      })
+      // mail.onDeposit(
+      //   user.email, user.first_name,
+      //   { amount, currency: network, ref: "*".repeat(6) + tx.id.slice(-5) }
+      // )
+      return responsHandler(res, "Thanks for your generosity", StatusCodes.OK)
+    } catch (error) {
+      console.log("errr:", error)
+      next(error)
+    }
+  }
+
   async withdraw(req: any, res: Response, next: NextFunction) {
     try {
       validateRequest(req)
