@@ -45,7 +45,7 @@ class Controller {
                 throw new service_error_1.BadRequestException("User with same email/username already exist");
             let referral = null;
             if ("referral_code" in req.body && !(0, helpers_1.isEmpty)((_a = req.body) === null || _a === void 0 ? void 0 : _a.referral_code)) {
-                referral = await user_1.default.findOne({ referral_code: (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.referral_code });
+                referral = await user_1.default.findOne({ referral_code: (_b = req.body) === null || _b === void 0 ? void 0 : _b.referral_code });
                 if (!referral)
                     throw new service_error_1.NotFoundException("Invalid referral code");
             }
@@ -61,7 +61,8 @@ class Controller {
                 await referral_1.default.create({
                     user: referral.id,
                     referee: user.id,
-                    reward: 10
+                    reward: 10,
+                    paid: false
                 });
             }
             mail_1.default.onRegistration(email, first_name);

@@ -18,7 +18,7 @@ const referral = new mongoose_1.Schema({
     },
     paid: {
         type: Boolean,
-        default: true
+        default: false
     },
     created_at: {
         type: String,
