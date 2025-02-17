@@ -23,15 +23,15 @@ const referral = new Schema<IReferral>({
   },
   paid: {
     type: Boolean,
-    default: true
+    default: false
   },
   created_at: {
     type: String,
-    get(v){
+    get(v) {
       return dayjs(v).format("DD MMM YYYY")
     }
   }
-},{
+}, {
   timestamps: {
     createdAt: "created_at",
     updatedAt: "updated_at"
