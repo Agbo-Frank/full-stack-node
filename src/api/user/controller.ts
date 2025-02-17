@@ -206,7 +206,7 @@ class Controller {
   async referalWithdrawl(req: any, res: Response, next: NextFunction) {
     try {
       const referral = await Referral.find({ user: req.user, paid: false })
-      const balance = referral.reduce((acc, d) => acc + d.reward, 0)
+      const balance = referral.filter(d => !d.paid).reduce((acc, d) => acc + d.reward, 0)
       if (balance === 0) throw new BadRequestException("Low referral balance");
 
       const user = await User.findById(req.user)
