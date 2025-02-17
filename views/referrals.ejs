@@ -75,7 +75,7 @@
                       </td>
                       <td data-label="Amount"><span class="amount">$<%= i?.reward %></span></td>
                       <td data-label="Status">
-                        <% if(i?.completed){ %>
+                        <% if(i?.completed || i?.paid){ %>
                           <span class="wallet text-capitalize badge" style="background-color: #198754;">completed</span>
                         <% } else{ %>
                           <span class="wallet text-capitalize badge">pending</span>
