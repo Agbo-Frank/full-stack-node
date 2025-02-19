@@ -117,16 +117,14 @@ class Controller {
     }
     async dashboard(req, res) {
         let data = await transaction_1.default.paginate({ user: req.user }, { sort: { created_at: "desc" } });
-        data.docs.sort((a, b) => (0, dayjs_1.default)(b.created_at).unix() - (0, dayjs_1.default)(a.created_at).unix());
         const total_deposit = data.docs.filter(t => t.type === "deposit" && t.status === "approved").reduce((acc, tx) => (0, numeral_1.default)(acc).add(tx.amount).value(), 0);
         const total_withdraw = data.docs.filter(t => t.type === "withdraw" && t.status === "approved").reduce((acc, tx) => (0, numeral_1.default)(acc).add(tx.amount).value(), 0);
-        return res.render('dashboard', { tx: data.docs, total_deposit, total_withdraw });
+        return res.render('dashboard', { tx: data.docs, formatDate: helpers_1.formatDate, total_deposit, total_withdraw });
     }
     async transactions(req, res) {
         const { page, limit } = (0, helpers_1.pagingParams)(req);
         let data = await transaction_1.default.paginate({ user: req.user }, { page, limit, sort: { created_at: "desc" } });
-        data.docs.sort((a, b) => (0, dayjs_1.default)(b.created_at).unix() - (0, dayjs_1.default)(a.created_at).unix());
-        return res.render('transactions', { data });
+        return res.render('transactions', { data, formatDate: helpers_1.formatDate });
     }
     async plans(req, res) {
         const plans = await plans_1.default.find();
@@ -135,7 +133,6 @@ class Controller {
     async investments(req, res) {
         const { page, limit } = (0, helpers_1.pagingParams)(req);
         const data = await investment_1.default.paginate({ user: req.user }, { page, limit, sort: { created_at: "desc" } });
-        console.log(data);
         return res.render('investments', { data });
     }
     async settings(req, res) {
@@ -153,7 +150,9 @@ class Controller {
     async referrals(req, res) {
         var _a;
         const link = config_1.APP_URL + "/register/" + ((_a = res.locals.user) === null || _a === void 0 ? void 0 : _a.referral_code);
-        const data = await referral_1.default.find({ user: req.user }).populate("referee", "first_name last_name");
+        const data = await referral_1.default.find({ user: req.user })
+            .populate("referee", "first_name last_name")
+            .sort({ created_at: "desc" });
         const paid_balance = data.filter(d => d.paid).reduce((acc, d) => acc + d.reward, 0);
         const balance = data.filter(d => !d.paid).reduce((acc, d) => acc + d.reward, 0);
         return res.render('referrals', { balance, paid_balance, data, link });

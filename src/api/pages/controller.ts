@@ -1,5 +1,5 @@
 import Transaction from "../../model/transaction";
-import { isEmpty, pagingParams } from "../../utility/helpers";
+import { formatDate, isEmpty, pagingParams } from "../../utility/helpers";
 import { Request, Response } from "express";
 import Referral from "../../model/referral";
 import { APP_URL, NEWAPI_API_KEY } from "../../utility/config";
@@ -118,10 +118,10 @@ class Controller {
       { user: req.user },
       { sort: { created_at: "desc" } }
     )
-    data.docs.sort((a, b) => dayjs(b.created_at).unix() - dayjs(a.created_at).unix())
+
     const total_deposit = data.docs.filter(t => t.type === "deposit" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
     const total_withdraw = data.docs.filter(t => t.type === "withdraw" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
-    return res.render('dashboard', { tx: data.docs, total_deposit, total_withdraw });
+    return res.render('dashboard', { tx: data.docs, formatDate, total_deposit, total_withdraw });
   }
   async transactions(req: any, res: Response) {
     const { page, limit } = pagingParams(req)
@@ -130,8 +130,8 @@ class Controller {
       { user: req.user },
       { page, limit, sort: { created_at: "desc" } }
     )
-    data.docs.sort((a, b) => dayjs(b.created_at).unix() - dayjs(a.created_at).unix())
-    return res.render('transactions', { data });
+
+    return res.render('transactions', { data, formatDate });
   }
   async plans(req: Request, res: Response) {
     const plans = await Plan.find()
@@ -143,7 +143,7 @@ class Controller {
       { user: req.user },
       { page, limit, sort: { created_at: "desc" } }
     )
-    console.log(data)
+
     return res.render('investments', { data });
   }
   async settings(req: Request, res: Response) {
@@ -160,7 +160,9 @@ class Controller {
   }
   async referrals(req: any, res: Response) {
     const link = APP_URL + "/register/" + res.locals.user?.referral_code
-    const data = await Referral.find({ user: req.user }).populate("referee", "first_name last_name")
+    const data = await Referral.find({ user: req.user })
+      .populate("referee", "first_name last_name")
+      .sort({ created_at: "desc" })
     const paid_balance = data.filter(d => d.paid).reduce((acc, d) => acc + d.reward, 0)
     const balance = data.filter(d => !d.paid).reduce((acc, d) => acc + d.reward, 0)
 

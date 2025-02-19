@@ -3,12 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.wrapAsync = exports.maskAddress = exports.generateCode = exports.extractFilters = exports.pagingParams = exports.responsHandler = exports.validateRequest = exports.maskEmail = exports.isEmpty = exports.compareStrings = exports.randAlphaNum = void 0;
+exports.formatDate = exports.wrapAsync = exports.maskAddress = exports.generateCode = exports.extractFilters = exports.pagingParams = exports.responsHandler = exports.validateRequest = exports.maskEmail = exports.isEmpty = exports.compareStrings = exports.randAlphaNum = void 0;
 exports.randNum = randNum;
 exports.extractNameFromEmail = extractNameFromEmail;
 const express_validator_1 = require("express-validator");
 const service_error_1 = require("./service-error");
 const user_1 = __importDefault(require("../model/user"));
+const dayjs_1 = __importDefault(require("dayjs"));
 function randNum(len = 4) {
     const numbers = '0123456789';
     let randomCode = '';
@@ -131,4 +132,6 @@ const wrapAsync = (fn) => {
     };
 };
 exports.wrapAsync = wrapAsync;
+const formatDate = (v) => (0, dayjs_1.default)(v).format("DD MMM YYYY HH:mm a");
+exports.formatDate = formatDate;
 //# sourceMappingURL=helpers.js.map

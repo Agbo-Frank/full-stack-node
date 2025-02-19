@@ -27,13 +27,7 @@ const tx = new Schema<ITransaction>({
   network: String,
   status: String,
   description: String,
-  recipient: { type: String },
-  created_at: {
-    type: String,
-    get(v){
-      return dayjs(v).format("DD MMM YYYY HH:mm a")
-    }
-  }
+  recipient: { type: String }
 }, {
   timestamps: {
     createdAt: "created_at",

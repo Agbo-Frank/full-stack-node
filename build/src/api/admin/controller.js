@@ -93,8 +93,7 @@ class Controller {
                 sort: { updated_at: "desc" },
                 populate: { path: "user", select: "email" }
             });
-            console.log(data[0]);
-            return res.render('all-transactions', { data });
+            return res.render('all-transactions', { data, formatDate: helpers_1.formatDate });
         }
         catch (error) {
             next(error);

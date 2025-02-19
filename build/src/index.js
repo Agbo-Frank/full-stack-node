@@ -9,7 +9,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const logger_1 = __importDefault(require("./utility/logger"));
 const logger = new logger_1.default("server");
 mongoose_1.default.connect(config_1.MONGODB_URL, { autoIndex: false })
-    .then(() => {
+    .then(async () => {
     console.log("MongoDB connected successfully...");
     app_1.default.listen(config_1.PORT, () => logger.log(`Application runing on port ${config_1.PORT}...`));
 })

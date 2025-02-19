@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { extractFilters, pagingParams, responsHandler, validateRequest } from "../../utility/helpers";
+import { extractFilters, formatDate, pagingParams, responsHandler, validateRequest } from "../../utility/helpers";
 import User from "../../model/user";
 import { StatusCodes } from "http-status-codes";
 import Transaction from "../../model/transaction";
@@ -128,8 +128,8 @@ class Controller {
           populate: { path: "user", select: "email" }
         }
       )
-      console.log(data[0])
-      return res.render('all-transactions', { data });
+
+      return res.render('all-transactions', { data, formatDate });
     } catch (error) {
       next(error)
     }

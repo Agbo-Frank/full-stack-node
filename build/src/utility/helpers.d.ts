@@ -16,3 +16,4 @@ export declare function extractNameFromEmail(email: string): string;
 export declare const generateCode: (email: string) => Promise<string>;
 export declare const maskAddress: (address: string) => string;
 export declare const wrapAsync: (fn: any) => (req: any, res: any, next: any) => any;
+export declare const formatDate: (v: string) => string;

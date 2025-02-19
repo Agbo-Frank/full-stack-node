@@ -5,8 +5,8 @@ import Logger from "./utility/logger"
 
 const logger = new Logger("server")
 
-mongoose.connect(MONGODB_URL as string, {autoIndex: false})
-  .then(() => {
+mongoose.connect(MONGODB_URL as string, { autoIndex: false })
+  .then(async () => {
     console.log("MongoDB connected successfully...");
     app.listen(PORT, () => logger.log(`Application runing on port ${PORT}...`))
   })

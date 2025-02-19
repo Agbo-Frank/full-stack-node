@@ -4,8 +4,9 @@ import { Response, Request } from "express"
 import axios from "axios";
 import { FilterQuery } from "mongoose";
 import User from "../model/user";
+import dayjs from "dayjs";
 
-export function randNum(len = 4){
+export function randNum(len = 4) {
   const numbers = '0123456789'
   let randomCode = '';
 
@@ -47,12 +48,12 @@ export const isEmpty = (mixedVar: any) => {
   }
 
   if (typeof mixedVar === 'object' && !(mixedVar instanceof Date)) {
-      for (key in mixedVar) {
-        if (mixedVar.hasOwnProperty(key)) {
-          return false;
-        }
+    for (key in mixedVar) {
+      if (mixedVar.hasOwnProperty(key)) {
+        return false;
       }
-      return true;
+    }
+    return true;
   }
   return false;
 };
@@ -60,7 +61,7 @@ export const isEmpty = (mixedVar: any) => {
 export const maskEmail = (email: string) => {
   const [username, domain] = email.split('@');
   const mask = username.slice(0, 4) + '*'.repeat(Math.floor(username.length / 2)) + username.charAt(username.length - 1);
-  return mask + '@' +  domain
+  return mask + '@' + domain
 }
 
 export const validateRequest = (req: Request) => {
@@ -86,21 +87,21 @@ export const pagingParams = (req: Request) => {
   return { limit, page, ...req.query }
 }
 
-export const extractFilters = (payload: any, fields: string[], searchable_fields: string[] =[]) => {
+export const extractFilters = (payload: any, fields: string[], searchable_fields: string[] = []) => {
   const proccessed: FilterQuery<any>[] = []
   const filter = Object.entries(payload)
 
-  for(let i = 0; i < filter.length; i ++){
-    if(!fields.includes(filter[i][0])) continue;
-    else if(filter[i][0] === "search") {
-      proccessed.push({ 
+  for (let i = 0; i < filter.length; i++) {
+    if (!fields.includes(filter[i][0])) continue;
+    else if (filter[i][0] === "search") {
+      proccessed.push({
         $or: searchable_fields.map(field => ({
-          [field]: { $regex: new RegExp(`${filter[i][1]}`), $options: "i"}
+          [field]: { $regex: new RegExp(`${filter[i][1]}`), $options: "i" }
         }))
       })
-      
+
     }
-    else proccessed.push( { [filter[i][0]]: filter[i][1] } )
+    else proccessed.push({ [filter[i][0]]: filter[i][1] })
   }
 
   return proccessed;
@@ -110,20 +111,20 @@ export function extractNameFromEmail(email: string) {
   let username = email.split('@')[0];
 
   username = username.split(/\.|_/)[0];
-  if(username.length > 6) username = username.slice(0, 8)
+  if (username.length > 6) username = username.slice(0, 8)
   return username + randNum(2)
 }
 
-export const generateCode = async (email: string) =>  {
+export const generateCode = async (email: string) => {
   let is_unique = null
   let code: string | null = null
 
-  if(email && email?.length > 0){
+  if (email && email?.length > 0) {
     do {
-        code =  extractNameFromEmail(email)
-        is_unique = await User.findOne({ referral_code: code })
+      code = extractNameFromEmail(email)
+      is_unique = await User.findOne({ referral_code: code })
     }
-    while(is_unique);
+    while (is_unique);
   }
 
   return code?.replace(/\s/g, '').toLowerCase()
@@ -138,3 +139,5 @@ export const wrapAsync = (fn) => {
     return fn(req, res, next).catch(next);
   };
 };
+
+export const formatDate = (v: string) => dayjs(v).format("DD MMM YYYY HH:mm a")
