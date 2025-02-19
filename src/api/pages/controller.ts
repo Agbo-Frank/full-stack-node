@@ -118,7 +118,7 @@ class Controller {
       { user: req.user },
       { sort: { created_at: "desc" } }
     )
-
+    data.docs.sort((a, b) => dayjs(b.created_at).unix() - dayjs(a.created_at).unix())
     const total_deposit = data.docs.filter(t => t.type === "deposit" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
     const total_withdraw = data.docs.filter(t => t.type === "withdraw" && t.status === "approved").reduce((acc, tx) => numeral(acc).add(tx.amount).value(), 0)
     return res.render('dashboard', { tx: data.docs, total_deposit, total_withdraw });

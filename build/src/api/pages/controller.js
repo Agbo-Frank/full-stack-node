@@ -117,6 +117,7 @@ class Controller {
     }
     async dashboard(req, res) {
         let data = await transaction_1.default.paginate({ user: req.user }, { sort: { created_at: "desc" } });
+        data.docs.sort((a, b) => (0, dayjs_1.default)(b.created_at).unix() - (0, dayjs_1.default)(a.created_at).unix());
         const total_deposit = data.docs.filter(t => t.type === "deposit" && t.status === "approved").reduce((acc, tx) => (0, numeral_1.default)(acc).add(tx.amount).value(), 0);
         const total_withdraw = data.docs.filter(t => t.type === "withdraw" && t.status === "approved").reduce((acc, tx) => (0, numeral_1.default)(acc).add(tx.amount).value(), 0);
         return res.render('dashboard', { tx: data.docs, total_deposit, total_withdraw });
