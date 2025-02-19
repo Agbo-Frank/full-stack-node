@@ -124,7 +124,7 @@ class Controller {
     async transactions(req, res) {
         const { page, limit } = (0, helpers_1.pagingParams)(req);
         let data = await transaction_1.default.paginate({ user: req.user }, { page, limit, sort: { created_at: "desc" } });
-        data.docs.sort((a, b) => (0, dayjs_1.default)(a.created_at).unix() - (0, dayjs_1.default)(b.created_at).unix());
+        data.docs.sort((a, b) => (0, dayjs_1.default)(b.created_at).unix() - (0, dayjs_1.default)(a.created_at).unix());
         return res.render('transactions', { data });
     }
     async plans(req, res) {

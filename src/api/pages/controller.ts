@@ -130,7 +130,7 @@ class Controller {
       { user: req.user },
       { page, limit, sort: { created_at: "desc" } }
     )
-    data.docs.sort((a, b) => dayjs(a.created_at).unix() - dayjs(b.created_at).unix())
+    data.docs.sort((a, b) => dayjs(b.created_at).unix() - dayjs(a.created_at).unix())
     return res.render('transactions', { data });
   }
   async plans(req: Request, res: Response) {
