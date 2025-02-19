@@ -212,6 +212,7 @@ class Controller {
       const user = await User.findById(req.user)
       if (!user) throw new BadRequestException("user not found");
       user.balance = numeral(user.balance).add(balance).value()
+      user.earnings = numeral(user.earnings).add(balance).value()
       await user.save()
 
       await Referral.updateMany({ user: req.user }, { paid: true })
@@ -219,6 +220,7 @@ class Controller {
         user: user.id,
         type: "commission",
         status: "approved",
+        currency: "USD",
         amount: balance,
         description: `Referral earnings withdrawal`
       })

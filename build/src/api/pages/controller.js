@@ -124,6 +124,7 @@ class Controller {
     async transactions(req, res) {
         const { page, limit } = (0, helpers_1.pagingParams)(req);
         let data = await transaction_1.default.paginate({ user: req.user }, { page, limit, sort: { created_at: "desc" } });
+        data.docs.sort((a, b) => (0, dayjs_1.default)(a.created_at).unix() - (0, dayjs_1.default)(b.created_at).unix());
         return res.render('transactions', { data });
     }
     async plans(req, res) {
@@ -151,10 +152,9 @@ class Controller {
     async referrals(req, res) {
         var _a;
         const link = config_1.APP_URL + "/register/" + ((_a = res.locals.user) === null || _a === void 0 ? void 0 : _a.referral_code);
-        const data = await referral_1.default.find({ user: req.user, paid: false }).populate("referee", "first_name last_name");
+        const data = await referral_1.default.find({ user: req.user }).populate("referee", "first_name last_name");
         const paid_balance = data.filter(d => d.paid).reduce((acc, d) => acc + d.reward, 0);
         const balance = data.filter(d => !d.paid).reduce((acc, d) => acc + d.reward, 0);
-        // const pending_balance = data.filter(d => !d.completed).reduce((acc, d) => acc + d.reward, 0)
         return res.render('referrals', { balance, paid_balance, data, link });
     }
     async kyc(req, res) {

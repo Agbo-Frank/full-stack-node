@@ -187,12 +187,14 @@ class Controller {
             if (!user)
                 throw new service_error_1.BadRequestException("user not found");
             user.balance = (0, numeral_1.default)(user.balance).add(balance).value();
+            user.earnings = (0, numeral_1.default)(user.earnings).add(balance).value();
             await user.save();
             await referral_1.default.updateMany({ user: req.user }, { paid: true });
             const tx = await transaction_1.default.create({
                 user: user.id,
                 type: "commission",
                 status: "approved",
+                currency: "USD",
                 amount: balance,
                 description: `Referral earnings withdrawal`
             });
