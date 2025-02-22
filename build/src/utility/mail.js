@@ -221,6 +221,33 @@ class MailService {
             throw new service_error_1.BadRequestException(`Failed to send reset link, verify this email ${(0, helpers_1.maskEmail)(email)} is correct`);
         }
     }
+    async onReferral(email, name) {
+        try {
+            const subject = "🎉 You’ve Earned a $10 Referral Reward!";
+            const html = await ejs_1.default.renderFile(path_1.default.join("views", "email-template", "general.ejs"), {
+                name,
+                subject,
+                text: `
+          <p>Congratulations! You’ve earned $10 for referring a new user to our system. 🥳</p>
+          <p>Your reward has been credited to your account. Keep sharing and keep earning—there’s no limit to how much you can earn!</p>
+          <p>Thank you for being a valued part of our community.</p>
+          `,
+                timestamp: (0, dayjs_1.default)().format("DD MMM YYYY")
+            });
+            console.log(html);
+            await this.send({
+                from: config_1.MAIL_USER,
+                to: email,
+                subject,
+                html
+            });
+            return { message: "Mail sent", status: true };
+        }
+        catch (error) {
+            console.log(error);
+            return { message: "Mail failed", status: false };
+        }
+    }
     async verifyOTP(email, code) {
         const user = await user_1.default.findOne({ email });
         if (!user)

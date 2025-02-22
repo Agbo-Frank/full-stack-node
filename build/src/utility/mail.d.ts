@@ -39,6 +39,10 @@ declare class MailService {
     resetLink(email: string): Promise<{
         message: string;
     }>;
+    onReferral(email: string, name: string): Promise<{
+        message: string;
+        status: boolean;
+    }>;
     verifyOTP(email: string, code: string): Promise<import("mongoose").Document<unknown, {}, import("../model/user").IUser> & import("../model/user").IUser & {
         _id: import("mongoose").Types.ObjectId;
     }>;

@@ -210,6 +210,37 @@ class MailService {
     }
   }
 
+  async onReferral(email: string, name: string) {
+    try {
+      const subject = "🎉 You’ve Earned a $10 Referral Reward!"
+      const html = await ejs.renderFile(
+        path.join("views", "email-template", "general.ejs"),
+        {
+          name,
+          subject,
+          text: `
+          <p>Congratulations! You’ve earned $10 for referring a new user to our system. 🥳</p>
+          <p>Your reward has been credited to your account. Keep sharing and keep earning—there’s no limit to how much you can earn!</p>
+          <p>Thank you for being a valued part of our community.</p>
+          `,
+          timestamp: dayjs().format("DD MMM YYYY")
+        }
+      );
+      console.log(html)
+      await this.send({
+        from: MAIL_USER,
+        to: email,
+        subject,
+        html
+      })
+
+      return { message: "Mail sent", status: true }
+    } catch (error) {
+      console.log(error)
+      return { message: "Mail failed", status: false }
+    }
+  }
+
   async verifyOTP(email: string, code: string) {
     const user = await User.findOne({ email })
     if (!user) throw new NotFoundException("User not found")

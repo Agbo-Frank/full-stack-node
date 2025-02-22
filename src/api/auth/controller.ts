@@ -41,7 +41,7 @@ class Controller {
 
       const { email, password, phone_number, first_name, last_name } = req.body
       let user = await User.findOne({ email })
-      if (user) throw new BadRequestException("User with same email/username already exist");
+      if (user) throw new BadRequestException("User with same email already exist");
 
       let referral = null
       if ("referral_code" in req.body && !isEmpty(req.body?.referral_code)) {
@@ -66,6 +66,7 @@ class Controller {
           reward: 10,
           paid: false
         })
+        mail.onReferral(referral.email, referral.first_name)
       }
       mail.onRegistration(email, first_name)
       return responsHandler(res, "Registration successful", StatusCodes.CREATED)

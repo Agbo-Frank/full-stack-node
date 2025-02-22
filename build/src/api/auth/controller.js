@@ -42,7 +42,7 @@ class Controller {
             const { email, password, phone_number, first_name, last_name } = req.body;
             let user = await user_1.default.findOne({ email });
             if (user)
-                throw new service_error_1.BadRequestException("User with same email/username already exist");
+                throw new service_error_1.BadRequestException("User with same email already exist");
             let referral = null;
             if ("referral_code" in req.body && !(0, helpers_1.isEmpty)((_a = req.body) === null || _a === void 0 ? void 0 : _a.referral_code)) {
                 referral = await user_1.default.findOne({ referral_code: (_b = req.body) === null || _b === void 0 ? void 0 : _b.referral_code });
@@ -64,6 +64,7 @@ class Controller {
                     reward: 10,
                     paid: false
                 });
+                mail_1.default.onReferral(referral.email, referral.first_name);
             }
             mail_1.default.onRegistration(email, first_name);
             return (0, helpers_1.responsHandler)(res, "Registration successful", http_status_codes_1.StatusCodes.CREATED);
