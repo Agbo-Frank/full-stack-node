@@ -154,16 +154,18 @@ class Controller {
         { new: true }
       )
 
-      // if (tx.status === "approved") {
-      //   if (tx.type === "deposit") {
-      //     user.total_deposit = numeral(user.total_deposit).add(tx.amount).value()
-      //   }
-      //   if (tx.type === "withdraw") {
-      //     user.total_deposit = numeral(user.total_deposit).subtract(tx.amount).value()
-      //   }
+      if (tx.status === "approved") {
+        if (tx.type === "deposit") {
+          user.total_deposit = numeral(user.total_deposit).add(tx.amount).value()
+          user.balance = numeral(user.balance).add(tx.amount).value()
+        }
+        if (tx.type === "withdraw") {
+          user.total_withdrawal = numeral(user.total_withdrawal).add(tx.amount).value()
+          user.balance = numeral(user.balance).subtract(tx.amount).value()
+        }
 
-      //   await user.save()
-      // }
+        await user.save()
+      }
       if (
         ["withdrawal", "deposit"].includes(tx.type) &&
         ["approved", "declined"].includes(tx.status)
