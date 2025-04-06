@@ -48,7 +48,6 @@ async function updateUsersInvestments() {
         await user_1.default.updateOne({ _id: inv.user }, {
             $inc: {
                 earnings: profit,
-                balance: profit
             }
         });
     });
@@ -57,17 +56,11 @@ async function updateUsersInvestments() {
 async function initiateJobs() {
     try {
         node_cron_1.default.schedule("0 0 * * *", //0 0 * * *
-        console.log, { timezone: "UTC" });
+        updateUsersInvestments, { timezone: "UTC" });
         console.log("cron job set up successfully");
     }
     catch (error) {
         console.log("cron job set up failed");
     }
 }
-// mongoose.connect(MONGODB_URL as string, {autoIndex: false})
-//   .then(async () => {
-//     console.log("MongoDB connected successfully...");
-//     await updateUsersInvestments()
-//   })
-//   .catch((err) => console.log("MongoDB Error just occured " + err))
 //# sourceMappingURL=index.js.map

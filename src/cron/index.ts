@@ -23,7 +23,6 @@ async function updateUsersInvestments() {
       {
         $inc: {
           earnings: profit,
-          // balance: profit
         }
       }
     )

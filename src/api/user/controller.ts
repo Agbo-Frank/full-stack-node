@@ -178,6 +178,7 @@ class Controller {
         user: user.id,
         type: "withdraw",
         status: "pending",
+        currency: "USD",
         recipient: address,
         amount: -amount,
         description: `Withdrawal request`

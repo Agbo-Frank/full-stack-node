@@ -105,9 +105,9 @@ class Controller {
             if (!user)
                 throw new service_error_1.NotFoundException("User not found");
             const amount = (0, numeral_1.default)(inv.capital).add(inv.profit).value();
-            user.total_deposit = (0, numeral_1.default)(amount).add(user.total_deposit).value();
-            user.balance = (0, numeral_1.default)(user.balance).subtract(amount).value();
-            user.earnings = (0, numeral_1.default)(user.earnings).subtract(inv.profit).value();
+            // user.total_deposit = numeral(amount).add(user.total_deposit).value()
+            user.balance = (0, numeral_1.default)(amount).add(user.balance).value(); //numeral(user.balance).subtract(amount).value()
+            // user.earnings = numeral(user.earnings).subtract(inv.profit).value()
             inv.status = investment_1.investment_status.completed;
             await inv.save();
             await user.save();
