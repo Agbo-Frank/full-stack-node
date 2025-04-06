@@ -57,8 +57,7 @@ class Controller {
                 user: req === null || req === void 0 ? void 0 : req.user,
                 status: investment_1.investment_status.active
             });
-            user.total_deposit = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.total_deposit).subtract(amount).value();
-            user.balance = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.balance).add(amount).value();
+            user.balance = (0, numeral_1.default)(user === null || user === void 0 ? void 0 : user.balance).subtract(amount).value();
             await user.save();
             await transaction_1.default.create({
                 user: req === null || req === void 0 ? void 0 : req.user,

@@ -745,10 +745,11 @@ $("#referral__withdrawal").click(async function (e) {
 
 //investment withdrawal
 $(".inv__withdrawal").click(async function (e) {
-  $(".inv__withdrawal #loader").toggleClass("d-none")
-  $(".inv__withdrawal").prop('disabled', true)
+  const btn = $(this)
+  const loader = btn.find("#loader")
+  loader.toggleClass("d-none")
+  btn.prop('disabled', true)
 
-  console.log($(this).attr('data-inv'))
   try {
     const response = await fetch("/investment/withdraw", {
       method: "POST",
@@ -762,8 +763,8 @@ $(".inv__withdrawal").click(async function (e) {
     console.log(error)
   }
   finally {
-    $(".inv__withdrawal #loader").toggleClass("d-none")
-    $(".inv__withdrawal").prop('disabled', false)
+    loader.toggleClass("d-none")
+    btn.prop('disabled', false)
   }
 })
 

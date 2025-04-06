@@ -36,10 +36,9 @@ class Controller {
         status: investment_status.active
       })
 
-      user.total_deposit = numeral(user?.total_deposit).subtract(amount).value()
-      user.balance = numeral(user?.balance).add(amount).value()
-
+      user.balance = numeral(user?.balance).subtract(amount).value()
       await user.save()
+
       await Transaction.create({
         user: req?.user,
         amount, currency: "USD",

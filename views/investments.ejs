@@ -33,10 +33,12 @@
                       <td data-label="Status"><%- include("partials/status", { name: i?.status }) %></td>
                       <td data-label="Date"><span class="date"><%= i?.created_at %></span></td>
                       <td data-label="">
+                        <% if(i?.status === "active") { %>
                         <button data-inv="<%= i?._id  %>" class="cmn--btn inv__withdrawal" style="width: fit-content; font-size: 14px; padding: 2px 15px;">
                           Withdraw
                           <span id="loader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         </button>
+                        <% } %>
                       </td>
                     </tr>
                   <% }) %>
